@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>首页</title>
+    <link rel="stylesheet" href="./css/common.css" />
     <style>
         li {
             list-style: none;
@@ -22,19 +23,7 @@
             width: 100%;
         }
 
-        .price del {
-            color: #666;
-            margin-right: 5px;
-        }
-
-        .price span {
-            color: #f00;
-        }
-
-        .price del::before,
-        .price span::before {
-            content: '￥'
-        }
+        
     </style>
 </head>
 
@@ -92,7 +81,7 @@
             const lis = data.result.map(item => {
                 // item:每一条数据
                 return `<li class="goods" data-id="${item._id}" data-my-age="18" data-username="laoxie">
-                    <img src="http://120.76.247.5:2003${item.img_url}" />
+                    <a href="goods.html?id=${item._id}"><img src="http://120.76.247.5:2003${item.img_url}" /></a>
                     <h4>${item.goods_name}</h4>
                     <p>分类：${item.category}</p>
                     <p class="price"><del>${item.price}</del><span>${item.sales_price}</span></p>
@@ -106,17 +95,17 @@
         request('/goods?category=女士表', goodslistHandle)
 
         // 点击进入商品详情页
-        goodslist.onclick = function({target}){
-            if(target.tagName === 'IMG'){
-                // 获取点击商品id
-                const currentLi = target.parentElement;
-                // const id = currentLi.getAttribute('data-id');
-                // dataset: 自定义属性集合
-                // console.log(currentLi.dataset)
-                const {id} = currentLi.dataset
-                location.href="goods.html?id="+id
-            }
-        }
+        // goodslist.onclick = function({target}){
+        //     if(target.tagName === 'IMG'){
+        //         // 获取点击商品id
+        //         const currentLi = target.parentElement;
+        //         // const id = currentLi.getAttribute('data-id');
+        //         // dataset: 自定义属性集合
+        //         // console.log(currentLi.dataset)
+        //         const {id} = currentLi.dataset
+        //         location.href="goods.html?id="+id
+        //     }
+        // }
 
 
         // 获取商品分类

@@ -129,7 +129,106 @@
     * baseUrl
     * 回调函数callback
 * 处理数据
+* 页面跳转传参
+    * url参数：?后的参数，格式：`?key=value`
+        > string -> object
+        * 传统操作
+            1. 通过`location.search`获取url参数
+            2. 通过&拆分每个参数
+            3. 遍历每个参数，通过=拆分键值
+            4. 把所有键值组合成一个对象
+        * HTML5新特性：URLSearchParams
+            ```js
+                // ?id=603777f0883dee30b83facf3&a=10&b=20
+                const params = new URLSearchParams(location.search)
+                params.get('id'); //603777f0883dee30b83facf3
 
+                // 思考一个问题：如果URLSearchParams是你封装的，你如何实现以上效果
+            ```
+
+
+* dataset: 自定义属性集合
+    > 通过`节点.dataset`属性获取自定义属性集合
+
+* Promise   承诺、许诺
+    * 使用
+        ```js
+            // 实例化一个promise对象(状态：Pending)
+            const promise = new Promise(function(resolve,reject){
+                // resolve是一个函数: 用来改变promise的状态为Fulfilled
+                // reject是一个函数：用来改变promise的状态为Rejected
+                
+                // 假设Promise为“爱你一辈子”
+                // 如果白头偕老，就调用resolve()
+                // 如果第二天就分手了，就调用reject()
+            })
+        ```
+    * promise的状态
+        > 状态只能从`Pending->Fulfilled`或Pending->Rejected，状态只要发生了改变时不可能在边回去
+        * Pending（未完成）可以理解为Promise对象实例创建时候的初始状态
+        * Fulfilled（成功） 可以理解为成功的状态
+        * Rejected（失败） 可以理解为失败的状态
+    * 原型方法
+        * then(success,fail)
+        * catch(fail)
+    * 静态方法（类方法）
+        * Promise.resolve()  创建一个状态为`Fulfilled`的promise对象
+        * Promise.reject()   创建一个状态为`Rejected`的Promise对象
+        * Promise.all([p1,p2,p3])    把多个promise对象包装成一个大的promise对象,大的promise对象的状态如下：
+            * 所有的promise对象的状态都为Fulfilled时，大的promise状态为Fulfilled
+            * 只要有一个promise对象的状态为rejected，则大的promise状态为rejected
+        * Promise.race([p1,p2]): 竞速，谁跑的快，状态以谁为准
+            ```js
+                // 请求图片
+                 function requestImg(){
+                    return new Promise((resolve, reject)=>{
+                        var img = new Image();
+                        img.onload = function(){
+                            resolve(img);
+                        }
+                        img.src = 'laoxie.jpg';
+                    });
+                }
+
+                //延时函数，用于给请求计时
+                function timeout(){
+                    return Promise((resolve, reject)=>{
+                        setTimeout(()=>{
+                            reject('图片请求超时');
+                        }, 5000);
+                    });
+                }
+
+                Promise.race([requestImg(), timeout()])
+                .then(function(result){
+                    document.body.appendChild(result)
+                })
+                .catch(function(reason){
+                    console.log(reason);
+                });
+            ```
+
+* 匿名函数的执行
+    ```js
+        (function(){})()
+    ```
+* ES8新特性
+    > async&await让我们以同步的写法实现异步操作
+    * asyn
+        > async函数返回一个promise对象，相当于以下代码
+        ```js
+            async function show(){
+                return 'laoxie'
+            }
+            // 等效于以下代码
+            function show(){
+                return new Promise(resolve,reject){
+                    resolve('laoxie')
+                }
+            }
+        ```
+    * await
+        > 不能单独使用，只能在async函数中使用，用来等待promise对象的结果（换句话说，await后只能跟promise对象）
 
 ### 练习
 * 根据数据渲染商品详情页面

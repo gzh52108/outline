@@ -35,6 +35,7 @@ function ajax(url,method='get'){
 
     url = baseUrl + url;
 
+
     const promise = new Promise(function(resolve,reject){
         const xhr = new XMLHttpRequest();
         xhr.onload = function(){

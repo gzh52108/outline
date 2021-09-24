@@ -92,7 +92,7 @@
 
             
         }
-        request('/goods?category=女士表', goodslistHandle)
+        request('/goods?category='+category.value, goodslistHandle)
 
         // 点击进入商品详情页
         // goodslist.onclick = function({target}){
@@ -124,6 +124,7 @@
             category.innerHTML = data.result.map(item => {
                 return `<option value="${item.text}">${item.text}</option>`
             }).join('')
+            request('/goods?category='+category.value, goodslistHandle)
         })
 
 

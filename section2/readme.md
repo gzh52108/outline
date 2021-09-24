@@ -232,3 +232,209 @@
 
 ### 练习
 * 根据数据渲染商品详情页面
+
+
+## day5-5
+
+### 面试题
+* 为什么会出现乱码
+    > 编码不统一造成乱码问题
+    * ascii
+    * latin
+    * gb2312
+    * gbk
+    * unicode -> utf-8
+
+### 复习
+* ajax封装
+    > 尽量让自己的封装方法功能单一化，需要考虑扩展性
+    * 回调函数
+        > 把函数作为参数传入其他函数中
+        * 回调地狱
+        ```js
+            // 定义
+            function ajax(url,callback){
+                const xhr = new XMLHttpRequest()
+                xhr.onload = function(){
+                    const data = xhr.reponseText
+
+                    callback(data)
+                }
+                xhr.open()
+                xhr.send()
+
+            }
+
+            // 调用
+            ajax('/test',function(data){
+                // 业务
+
+            })
+
+            // 回调地狱1：第5个请求需要依赖前4个请求的数据才能发起请求
+            // 可以使用Promise.all()解决这个问题
+            ajax('/category',function(category){
+                // 业务： 此处省略100行代码
+                ajax('/goods',function(goodslist){
+                // 业务： 此处省略300行代码
+                    ajax(`/list`,function(data3){
+                        ajax(url,function(data4){
+
+                            
+                            ajax(url,function(){
+
+                            })
+                        })
+                    })
+                })
+            })
+
+            // 回调地狱2：每个请求需要依赖前一个请求的数据
+            // 解决方案：在每一个then方法中返回一个新的promise对象，实现then方法的链式调用（请看一下promise代码）
+            ajax('/cagetory',(category)=>{
+                ajax(`/goods?category=${category}`,(goodslist)=>{
+                    ajax(url+goodslist.name,function(data3){
+                        ajax(url+data3.name,function(){
+
+                        })
+                    })
+                })
+            })
+        ```
+    * Promise
+        * Promise.all([p1,p2,p3,p4])
+        ```js
+            const p1 = new Promise((resolve,reject)=>{
+                ajax('/category',function(category){
+                    resolve(category)
+                })
+            })
+            const p2 = new Promise((resolve,reject)=>{
+                ajax('goods?category='+category.name,function(goodslist){
+                    resolve(goodslist)
+                })
+            })
+            //const p3 = ...
+            //const p4 = ...
+
+            // 第5个请求：需要依赖前4个请求的数据才能发起请求
+            // 可以使用Promise.all()解决这个问题
+            const p5 = Promise.all([p1,p2,p3,p4])
+            p5.then((category,goodslist,data3,data4)=>{
+                ajax(url,function(){
+
+                })
+            })
+
+            // 每个请求需要依赖前一个请求的数据
+            // 在每一个then方法中返回一个新的promise对象，实现then方法的链式调用
+            new Promise((resolve,reject)=>{
+                ajax('/category',function(category){
+                    resolve(category)
+                })
+            }).then((category)=>{
+                
+                return new Promise((resolve,reject)=>{
+                    ajax('goods?category='+category.name,function(goodslist){
+                        resolve(goodslist)
+                    })
+                })
+
+            }).then((goodslist)=>{
+                 return new Promise((resolve,reject)=>{
+                     ajax(url+goodslist.name,function(data3){
+                         resolve(data3)
+                     });
+                })
+            }).then((data3)=>{
+                return new Promise((resolve,reject)=>{
+                     ajax(url+goodslist.name,function(data4){
+                         resolve(data4)
+                     });
+                })
+            })
+        ```
+* Promise
+* async & await
+    > 用于简化Promise操作的代码
+    ```js
+        const category = await ajax('/category')
+        const goodslist = await ajax('/goodslist?category='+category)
+        // ...
+    ```
+* 
+
+### 知识点
+* NodeJS
+    > 属于后端语言，基于ECMAScript
+    * 前端javascript = ECMAScript + DOM + BOM
+
+* 环境变量
+* 模块化
+    > 在NodeJS中把一个文件当作一个模块，每个模块的作用域是独立作作用域，如需要在其他模块中获取当前模块的数据，必须导出
+    * 什么时模块化
+        * 把一个大的功能拆分成若干小的功能
+    * 为什么需要它(优点)
+        * 分工
+        * 维护
+        * 复用
+    * 规范
+        * commonJS  nodejs采用的规范
+        * ESModule  ES6推出的模块化规范
+        * AMD       require.js（了解）
+        * CMD       sea.js（了解）
+    * 分类
+        * 内置模块
+            > NodeJS自带，直接引用
+        * 自定义模块
+        * 第三方模块
+    * 使用
+        * 引入
+            ```js
+                // commonJS
+                require(url)
+            ```
+        * 导出
+            ```js
+                // commonJS
+                module.exports
+            ```
+* 创建一个服务器
+    * http-server实现一个服务器
+    * 利用http模块创建一个服务器
+        * request
+        * response
+            * writeHead()   设置响应头
+                > 一个请求可以使用多次writeHead()
+            * write()       设置响应内容
+                > 一个请求可以使用多次write()
+            * end()         接收响应
+                > 一个请求只能使用一次end()
+    * 连接服务器
+        * 协议：http
+        * 地址：ip地址/localhost/127.0.0.1
+        * 端口：80
+* 静态资源服务器
+    * 依赖模块
+        * http
+        * fs
+        * path
+        * url / URLSearchParams / URL
+    * 全局变量
+        * __dirname ： 当前文件所在的目录
+    * mime类型
+        > 设置Content-Type属性
+    * Buffer
+        > 类似与数组的二进制数据类型
+    * 状态码
+        * 200+      成功
+            * 200
+        * 300+  
+            * 301:重定向
+            * 302:重定向
+            * 304:缓存文件
+        * 400+      客户端错误
+            * 404:文件不存在
+        * 500+      服务器错误
+            * 500
+* express

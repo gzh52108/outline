@@ -438,3 +438,108 @@
         * 500+      服务器错误
             * 500
 * express
+
+## day5-7
+
+### 复习
+* 模块化
+    * 规范
+        * commonJS      NodeJS
+        * ESModule      ES6
+        * AMD           require.js
+        * CMD           sea.js
+    * 使用（commonJS）
+        > 每一个模块的作用域是独立的
+        * 导入:`require()`
+            > 一定是引入一个js文件，如引入的是一个目录，则查找这个目录下的`package.json`中的`main`属性，如无main属性，则引入该目录下的`index.js`
+
+            1. 在缓存中查找（找到则停止，否则进入下一步）
+            2. 判断是否为内置模块
+            3. 如非内置模块，则到`node_modules`中查找
+            4. 缓存该模块
+
+
+        * 导出: 
+            * `module.exports`（推荐）
+            * `exports`
+
+    * 模块分类
+        * 内置模块
+            ```js
+                require('fs')
+            ```
+        * 自定义模块
+            ```js
+                require('../tools')
+            ```
+        * 第三方模块
+            > 需要安装
+            ```js
+                require('express')
+            ```
+* 静态资源服务器
+    > 静态资源：html、css、js、img、字体等文件
+    * 网站根目录
+        > 注意：网站中所有的资源链接不能在网站根目录之外
+
+### 知识点
+* express
+    * 安装
+        ```js
+            npm install expess
+        ```
+    * 使用
+        ```js
+            const express = require('express')
+            const app = express()
+            app.listen(2108,()=>{
+                console.log('server is running')
+            })
+        ```
+    * 中间件middleware 
+        > 使用express其实就是在调用各种各样的中间件
+        * 中间件是一个封装了某些处理数据功能的**函数**
+        * 分类
+            * express内置中间件
+                * express.static()
+            * 自定义中间件
+                ```js
+                    function myMiddleware(request,response,next){
+                        // request: 经过express处理后的请求对象Request
+                        // response: 经过express处理后的响应对象Response
+                        // next()： next是一个方法，因为一个应用中可以使用多个中间件，而要想运行下一个中间件，那么上一个中间件必须运行next()
+                    }
+                ```
+            * 第三方中间件
+
+        * 使用中间件: app.use()
+            > `app.use([path],...middlewares)`
+            ```js
+                app.use(function(req,res,next){
+
+                })
+                app.use(
+                    // 中间件1
+                    function(req,res,next){
+                        console.log('m1')
+                    },
+                    // 中间件2
+                    function(req,res,next){
+                        console.log('m2')
+                    }
+                )
+            ```
+* 编写数据接口
+    > RESTful接口规范：据不同的请求类型与不同的路径实现不同的接口
+    * 请求类型：
+        > 如果中间件使用use，则所有请求类型都会进入
+        * get       查
+        * post      增
+        * delete    删
+        * put       改
+    * postman测试工具
+        > 下载地址：https://www.postman.com/downloads/
+
+### 练习
+* 编写符合RESTful规范的商品与用户CRUD接口
+    > 只实现接口，不用具体实现

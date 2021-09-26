@@ -513,7 +513,7 @@
             * 第三方中间件
 
         * 使用中间件: app.use()
-            > `app.use([path],...middlewares)`
+            > 格式：`app.use([path],...middlewares)`
             ```js
                 app.use(function(req,res,next){
 
@@ -528,9 +528,13 @@
                         console.log('m2')
                     }
                 )
+
+                app.use('/api',function(req,res){
+
+                })
             ```
 * 编写数据接口
-    > RESTful接口规范：据不同的请求类型与不同的路径实现不同的接口
+    > **RESTful接口规范**：据不同的请求类型与不同的路径实现不同的接口
     * 请求类型：
         > 如果中间件使用use，则所有请求类型都会进入
         * get       查
@@ -540,6 +544,33 @@
     * postman测试工具
         > 下载地址：https://www.postman.com/downloads/
 
+* 模块化路由
+    * 利用模块化思想把路由拆分成若干小模块
+
+    * 利用路由中间件组合路由
+        > express.Router()
+
+* 请求参数传递与接收
+    * url参数：`?key=value&key=value`
+        > 后端接收：`req.query`
+    * 动态路由：`/goods/:id`
+        > 后端接收：`req.params`
+    * 请求体requestBody
+        > 由于请求体数据类型众多，express默认并没有帮我们格式化数据，需要开发者手动处理，express提供了多个中间件处理这些类型数据
+        * x-www-form-urlencoded：`key=value&key=value` -> {key:value}
+            > 使用`express.urlencode()`中间件把该类型数据格式化到`req.body`
+        * json
+            ```js
+                {
+                    "key":"value",
+                    "key":"value"
+                }
+            ```
+        * formData
+    * 请求头requestHeader
+        > 后端接收： req.get(key)
 ### 练习
 * 编写符合RESTful规范的商品与用户CRUD接口
     > 只实现接口，不用具体实现
+* 编写用户注册与登录接口
+    > 需要检测用户名是否存在

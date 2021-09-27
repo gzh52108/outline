@@ -44,7 +44,7 @@ router.post('/',function(req,res){
     console.log('req.body',req.body)
     res.send('添加商品')
 })
-// delete /api/goods/1,/api/goods/2 删除商品
+// delete '/api/goods' '/api/goods/1',/api/goods/2 删除商品
 router.delete('/:id',function(req,res){
     // 动态路由：路由地址为变量，只要访问路径匹配格式，就能进入该路由，?表示该变量可选('/:id/:arg?')
     // 动态路由接收：req.params
@@ -56,6 +56,7 @@ router.delete('/:id',function(req,res){
     })
     res.send(`商品${id} 已删除`)
 })
+
 
 // put 修改商品信息
 router.put('/',function(req,res){

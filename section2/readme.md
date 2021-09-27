@@ -574,3 +574,53 @@
     > 只实现接口，不用具体实现
 * 编写用户注册与登录接口
     > 需要检测用户名是否存在
+
+
+## day6-1
+
+### 复习
+* express
+    * 中间件
+        * 使用：`app.use([path],...middleware)`
+        * 分类
+            * 内置
+                * express.static()
+                * express.Router()
+                * express.urlencoded()
+                * express.json()
+            * 自定义
+            * 第三方
+    * 模块化路由
+    * 参数传递与接收
+        * url参数：req.query
+        * 动态路由: req.params
+        * 请求体: req.body
+            * x-www-form-urlencoded: `key=value&key=value`
+                ```html
+                    <form action="http://localhost:2108/login" method="post">
+                        <input type='text' name="username"  />
+                        <input type='password' name="password" />
+                        <button>提交</button>
+                    </form>
+
+                     <!-- get: http://localhost:2108/login?username=xxx&password=xxx -->
+                     <!-- post: http://localhost:2108/login -->
+                ```
+            * json
+        * 请求头:req.get()
+
+### 知识点
+* 数据库: database
+    > MySQL
+    * 概念：
+        * 表：table
+        * 数据：row
+        * 字段：field
+        * 主键：primary key
+    * 安装
+        > 配置
+    * 操作
+        * 命令行
+        * 可视化工具
+    * 数据CRUD
+        > sql语句（语句）

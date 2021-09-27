@@ -624,3 +624,33 @@
         * 可视化工具
     * 数据CRUD
         > sql语句（语句）
+        * 增：`insert into`
+            ```sql
+                -- 插入单条数据
+                insert into user (username,age,gender) values ('xiajie',17,'女');
+
+                -- 插入多条数据
+                insert into 
+                user (username,age,gender) 
+                values 
+                ('xiajie',17,'女'),
+                ('zege',37,'男'),
+                ('marong',39,'女');
+            ```
+        * 删: `delete from`
+            > 删除一般需要配合条件使用
+            ```sql
+                delete from user where age>18;
+                delete from user where age>18 and gender='男';
+            ```
+        * 改: `update ... set`
+            > 修改一般需要配合条件使用
+            ```sql
+                update user set age=20 where username="laoxie";
+            ```
+        * 查: `select ... from ...`
+            ```sql
+                select * from user;
+                select username,gender from user;
+            ```
+    * 条件：where

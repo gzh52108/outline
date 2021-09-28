@@ -736,6 +736,63 @@
     * 编写login接口
     * 使用bootstrap进行页面布局
 
+* 本地存储
+    > 客户端存储技术，把数据保存在客户端
+    * Cookie
+        ```js
+            name=value[;expires=有效期时间][;path=路径][;domain=域名]
+        ```
+        * 组成部分：
+            * name=value
+            * 参数
+                * expires
+                    > 默认为session，关闭浏览器自动删除
+                    ```js
+                        document.cookie = 'name=value;expires='+new Date()
+                    ```
+        * 操作
+            * 写入
+                > 只能写入字符串数据，一次只能写入一个
+                ```js
+                    document.cookie = `name=value`
+                ```
+            * 读取
+                > 读取当前域名下所有cookie，每个cookie间以**分号+空格**隔开
+                ```js
+                    document.cookie
+                ```
+            * 删除cookie
+                > 利用设置过期时间达到删除的效果
+                ```js
+                    let date = new Date();// 2021-9-28
+                    date.setDate(date.getDate()-1); //2021-9-27
+                    document.cookie = 'name=value;expires='+date
+                ```
+    * webStorage
+        > 与cookie一样，只能存储字符串类型数据（如写入非字符串数据会自动转换）
+        * 分类
+            * sessionStorage
+                > 存在session中的数据，关闭浏览器会自动删掉
+            * localStorage
+                > 永远保存在本地，除非手动删除
+
+        * 操作方法
+            * getItem(key)
+                > 如key不存在，则得到null
+            * setItem(key,value)
+                > value只能为String类型
+            * removeItem(key)
+        * 事件：storage
+            > 当本地存储有修改时（添加，删除，修改，清空）会自动执行该事件，一般用于跨页面通讯
+            ```js
+                window.addEventListener('storage',function(e){
+
+                },true)
+            ```
 
 ### 练习
 * 封装formatData工具函数，实现统一前后端数据格式
+* 封装cookie的增删改查函数
+    * Cookie.getCookie()
+    * Cookie.setCookie()
+    * Cookie.removeCookie()

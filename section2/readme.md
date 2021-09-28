@@ -619,11 +619,15 @@
         * 主键：primary key
     * 安装
         > 配置
+    * 使用步骤
+        1. 连接数据库
+        2. 切换数据库
+        3. 执行sql语句
     * 操作
         * 命令行
         * 可视化工具
     * 数据CRUD
-        > sql语句（语句）
+        > sql语句（重点）
         * 增：`insert into`
             ```sql
                 -- 插入单条数据
@@ -654,3 +658,84 @@
                 select username,gender from user;
             ```
     * 条件：where
+
+
+* 在NodeJS中使用mysql
+    * 安装驱动（第三方模块）
+        ```js
+            npm install mysql
+        ```
+    * 连接数据库
+        * 连接对象
+            ```js
+                const connection = mysql.createConnection({
+                    host     : 'localhost',
+                    user     : 'root',
+                    password : 'root',
+                    database : 'h52108'
+                });
+            ```
+        * 连接池（推荐）
+            ```js
+                const pool  = mysql.createPool({
+                    host     : 'localhost',
+                    user     : 'root',
+                    password : 'root',
+                    // port: 3306,
+                    database: 'h52108',
+
+                    // 允许每个mysql语句有多条查询（默认false）.使用它时要非常注意，因为它很容易引起sql注入攻击
+                    // multipleStatements: true
+                });
+            ```
+    * 执行sql语句
+        > 重点：如何编写sql语句（拼接sql）
+        ```js
+            connection.query('select * from users',(err,rows)=>{
+
+            })
+            pool.query('select * from users',(err,rows)=>{
+
+            })
+
+            // let sql = `select * from users`
+            
+            // 拼接sql语句
+            let data = [{username:'laoxie',password:123456},{username:'tiantian',password:123456}]
+            //let sql = `insert into users(username,password) values
+            //('${data[0].username}','${data[0].password}'),
+            //('${data[1].username}','${data[1].password}')
+            //`
+
+            let sql = `insert into users(username,password) values`
+            sql += map.forEach(item=>{
+                return `('${item.username}','${item.password}'),`
+            }).join(',')
+            console.log('sql',sql);// insert into users(username,password) values('laoxie','123456'),('tiantian','123456')
+        ```
+
+## day6-2
+
+### 知识点
+* bootstrap
+    * 版本
+        * 开发版本:development
+            > 未压缩
+        * 生产版本：production
+            > 压缩后的代码，一般在上线后使用
+* 统一前后端数据格式
+    ```js
+        {
+            code:200, // 200成功，400失败
+            data,   // 返回前端的数据
+            msg
+        }
+    ```
+* 登录页面
+    * 封装ajax请求方法：request
+    * 编写login接口
+    * 使用bootstrap进行页面布局
+
+
+### 练习
+* 封装formatData工具函数，实现统一前后端数据格式

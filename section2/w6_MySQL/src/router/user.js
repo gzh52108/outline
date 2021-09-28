@@ -18,7 +18,12 @@ router.get('/list',async (req,res)=>{
     // })
 
     const data = await db(sql)
-    res.send(data)
+    // 统一前后端数据格式
+    res.send({
+        code:200,
+        data:data,
+        msg:'success'
+    })
 })
 
 router.get('/:id',async (req,res)=>{
@@ -26,5 +31,13 @@ router.get('/:id',async (req,res)=>{
     const sql = `select * from users where id=${id}`
 
     const data = await db(sql)
-    res.send(data[0])
+    // res.send(data[0])
+    res.send({
+        code:200,
+        data:data[0],
+        msg:'success'
+    })
+
+    // res.send(formatData()); // {code:200,data:[],msg:'success'}
+    // res.send(formatData({data:data[0]})); // {code:200,data:{username,id},msg:'success'}
 })

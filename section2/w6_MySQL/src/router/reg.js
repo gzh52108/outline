@@ -12,7 +12,22 @@ router.post('/',async (req,res)=>{
     const sql = `insert into users(username,password) values('${username}','${password}')`
 
     const data = await db(sql)
-    res.send(data)
+    if(data.insertId){
+        // 统一前后端数据格式
+        res.send({
+            code:200,
+            data:[],
+            msg:'success'
+        })
+    }else{
+        res.send({
+            code:400,
+            data:[],
+            msg:'fail'
+        })
+
+        // res.send(formatData({code:400})) {code:400,data:[],msg:'fail'}
+    }
 })
 
 // get /api/reg/check?username=xxx
@@ -27,8 +42,14 @@ router.get('/check',async (req,res)=>{
     console.log('sql=',sql);
     const data =  await db(sql)
     if(data.length>0){
-        res.send('用户已存在')
+        // res.send('用户已存在')
+        res.send({
+            code:400
+        })
     }else{
-        res.send('可注册')
+        // res.send('可注册')
+        res.send({
+            code:200
+        })
     }
 })

@@ -12,3 +12,10 @@ body{
 .price del::before,.price span::before{
     content:'￥'
 }
+
+.navbar-brand i{
+    margin-right:10px;
+    font-size:30px;
+    color:#fc0;
+    vertical-align: middle;
+}

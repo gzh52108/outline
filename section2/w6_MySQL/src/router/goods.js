@@ -43,11 +43,12 @@ router.get('/list',async (req,res)=>{
     })
 })
 
+// get /api/goods/1,/api/goods/2
 router.get('/:id',async (req,res)=>{
     const {id} = req.params;
     // 根据id查询数据库商品，并把查询结果响应到前端
-    const sql = `select * from goods where id=${id}`
-    
+    const sql = `select * from goods where _id='${id}'`
+    console.log('sql=',sql)
     const data = await db(sql)
     res.send({
         code:200,

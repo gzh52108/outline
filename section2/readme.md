@@ -796,3 +796,41 @@
     * Cookie.getCookie()
     * Cookie.setCookie()
     * Cookie.removeCookie()
+
+
+## day6-3
+
+### 复习
+* 本地存储技术
+    * Cookie
+        * 4k大小
+        * 随着请求自动通过请求头发送给服务器
+        * 属性
+            * expires   有效期（默认session）
+            * path      作用域（默认当前目录）
+                ```js
+                    laoxie.com/             a    
+                    laoxie.com/html/        b
+                    laoxie.com/html/views/  c
+
+                    document.cookie = `a=10;path=/`
+                    document.cookie = `b=20;path=/html`
+                    document.cookie = `c=20;path=/html/views`
+                ```
+            * domain 
+    * WebStorage
+        * SessionStorage    会话存储（关闭浏览器自动删除）
+        * localStorage      本地存储（永久存储，除非手动删除）
+* bootstrap
+
+
+### 知识点
+* mysql数据的导入导出
+    * 导入
+        * csv
+        * json
+        * sql（推荐）
+    * 导出
+        * csv
+        * json
+        * sql（推荐）

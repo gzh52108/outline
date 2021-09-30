@@ -836,9 +836,13 @@
         * sql（推荐）
 
 * bootstrap
-    * 栅格系统
-    * 图标
-        > https://icons.bootcss.com/
+    * css
+        * 栅格系统
+        * 图标
+            > https://icons.bootcss.com/
+        * 组件
+        * 工具类
+    * js
 
 * 购物车页面效果
 
@@ -848,3 +852,8 @@
     * 删除
     * 清空
     * 实时更新购物车效果
+
+## day6-4
+
+### 知识点
+* 封装

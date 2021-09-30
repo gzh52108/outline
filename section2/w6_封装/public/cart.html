@@ -82,7 +82,7 @@
             * 进入页面获取本地存储数据cartlist，根据cartlist渲染页面
             * 
          */
-        const goodslist = document.querySelector('.goodslist')
+        const goodslist = document.querySelector('.goodslist');
         const totalPrice = document.querySelector('.totalPrice')
         const btnClear = document.querySelector('.btnClear')
         let cartlist = JSON.parse(localStorage.getItem('cartlist')) || []

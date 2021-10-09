@@ -59,11 +59,18 @@
 
             // 发送ajax请求之前
             beforeSend(xhr){
-                // console.log('beforeSend=',xhr,this)
+                console.log('beforeSend=',xhr)
 
                 // 设置baseUrl
                 this.url = 'http://120.76.247.5:2003/api' + this.url;
-            }
+            },
+            complete(xhr){
+                console.log('complete=',xhr)
+                // xhr.abort();
+            },
+
+            // 5s后如果请求没有返回，则自动取消
+            timeout:5000
         });
 
 
@@ -85,7 +92,7 @@
             //     console.log('then',res)
             // })
 
-            $.ajax('/goods').then(res=>{
+            const xhr = $.ajax('/goods').then(res=>{
                 console.log('res=',res)
                 const {result} = res.data;
 
@@ -109,6 +116,8 @@
 
                 $('.goods-list ul').html(html)
             })
+
+            console.log('xhr=',xhr)
        });
    </script>
 </body>

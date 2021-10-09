@@ -43,6 +43,7 @@
             const $password = $('#password')
             const $btnSubmit = $('.btnSubmit')
 
+            let isValid = true;
 
             // 检测用户名是否存在
             $username.on('change',function(){
@@ -56,14 +57,18 @@
                     if(res.code===200){
                         $username.removeClass('is-invalid')
                         $username.addClass('is-valid')
+                        isValid = true;
                     }else{
+                        $username.removeClass('is-valid')
                         $username.addClass('is-invalid')
+                        isValid = false
                     }
                 })
             })
 
             // 注册
             $btnSubmit.on('click',function(){
+                if(!isValid) return;
                 const username = $username.val();
                 $.ajax({
                     method:'post',

@@ -81,6 +81,8 @@ class Query{
         this.el.forEach(item=>{
             item['on'+type] = handle
         })
+
+        return this;
     }
 
     // 添加类名
@@ -88,16 +90,28 @@ class Query{
         this.el.forEach(item=>{
             item.classList.add(className)
         })
+        return this
     }
     removeClass(className){
         this.el.forEach(item=>{
             item.classList.remove(className)
         })
+
+        return this;
     }
 
     // 添加很多节点操作方法
     animate(){
-        
+        return this;
+    }
+    eq(){
+        return this;
+    }
+    first(){
+        return this;
+    }
+    last(){
+        return this;
     }
 }
 
@@ -108,8 +122,9 @@ const $ = function(selector){
 
 // const btns = new Query('button');
 // const btns = $('button')
-// btns.on('click',function(){
-
-// })
+// btns.removeClass()
 
 // btns.addClass('btn')
+// const goodslist = document.querySelector('#goodslist')
+// goodslist.classList.add('box')
+// $('#goodslist').addClass('box')

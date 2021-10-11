@@ -40,6 +40,8 @@
             const password = document.querySelector('#password')
             const btnSubmit = document.querySelector('.btnSubmit')
 
+            
+
             const xhr_check = new XMLHttpRequest()
             xhr_check.onload = function(){
                 const data = JSON.parse(xhr_check.responseText)
@@ -49,6 +51,7 @@
                     username.classList.remove('is-invalid')
                     username.classList.add('is-valid')
                 }else{
+                    username.classList.remove('is-valid')
                     username.classList.add('is-invalid')
                 }
             }
@@ -62,6 +65,7 @@
                 
        
             btnSubmit.onclick = function(){
+
                 request({
                     url:'http://localhost:2108/api/reg',
                     method:'post',

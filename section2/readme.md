@@ -858,11 +858,13 @@
 ### 知识点
 * 购物车页面逻辑
 * 封装
+    > 函数式编程
     * formatData()
     * request()
     * Cookie
     * 节点操作
 * jQuery
+    > 是一个利用面向对象编程的库
 
 ### 练习
 * 完善节点操作方法Query
@@ -873,3 +875,287 @@
         * 排序：价格，热度
     * 搜索
 * mySql语句
+
+## day6-5
+
+### 知识点：jQuery
+* 原生获取元素
+    * document.getElementById()
+    * document.getElementsByName()
+    * getElementsByTagName()
+    * getElementsByClassName()
+    * querySelector()
+    * querySelectorAll()
+
+
+* jQuery特点
+    * 选择器
+        * 直接选取
+        * 过滤方法
+    * 节点操作方法
+        修改节点
+        事件绑定
+        动画
+    * ajax
+* jquery的使用
+    * 原理：基于面向对象的一个工具库
+        * 构造函数（类）：jQuery
+        * 原型对象：jQuery.prototype
+        * 实例: 通过调用jQuery()返回的对象
+    * jQuery获取元素
+        > 返回一个伪数组（实例，有自己的原型对象，原型中有很多方法）
+        ```js
+            const el = jQuery(selector)
+
+            el.xxx
+        ```
+    * 原生对象与jQuery对象的转换
+        * 原生->jQuery对象：`$(原生)`
+    * 动画
+        * 方法
+            * show(speed)/hide(speed)     同时控制with,height,opacty
+            * fadeIn(speed,callback)/fadeOut(speed,callback)                淡入淡出（控制opacity）
+            * slideDown(speed,callback)/slideUp(speed,callback)             滑入（控制height）
+            * 自定义动画：`animate(params,[speed],[callback])`
+        * 动画时间：speed
+            * Number： 单位毫秒
+            * String: slow,normal,fast
+
+    * 事件绑定
+        * `on(type,[selector],handle)`
+        ```js
+            // 事件绑定
+            $btn.on('click',function(){})
+
+            // 事件移除
+            $btn.off('click')
+
+            // 事件委托
+            $div.on('click','button',function(){})
+        ```
+
+### 练习
+* 根据数据生成表单
+
+## day6-6
+
+### 面试题
+* 如何取消ajax请求
+    * abort()：主动取消
+    * timeout：设置超时时间被动取消
+    ```js
+        const xhr = new XMLHttpRequest()
+        xhr.open()
+        xhr.send()
+
+        // 取消ajax请求
+        xhr.abort()
+    ```
+* jquery方法链式调用的原理
+    > 每个方法返回jquery实例`（return this）`
+    jquery的大部分方法都支持链式调用，但获取的方法不支持（如：xx.html(),xx.css('color')
+
+### 知识点
+* 类方法（静态方法）
+    > 与原型方法的区别
+* jquery ajax
+    * $.ajaxSetup() 设置公共配置
+        * beforeSend(xhr)中设置baseUrl
+            * this: 配置信息
+    * $.ajax()
+    * $.get()
+    * $.post()
+
+* jquery扩展：根据用户需求扩展jquery功能
+    * jquery插件
+        * 实例方法插件：扩展原型对象方法
+            > 注意this指向问题
+            * jquery.ui
+            ```js
+                jQuery.prototype.draggable = function(){
+                    // this: jquery实例
+                    this.each(function(index,el){
+                        // el：原生节点
+                        // this: 指向el
+
+                        // 拖拽代码
+                        el.onmousedown = function(){
+
+                            document.onmousemove = function(){
+
+                            }
+                        }
+
+                        document.onmouseup = function(){
+
+                            document.onmousemove = null;
+                        }
+                    })
+
+                    return this;
+                }
+
+                // 使用
+                $('#box').draggable()
+                $('div').draggable()
+            ```
+        * 全局函数插件（静态方法），如$.each,$.map,$.ajax
+            ```js
+                 jQuery.put = function(url,data,callback){
+                    return  jQuery.ajax()
+                }
+            ```
+
+* jquery总结
+    > 是一个工具库，实现了很多封装函数供用户使用
+    * 原理
+        > 基于面向对象的工具库
+        * jquery对象（实例）
+        * 构造函数（jQuery）
+        * 原型（编写了大量的工具函数）
+        ```js
+            $('.box').find()
+        ```
+    * 特点
+        * 选择元素
+        * 操作元素
+            * 修改内容
+                ```js
+                    $('.box').html('xxx')
+                    $('.box').text('xx')
+
+                    $('.box').append()
+                ```
+            * 修改属性
+                > 标签**公有属性**和**私有属性**的操作会相互影响
+                * html标签属性
+                    * 原生JS：setAttribute(name,value)
+                    * jQuery: attr(name,value)
+                * 节点属性
+                    * 原生：点语法(`节点.name=value`)
+                    * jQuery: props(name,value)
+                ```js
+                    $('.box').addClass('xx')
+
+                    // 设置html标签属性：setAttribute('msg','123')
+                    $('.box').attr('msg','123')
+
+                    // 设置节点属性
+                    // 点语法：box.msg = '123'
+                    $('.box').prop('msg','123')
+                ```
+            * 动画
+            * ajax
+            * ...
+        * 设置的方法支持链式调用，获取方法不支持
+        * 一个方法同时支持获取与设置
+            * css(name)/css(name,value)
+            * html()/html(value)
+            * attr(name)/attr(name,value)
+            * prop(name)/prop(name,value)
+            * ...
+
+### 练习
+* 给jQuery添加put与delete静态方法，实现ajax请求
+    ```js
+        (function($){
+            $.put = function(){
+                return  $.ajax()
+            }
+            $.delete = function(){
+
+            }
+        })(jQuery)
+
+    ```
+
+
+## day7-1
+
+### 知识点
+* 项目优化
+    * 编译成浏览器支持的代码
+        > 目的：兼容个大浏览器
+    * 合并文件
+        > 目的：减少http请求
+    * 压缩文件
+        > 目的：加快文件的下载速度
+    * ...
+* 构建工具：Gulp
+    1. 安装
+        * 全局安装
+            > 一台电脑只需要安装一次，目的为了在命令行中使用
+            ```bash
+                npm install -g gulp
+            ```
+        * 项目安装
+            > 目的为了在代码中引用模块
+            * 为了保存安装模块信息，需要使用`npm init`命令生成`package.json`文件
+            ```bash
+                npm install gulp
+            ```
+    2. 在根目录中创建`gulpfile.js`文件 
+        > 该文件遵顼`commonJS`规范
+
+    3. 创建任务
+        > gulp是一个基于任务的构建工具，任何的操作都需要一个任务来完成
+        ```js
+            // 老版本创建任务
+            gulp.task('es625',function(){
+
+            })
+
+            // 新版本创建任务
+            module.exports = {
+                es625:function(){
+
+                }
+            }
+            exports.es625 = function(){}
+        ```
+    4. 运行任务
+        ```bash
+            gulp es625
+        ```
+
+* ES6转ES5
+    > 利用`babel`来进行编译，把代码转成浏览器支持的代码
+    * 依赖
+        * babel
+            > babel是工具的一个统称，实际开发中需要安装一下模块
+            * @babel/core
+            * @babel/preset-env
+        * gulp-babel
+            > 要在gulp中使用babel必须安装这个gulp插件
+    * 创建任务
+        ```js
+            exports.es625 = function(done){
+                // 输入：查找目标文件（返回文件流：文件的液体状态，可以随意分割和传输）
+                gulp.src('./src/js/common.js')
+                // 处理
+                .pipe(babel({
+                    presets: ["@babel/preset-env"],
+                }))
+                // 输出：把处理过的文件保存到硬盘
+                .pipe(gulp.dest('./dist'))
+                done();
+            }
+
+        ```
+* 自动化编译
+    > 监听文件修改，自定执行相应的任务
+    ```js
+        // 监听文件，执行单个任务
+        gulp.watch('./src/**/*.js',es625)
+
+        // 监听文件修改，执行多个任务
+        gulp.watch(
+            './src/**/*.js',
+
+            // 顺序执行
+            gulp.series(mergeJS,es625,compressJS),
+
+            // 同时执行
+            // gulp.parallel(mergeJS,es625,compressJS)
+        ) 
+    ```

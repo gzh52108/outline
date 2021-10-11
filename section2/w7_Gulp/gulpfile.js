@@ -1,5 +1,8 @@
 const gulp = require('gulp');
 const babel = require('gulp-babel');
+const concat = require('gulp-concat')
+const rename = require('gulp-rename')
+const uglify = require('gulp-uglify')
 
 // 老版本创建任务
 // gulp.task('es625',function(){
@@ -53,11 +56,43 @@ function compressJS(done){
     done();
 }
 
+// 编译JS：ES6+转ES5，合并，压缩
+function compileJS(done){
+    // gulp.src(['./src/**/*.js','!./src/plugins/jquery.min.js'])
+    gulp.src('./src/**/*.js')
+
+    // ES6+ -> ES5：gulp-babel+@babel/core+@babel/preset-env
+    .pipe(babel({
+        presets: ["@babel/preset-env"],
+    }))
+
+    // 合并: gulp-concat
+    .pipe(concat('all.js'))
+
+    // 输出：未压缩
+    .pipe(gulp.dest('./dist/js'))
+
+    // 压缩：
+    .pipe(uglify())
+    // 重命名
+    .pipe(rename({
+        // dirname: "main/text/ciao",
+        // basename: "aloha",
+        // prefix: "page-", // page-all.js
+        suffix: ".min", // all.min.js
+        // extname: ".md"
+      }))
+    .pipe(gulp.dest('./dist/js'))
+
+    done();
+}
+
 
 // ES6->ES5
 exports.es625 = es625
 exports.mergeJS = mergeJS
 exports.compressJS = compressJS
+exports.compileJS = compileJS;
 
 exports.listen = function(){
     // 监听文件，执行单个任务
@@ -73,4 +108,8 @@ exports.listen = function(){
         // 同时执行
         // gulp.parallel(mergeJS,es625,compressJS)
     ) 
+}
+
+exports.server = function(){
+    
 }

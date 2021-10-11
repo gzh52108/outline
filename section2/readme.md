@@ -1102,7 +1102,16 @@
         ```js
             // 老版本创建任务
             gulp.task('es625',function(){
+                // gulp工作流程
+                // 1. 输入：查找目标文件
+                gulp.src()
 
+                // 2. 处理：利用各种插件、工具进行操作
+                .pipe()
+                .pipe()
+
+                //3. 输出：把处理过的文件保存到硬盘
+                .pipe(gulp.dest())
             })
 
             // 新版本创建任务
@@ -1117,31 +1126,32 @@
         ```bash
             gulp es625
         ```
+* 应用
+    * ES6转ES5
+        > 利用`babel`来进行编译，把代码转成浏览器支持的代码
+        * 依赖
+            * babel
+                > babel是工具的一个统称，实际开发中需要安装一下模块
+                * @babel/core
+                * @babel/preset-env
+            * gulp-babel
+                > 要在gulp中使用babel必须安装这个gulp插件
+        * 创建任务
+            ```js
+                exports.es625 = function(done){
+                    // 输入：查找目标文件（返回文件流：文件的液体状态，可以随意分割和传输）
+                    gulp.src('./src/js/common.js')
+                    // 处理
+                    .pipe(babel({
+                        presets: ["@babel/preset-env"],
+                    }))
+                    // 输出：把处理过的文件保存到硬盘
+                    .pipe(gulp.dest('./dist'))
+                    done();
+                }
+            ```
+    * 合并与压缩
 
-* ES6转ES5
-    > 利用`babel`来进行编译，把代码转成浏览器支持的代码
-    * 依赖
-        * babel
-            > babel是工具的一个统称，实际开发中需要安装一下模块
-            * @babel/core
-            * @babel/preset-env
-        * gulp-babel
-            > 要在gulp中使用babel必须安装这个gulp插件
-    * 创建任务
-        ```js
-            exports.es625 = function(done){
-                // 输入：查找目标文件（返回文件流：文件的液体状态，可以随意分割和传输）
-                gulp.src('./src/js/common.js')
-                // 处理
-                .pipe(babel({
-                    presets: ["@babel/preset-env"],
-                }))
-                // 输出：把处理过的文件保存到硬盘
-                .pipe(gulp.dest('./dist'))
-                done();
-            }
-
-        ```
 * 自动化编译
     > 监听文件修改，自定执行相应的任务
     ```js
@@ -1159,3 +1169,42 @@
             // gulp.parallel(mergeJS,es625,compressJS)
         ) 
     ```
+
+* css预处理器
+    > 利用编程的思想编写css代码
+    * Less
+    * Sass
+    * Stylus
+
+* Sass语法
+    > sass兼容所有css语法
+    * 注释
+        * 单行
+        * 多行
+    * 变量
+        * 定义
+            > $变量名:值
+            * 默认变量：`$变量名：值 !default;`
+        * 类型
+            * 普通变量
+            * 多值变量
+                * list
+                * map
+        * 使用
+            > 默认用于属性值
+            * 特殊用法：在属性名或选择器中使用变量
+                > #{变量}
+        * 作用域
+            * 全局变量
+            * 局部变量
+
+* 转换
+    * css转sass
+        * 在线转换 
+    * sass转css
+        * gulp
+        * 在线
+        * vscode插件
+
+### 练习
+* 压缩html文件

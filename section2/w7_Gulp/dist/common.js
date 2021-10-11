@@ -1,26 +1,13 @@
 "use strict";
 
-// ES6代码
-var init = function init() {
-  console.log('es6代码');
-  return {
-    nav: function nav() {
-      return 100;
-    },
-    "goto": function goto() {
-      return 200;
+jQuery(function ($) {
+  $.ajaxSetup({
+    // url: "http://120.76.247.5:2003/api",
+    // 发送ajax请求之前
+    beforeSend: function beforeSend(xhr) {
+      // console.log('beforeSend=',xhr,this)
+      // 设置baseUrl
+      this.url = 'http://120.76.247.5:2003/api' + this.url;
     }
-  };
-};
-
-var username = 'laoxie'; // class Render{
-//     constructor(){
-//     }
-//     render(){
-//         return `
-//             hello ${username}
-//         `
-//     }
-// }
-
-var html = "hello ".concat(username);
+  });
+});

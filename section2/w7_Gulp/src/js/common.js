@@ -1,28 +1,13 @@
-// ES6代码
-const init = ()=>{
-    console.log('es6代码')
-
-    return {
-        nav(){
-            return 100;
-        },
-        goto(){
-            return 200;
+jQuery(($)=>{
+    $.ajaxSetup({
+        // url: "http://120.76.247.5:2003/api",
+    
+        // 发送ajax请求之前
+        beforeSend(xhr){
+            // console.log('beforeSend=',xhr,this)
+    
+            // 设置baseUrl
+            this.url = 'http://120.76.247.5:2003/api' + this.url;
         }
-    }
-}
-
-const username = 'laoxie'
-
-// class Render{
-//     constructor(){
-
-//     }
-//     render(){
-//         return `
-//             hello ${username}
-//         `
-//     }
-// }
-
-let html = `hello ${username}`;
+    });
+})

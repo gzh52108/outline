@@ -1275,3 +1275,51 @@
         ```sass
             @include mixinName
         ```
+
+* 版本管理工具：Git
+    * 概念（git三大区）
+        * git仓库（版本库：Repository）  
+        * 工作区（Working Directory）：包含.git的目录
+        * 暂存区（stage/index）：git add命令添加文件后进入暂存区
+
+    * 使用git
+        * git init  初始化一个仓库
+            > 在当前目录下创建一个`.git`的隐藏目录
+        * 版本管理
+            1. 修改文件
+            2. 添加：添加到暂存区
+                ```bash
+                    git add <文件名>
+                ```
+            3. 提交： 把文件提交到git仓库
+                ```bash
+                    git commit -m "备注信息"
+                ```
+    * 常用git命令
+        * git init     初始化仓库
+        * git add       添加文件
+            ```bash
+                # 添加一个文件
+                git add <文件名>
+
+                # 添加一个目录
+                git add <文件夹>
+
+                # 添加当前文件夹下所有文件（慎用）
+                git add .
+            ```
+        * git commit    提交文件
+            ```bash
+                # 备注信息尽量写详细一些
+                git commit -m "备注"
+            ```
+            > 如果不写-m就提交会进入**vim**编辑界面
+            * 进入编辑状态: i
+            * 推出编辑状态：esc
+            * 保存并退出
+                1. 退出编辑状态
+                2. 在英文输入法状态按`shift+:`
+                3. 输入`wq`并回车
+        * git status    查看仓库状态
+    * git过滤清单
+        > .gitignore

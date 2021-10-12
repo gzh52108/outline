@@ -1203,8 +1203,75 @@
         * 在线转换 
     * sass转css
         * gulp
+            * 依赖：gulp-sass + sass
         * 在线
         * vscode插件
 
 ### 练习
 * 压缩html文件
+
+## day7-2
+
+### 复习
+* gulp
+    * 是什么
+    * 有什么用
+    * 怎么用
+        * 安装
+            * 全局安装
+            * 项目安装
+        * 工作流程
+            1. 输入
+            2. 处理
+            3. 输出
+        * gulpfile.js
+            * 创建任务
+        * 运行任务
+            * 命令行操作
+* sass
+    * 语法
+    * 编译
+        * gulp
+        * gulp-sass + sass(node-sass)
+
+### 知识点
+* sass语法
+    * 变量
+    * 注释
+    * 嵌套
+    * 循环
+        ```sass
+            @for $var from <start> through <end>//（包含end值）
+            @for $var from <start> to <end>//（不包含en值）
+        ```
+    * 条件
+        ```sass
+            .price{
+                @if $type == ocean {
+                    color: blue;
+                } @else if $type == matador {
+                    color: red;
+                } @else {
+                    color: black;
+                }
+            }
+        ```
+    * 函数
+        ```sass
+            @function 函数名($type){
+                @return 返回值;
+            }
+        ```
+    * 导入
+        ```sass
+            @import <url>
+        ```
+    * 继承
+        * 占位符：`%name`
+        ```js
+            @extend <选择器>
+        ```
+    * mixin
+        ```sass
+            @include mixinName
+        ```

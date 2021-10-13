@@ -1323,3 +1323,62 @@
         * git status    查看仓库状态
     * git过滤清单
         > .gitignore
+
+## day7-3
+
+### 复习
+* Sass语法
+* Git
+    * 作用
+        * 版本管理
+        * 团队协作
+    * 三大区
+        * 工作区
+        * 暂存区
+        * 版本库
+    * 使用步骤
+        1. 仓库初始化：git init
+            > 本地仓库
+        2. 修改文件
+        3. git add
+        4. git commit 
+
+### 知识点
+* git 版本管理工具
+* 代码托管服务器
+    * github
+    * gitlap
+    * gitee
+* 本地仓库与远程仓库
+    * 本地仓库：保存在自己电脑中的git仓库（通过git init创建的仓库）
+    * 远程仓库：
+        1. 创建远程仓库： github
+        2. 关联：关联本地仓库与远程仓库
+            * git remote add <远程仓库名> <远程仓库地址>
+                ```bash
+                    # https: 速度较慢，每次都需要登录才能推送
+                    git remote add h52108 https://github.com/aaron-xie/h52108.git
+
+                    # ssh: 速度快，但需要配置公钥才可使用（虽然比较麻烦，但推荐这种方式）
+                    git remote add origin git@github.com:aaron-xie/h52108.git
+
+                    # 查看远程仓库
+                    git remote -v
+                ```
+        3. 推送：把本地仓库代码推送到远程仓库
+            > git push <远程仓库名> <分支名>
+            ```bash
+                git push h52108 master
+            ```
+        4. 拉取：把远程仓库的代码拉去到本地仓库
+            > git pull <远程仓库名> <分支名>
+            ```bash
+                git pull h52108 master
+            ```
+
+    * 克隆仓库
+        > git clone <远程仓库地址>
+        * 克隆仓库 = 创建+关联
+
+* 开源
+

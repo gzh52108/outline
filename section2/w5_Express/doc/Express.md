@@ -144,7 +144,7 @@
 > 把这个路由配置放在所有路由的前面，方便调用next操作
 
 * 简单跨域
-    > 只需设置`Access-Control-Allow-Origin:'*'`即可
+    > 只需设置`Access-Control-Allow-Origin:'*'`响应头即可
 
 
 #### 代理服务器

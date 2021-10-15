@@ -1,0 +1,33 @@
+body {
+  margin: 0;
+  padding: 20px;
+  font-size: 16px;
+}
+
+ul, ol {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.goodslist {
+  padding: 10px;
+  overflow: hidden;
+}
+.goodslist li {
+  float: left;
+  width: 200px;
+  height: 300px;
+  margin: 10px;
+  border: 1px solid #ddd;
+  padding: 10px;
+  color: #f60;
+}
+
+.title {
+  padding: 10px;
+  font-size: 30px;
+  line-height: 30px;
+  border-bottom: 1px solid #ddd;
+  color: #58bc58;
+}

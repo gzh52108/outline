@@ -1,0 +1,9 @@
+.goodslist{
+    padding:10px;overflow:hidden;
+    li{
+        float:left;width:200px;height:300px;margin:10px;border:1px solid #ddd;padding:10px;color:#f60;
+    }
+}
+.title{
+    padding:10px;font-size:30px;line-height:30px;border-bottom:1px solid #ddd;color:$highColor;
+}

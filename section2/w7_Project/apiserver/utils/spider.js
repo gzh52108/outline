@@ -9,6 +9,8 @@
 
 const superagent = require('superagent')
 const cheerio = require('cheerio')
+const fs = require('fs')
+const path = require('path')
 
 // console.log(superagent)
 
@@ -74,7 +76,8 @@ superagent.get('https://www.wbiao.cn/search/share/list/')
 .query({
     bCode:111,
     w:'百达翡丽',
-    exposedFrom:1
+    exposedFrom:1,
+    page:2
 })
 // 设置请求头
 .set({
@@ -100,7 +103,7 @@ superagent.get('https://www.wbiao.cn/search/share/list/')
     'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.81 Safari/537.36',
 })
 .then(res=>{
-    console.log(res.text);
+    // console.log(res.text);
     // 使用cheerio.load()加载html结构
     const $ = cheerio.load(res.text)
 
@@ -115,13 +118,37 @@ superagent.get('https://www.wbiao.cn/search/share/list/')
         // 提取li中的信息
         const $li = $(el);
 
+        let img_url = $li.find('img').attr('src'); // //xxx.png -> https://xxx.png
+
+        // 判断img_url中是否以https开头：startsWith()/endsWith()/includes()
+        img_url = (!img_url.startsWith('https') ? 'https:' : '') + img_url
+
+        // 获取图片路径
+        const {pathname} = new URL(img_url)
+        const filename = path.basename(pathname)
+
         const goods = {
-            img_url: $li.find('img').attr('src'),
+            img_url:filename,
             name:$li.find('.desc').text(),
             price:$li.find('.new').text().replace(/[,￥¥]/g,'')*1,
             old_price:$li.find('.old').text().replace(/[,￥¥]/g,'')*1
         }
         goodslist.push(goods)
+
+        // 发起图片请求
+        superagent.get(img_url).then(result=>{
+            // 获取到图片信息，利用fs模块并保存到本地
+            // console.log('result=',result.body)
+
+            
+
+            fs.writeFile('../src/assets/img/'+filename,result.body,function(err,res){
+                if(!err)
+                console.log('图片写入成功')
+                else
+                console.log('err',err)
+            })
+        })
     })
 
     sql += goodslist.map(item=>{
@@ -129,7 +156,7 @@ superagent.get('https://www.wbiao.cn/search/share/list/')
         return `('${name}','${price}','${old_price}','${img_url}')`
     }).join(',')
 
-    console.log('goodslist',goodslist)
+    // console.log('goodslist',goodslist)
 
     // 写入数据库
     pool.query(sql,(err,result)=>{

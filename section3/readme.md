@@ -85,3 +85,40 @@
             * CORS
                 * 简单跨域：`Access-Control-Allow-Origin`
                 * 复杂跨域：
+                    * `Access-Control-Allow-Origin`
+                    * `Access-Control-Allow-Methods`
+                    * `Access-Control-Allow-Headers`
+
+## day1-2
+
+### 复习
+* 缓存
+    * 强制缓存：200
+    * 协商缓存: 304
+* 跨域
+    * CORS
+        * 复杂跨域
+### 知识点
+* 跨域
+    * CORS
+    * JSONP: json with pending
+        1. 定义全局函数
+        2. 利用script标签发起请求，并传递全局**函数名**
+            * script标签没有跨域限制
+            * script标签请求必须得到js代码
+        3. 服务器响应js代码
+            * js代码为：执行**全局函数**，并传递数据
+            ```html
+                <script src="http://localhost:2108/js/home.js"></script>
+
+                <script src="http://localhost:2108/api/jsonp"></script>
+            ```
+        * 缺点
+            * 只能get请求
+            * jsonp并不是ajax请求
+
+    > JSONP与CORS都需要服务器的支持 
+
+    * 服务器代理
+        > http-proxy-middleware
+* 客户端渲染(BSR)与服务器渲染(SSR)

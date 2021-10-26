@@ -19,8 +19,9 @@ router.use((req,res,next)=>{
     // 处理复杂跨域中的预检请求
     if(req.method=="OPTIONS") {
         // res.header("Access-Control-Allow-Methods","PUT,POST,GET,PATCH,DELETE,OPTIONS");
+        // 设置响应头
         res.set({
-            "Access-Control-Allow-Headers": "Content-Type,Content-Length, Authorization, Accept,X-Requested-With",
+            "Access-Control-Allow-Headers": "Content-Type,Content-Length, Authorization, Accept,X-Requested-With,aa",
             "Access-Control-Allow-Methods":"PUT,POST,GET,PATCH,DELETE,OPTIONS"
         });
         res.sendStatus(200);/*让options请求快速返回*/
@@ -40,3 +41,16 @@ router.use('/user',userRouter);
 router.use('/goods',goodsRouter);
 router.use('/reg',regRouter);
 router.use('/login',loginRouter);
+
+// 跨域解决方案之：jsonp
+// jsonp请求必须响应js代码
+// get /api/jsonp
+router.get('/jsonp',function(req,res){
+    const {callback} = req.query;
+    const user = {
+        name:'tiantian',
+        role:'svip'
+    }
+    // res.send('getData({"name":"tiantian","role":"svip"})')
+    res.send(`${callback}(${JSON.stringify(user)})`)
+})

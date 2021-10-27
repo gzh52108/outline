@@ -156,3 +156,35 @@
 ### 练习
 * 配合bootstrap完成goodslist与goods页面（SSR）
 * 完成登录、注册（SSR）
+
+
+## day1-3
+
+### 复习
+* 跨域解决方案
+    * JSONP
+    * CORS
+    * 服务器代理
+        * 正向代理
+            > 代理服务器为客户端服务
+        * 反向代理
+            > 代理服务器为服务器服务器，反向代理用户一般无法感知代理服务器的存在
+            * 负载均衡
+* BSR与SSR
+* 模板引擎
+    * ejs
+    * jade/pug
+
+### 知识点
+* 文件上传
+    * 前端：发送
+        > multipart/form-data
+        * `<form enctype="multipart/form-data">`
+        * FormData
+            * set(name,value)
+            * append(name,value)
+            * delete(name)
+            * get(name)
+            * getAll(name)
+    * 后端：接收
+        > 使用multer模块格式化`multipart/form-data`类型数据，把文件数据格式化到`req.file`或`req.files`

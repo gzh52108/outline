@@ -336,7 +336,53 @@
             * 查：
                 * find(query,project)
                 * findOne(query,project)
-        * 可视化工具
+    * 可视化工具
+        * compass
+    * 导入与导出
+    * 备份与恢复
+    * 查询条件
+        > 删、改、查都需要使用条件
+        ```js
+            // sql
+            // select * from user where id=1
+            db.user.find({id:1})
+            // select * from user where id=1 and name=laoxie
+            db.user.find({id:1,name:'laoxie'})
+            // select * from user where id=1 or name=laoxie
+            db.user.find({$or:[{id:1},{name:'laoxie'}]})
+            // select * from user where age>18
+            db.user.find({age:{$gt:18}})
+
+            // 批量
+            // delete from user where id in(2,4,6,8)
+            // delete from user where id in(select userid from cart where qty>0)
+            db.user.deleteMany({id:{$in:[2,4,6,8]}})
+
+            // 正则表达式
+            db.user.deleteMany({username:/laoxie/i})
+
+            // 过滤与限制条件
+            // select * from goods limit 0,10
+            db.goods.find({}).skip(0).limit(10)
+            // select * from goods order by price desc limit 0,10
+            db.goods.find().sort({price:-1}).skip(0).limit(10)
+        ```
+    * 在NodeJS中使用MongoDB
+        * 驱动
+            * mongodb(官方)
+            * mongoose
+                > 基于mongodb驱动的封装
+        * mongodb驱动
+            ```js
+                // 连接数据库
+                const url = 'mongodb://127.0.0.1:27017'
+                mongodb.MongoClient.connect(url,callback)
+            ```
+        * 封装mongodb操作
+            * create()
+            * remove()
+            * update()
+            * find()    基本完成
 
 * Set集合
     ```js
@@ -349,3 +395,6 @@
         myset.add({a:1,b:2}) ; // [10,20,30,'10',{a:1,b:2}]
         myset.add({a:1,b:2}) ; // [10,20,30,'10',{a:1,b:2},{a:1,b:2}]
     ```
+
+### 练习
+* 完成create,remove,update的封装

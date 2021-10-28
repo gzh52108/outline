@@ -1,0 +1,30 @@
+[{
+  "_id": {
+    "$oid": "617a0931be47b8e663bf743a"
+  },
+  "username": "laoxie",
+  "password": "123456",
+  "role": "admin"
+},{
+  "_id": {
+    "$oid": "617a09e93acc3b333384c098"
+  },
+  "username": "ouyang",
+  "password": "123654",
+  "role": "vip"
+},{
+  "_id": {
+    "$oid": "617a0b183acc3b333384c099"
+  },
+  "username": "tiantian",
+  "password": "123",
+  "role": "vip"
+},{
+  "_id": {
+    "$oid": "617a0b183acc3b333384c09a"
+  },
+  "username": "jingjing",
+  "password": "123654",
+  "role": "svip",
+  "age": 35
+}]

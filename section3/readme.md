@@ -213,6 +213,139 @@
                 * 加盐
                 * 多次加密
     * 双向加密
+        > 密钥
         * 对称加密
+            > 加密和解密公用一个密钥
         * 非对称加密
+            > 公钥+私钥
     * crypto
+        * createHash()
+            * update(data)
+            * digest('hex'|'base64')
+    * 应用
+        * https: ssl
+
+        ```
+            // 明文传输
+            http://localhost:2108/index.html
+
+            // 密文传输
+            https://offer.qfh5.cn/home
+        ```
+
+## day1-4
+
+### 复习
+* 文件上传
+    * 前端代码
+        * `multipart/form-data`
+        * FormData
+            * set()
+            * append()
+        * base64
+            > 把图片转成base64编码后再传到服务器
+        ```html
+            <!-- 表单 -->
+            <form action method enctype>
+                <input type="file" id="upload" multiple />
+            </form>
+
+            <!-- ajax -->
+            const fdata = new FormData()
+            xhr.send(fdata)
+        ```
+    * 后端代码
+        > multer
+        ```js
+            const multer = require('multer')
+            const upload = multer({dest or storage,fileFilter,limits})
+        ```
+* 加密解密
+    * base64编码（65个合法字符：[a-zA-Z0-9/+=]）
+    * 单向加密
+    * 双向加密
+        * 对称加密
+        * 非对称加密（公钥+私钥）
+    * NodeJS
+        * crypto
+        ```js
+            // password -> password2
+            123456 -> xxxxx
+
+            // 加盐
+            123456 ->abc->密文
+            123456 ->cba->密文
+        ```
+
+### 知识点
+* 数据库：Database
+    * 关系型数据库
+        * 概念
+            * 表：table
+            * 记录: row
+        * 常用关系型数据库
+            * Oracle
+            * MySQL/MariaDB
+            * SQL Server
+            * PostgrcSQL
+            * DB2
+    * 非关系型数据
+        * MongoDB
+            * 集合: collection
+            * 文档：document
+
+* mongoDB
+    ```js
+        // user结合
+        [
+            {username:'吴亦凡',age:34,hobby:'唱歌'},
+            {username:'李云迪',age:39,password:123456,tag:['钢琴家','xxx']},
+            {username:'朗朗'},
+        ]
+    ```
+    * 命令行操作
+        * 操作数据库
+        * 操作集合
+        * 操作文档:CRUD
+            * 增：
+                * insertOne(document)
+                * insertMany([document...])
+            * 删：
+                * deleteOne(query)
+                * deleteMany(query)
+            * 改
+                * updateOne(query,newData)
+                * updateMany(query,newData)
+                * save(document)
+                ```js
+                    db.user.updateOne(
+                        // 条件
+                        {_id:ObjectId('617a0b183acc3b333384c09a')},
+                        {
+                            // 把username改成jingjing
+                            $set:{username:'jingjing'},
+                            // 把qty在原来的基础上+1
+                            $inc:{qty:1},
+                            // 给hobby数组添加"唱歌"
+                            $push:{hobby:'唱歌'}
+                            // 给hobby数组添加'唱歌'并自动去重
+                            $addToSet:{hobby:'唱歌'}
+                        }
+                    )
+                ```
+            * 查：
+                * find(query,project)
+                * findOne(query,project)
+        * 可视化工具
+
+* Set集合
+    ```js
+        const myset = new Set(); // 与数组类似，能自动去重
+        myset.add(10); // [10]
+        myset.add(20)   // [10,20]
+        myset.add(30) ; // [10,20,30]
+        myset.add(10) ; // [10,20,30]
+        myset.add('10') ; // [10,20,30,'10']
+        myset.add({a:1,b:2}) ; // [10,20,30,'10',{a:1,b:2}]
+        myset.add({a:1,b:2}) ; // [10,20,30,'10',{a:1,b:2},{a:1,b:2}]
+    ```

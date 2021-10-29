@@ -1,5 +1,4 @@
-const {MongoClient} = require('mongodb');
-const router = require('../../../w1_NodeJS/server/router/upload');
+const {MongoClient,ObjectId} = require('mongodb');
 
 const url = "mongodb://127.0.0.1:27017";
 const dbname = 'h52108'
@@ -79,9 +78,14 @@ async function create(colname,data){
 //     console.log('res',res)
 // })
 
-async function remove(colname,query){
+async function remove(colname,query={}){
     const {db,client} = await connect()
     const col = db.collection(colname)
+
+    if(query._id){
+        query._id = ObjectId(query._id)
+    }
+
     let res;
     try{
         await col.deleteMany(query)
@@ -92,9 +96,14 @@ async function remove(colname,query){
     return res;
 }
 
-async function update(colname,query,data){
+async function update(colname,query={},data={}){
     const {db,client} = await connect()
     const col = db.collection(colname)
+
+    if(query._id){
+        query._id = ObjectId(query._id)
+    }
+
     let res;
     try{
         await col.updateMany(query,data)
@@ -113,10 +122,40 @@ async function update(colname,query,data){
  * @param {Object}      query       查询条件
  * @returns {Array}                 查询结果
  */
-async function find(colname,query){
+async function find(colname,query={},{sort,skip,limit,projection}={}){
     const {db,client} = await connect()
     const col = db.collection(colname)
-    const result = col.find(query)
+
+    if(query._id){
+        query._id = ObjectId(query._id)
+    }
+
+    let result = col.find(query,{
+        projection
+    })
+
+    // 排序
+    if(sort){
+        // sort='price'
+        // sort='price,1'
+        let [key,type=-1] = sort.split(',')
+
+        result = result.sort({
+            [key]:type
+        })
+    }
+
+    // 跳过数量
+    if(skip){
+        result = result.skip(skip)
+    }
+
+    // 限制数量
+    if(limit){
+        result = result.limit(limit)
+    }
+
+    
 
     const data = await result.toArray()
 

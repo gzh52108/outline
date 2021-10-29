@@ -468,6 +468,7 @@
         Math.max(...arr)
         Math.max.apply(null,arr)
     ```
+* console.time()/console.timeEnd()
 
 ### 复习
 * Mongodb
@@ -510,3 +511,15 @@
     > 假设btns是一个伪数组
     * `[...btns]`
     * `Array.from(btns)`
+
+* npm script 
+    > package.json下的scripts
+    * 运行命令：npm run xxx
+    * start: npm start
+    * test: npm test
+
+### 练习
+* 完成商品CRUD接口
+* 完成用户CRUD接口
+* 完成注册登录接口
+* 了解后台管理系统

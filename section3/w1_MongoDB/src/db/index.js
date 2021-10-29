@@ -4,6 +4,10 @@ const router = require('../../../w1_NodeJS/server/router/upload');
 const url = "mongodb://127.0.0.1:27017";
 const dbname = 'h52108'
 
+/**
+ * 连接数据库
+ * @returns {Object}    包含数据库对象与客户端对象组成的对象
+ */
 async function connect(){
     // 创建客户端对象
     const client = new MongoClient(url);
@@ -19,20 +23,96 @@ async function connect(){
     }
 }
 
-async function create(){
+/**
+ * 
+ * @param {String} colname 集合名称
+ * @param {Object|Array} data   插入的数据
+ * @returns {code,ids,msg}
+ */
+async function create(colname,data){
     const {db,client} = await connect()
+    const col = db.collection(colname)
+    let result;
+
+    // create方法返回值
+    let res = {
+        code:200,
+        ids:[]
+    }
+    try{
+        // insertMany()/insertOne()返回Promise对象
+        if(Array.isArray(data)){
+            // 返回格式
+            // {
+            //     acknowledged: true,
+            //     insertedCount: 2,
+            //     insertedIds: {
+            //       '0': new ObjectId("617b5b81a8c19ee2353b137e"),
+            //       '1': new ObjectId("617b5b81a8c19ee2353b137f")
+            //     }
+            //  }
+            result = await col.insertMany(data)
+            for(let key in result.insertedIds){
+                res.ids.push(result.insertedIds[key])
+            }
+            
+        }else{
+            // 返回格式：
+            // {
+            //     acknowledged: true,
+            //     insertedId: new ObjectId("617b5b3b824a8353dafac872")
+            // }
+            result = await col.insertOne(data)
+            res.ids = [result.insertedId]
+        }
+
+    }catch(err){
+        res.code = 400
+        res.msg = err;
+    }
+    client.close()
+    return res
 }
 
-async function remove(){
-    const {db,client} = await connect()
+// create('user',{username:'laoxie',password:123456})
+// create('user',[{username:'laoxie3',password:123456},{username:'laoxie4',password:123456}]).then(res=>{
+//     console.log('res',res)
+// })
 
+async function remove(colname,query){
+    const {db,client} = await connect()
+    const col = db.collection(colname)
+    let res;
+    try{
+        await col.deleteMany(query)
+        res = true;
+    }catch(err){
+        res = false;
+    }
+    return res;
 }
 
-async function update(){
+async function update(colname,query,data){
     const {db,client} = await connect()
+    const col = db.collection(colname)
+    let res;
+    try{
+        await col.updateMany(query,data)
+        res = true;
+    }catch(err){
+        res = false;
+    }
+    return res;
 
 }
+// update('user',{role:'vip'},{$set:{role:'svip'},$inc:{age:1}})
 
+/**
+ * 查询数据库
+ * @param {String}      colname     集合名称
+ * @param {Object}      query       查询条件
+ * @returns {Array}                 查询结果
+ */
 async function find(colname,query){
     const {db,client} = await connect()
     const col = db.collection(colname)

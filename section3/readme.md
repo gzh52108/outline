@@ -398,3 +398,115 @@
 
 ### 练习
 * 完成create,remove,update的封装
+
+
+## day1-5
+
+### 面试题
+* 通过getElementsByTagName()获取到的元素如何使用forEach循环
+    * HTMLCollection    动态列表
+    * NodeList          静态列表
+
+    ```js
+        <button>btn1</button>
+        <button>btn2</button>
+        <button>btn3</button>
+        <button>...</button>
+        <button>btn10</button>
+
+        const btns = document.getElementsByTagName('button'); // 10个button
+
+        // for循环遍历节点
+        for(var i=0;i<btns.length;i++){
+            btns[i].onclick = function(){}
+        }
+
+        // 报错：forEach is not a function
+        btns.forEach(function(btn,idx){
+            btn.onclick = function(){}
+        })
+
+        
+
+        // call 或 apply实现任意方法的调用
+        Array.prototype.forEach.call(btns,function(btn,idx,arr){
+            btn.onclick = function(){}
+        })
+        Array.prototype.map.call(btns,function(item,idx){
+            return item.innerText;
+        }); // ['btn1','btn2','btn3',...,'btn10']
+
+        // 模拟forEach封装
+        // 调用：[10,20,30].forEach(function(item,idx,arr){})
+        Array.prototype.forEach = function(callback){
+            for(var i=0;i<this.length;i++){
+                callback(this[i],i,this)
+            }
+        }
+
+        // 模拟map封装
+        Array.prototype.map = function(callback){
+            var arr = [];
+
+            for(var i=0;i<this.length;i++){
+                arr.push(callback(this[i],i,this))
+            }
+            return arr;
+        })
+
+        [10,20,30].forEach((item,idx,arr)=>{
+
+        })
+
+        // 判断数据类型
+        typeof [] ;// object
+        Object.prototype.toString.call(arr);  //[Object Array]
+
+        [10,20,30].toString();// 10,20,30,
+
+        var arr = [1,23,5,6,32,45,2,34,5]
+        Math.max(...arr)
+        Math.max.apply(null,arr)
+    ```
+
+### 复习
+* Mongodb
+    * 概念
+        ```
+                        数据库          表/集合             数据记录
+            MySQL       database        table               row 
+            Mongo       database        collection          document
+        ```
+    * 操作
+        * 命令行操作
+            * 操作database
+            * 操作collection
+            * 操作document
+            ```js
+                use h52108
+                db.user.find()
+            ```
+        * 可视化工具操作
+            * MongoDB Compass
+            * Robo 3T
+        * NodeJS中操作
+            * 官方驱动：mongodb
+            ```js
+                const db = client.db('h52108')
+                const col = db.collection('user')
+                col.find()
+            ```
+    * 导入导出
+        * 可视化工具
+        * 命令行
+            * mongoimport
+            * mongoexport
+    * 备份恢复
+        * mongodump
+        * mongorestore
+
+* 判断是否为数组：Array.isArray()
+* 把伪数组转成数组
+    > 假设btns是一个伪数组
+    * `[...btns]`
+    * `Array.from(btns)`

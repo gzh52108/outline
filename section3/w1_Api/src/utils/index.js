@@ -1,5 +1,5 @@
-const { ObjectId, Db } = require("mongodb")
-
+const { ObjectId} = require("mongodb")
+const crypto = require('crypto')
 // 封装formatDate函数，用以生产返回前端的数据格式
 function formatData(obj={}){
     let {code=200,data=[],msg='success'} = obj
@@ -51,15 +51,71 @@ function formatId(id){
 // db.update('goods',{_id:{$in:['6037755f08f65d3a6c243510','6037755f08f65d3a6c243511']}})
 
 
+/**
+ * 
+ * @param {Object} data 
+ * @param {Array} filter 
+ * @returns {Object}    
+ */
 function dataFilter(data,filter){
-    return {
+    let res = {}
+    filter.forEach(item=>{
+        let key = item
+        let value = data[key];
+        
+        if(typeof item === 'object'){
+            key = item.key;
+            value = data[key]; 
+            // 如果value得到undefined且item.default有值
+            if(value === undefined && item.default !== undefined){
+                value = item.default;
+            }else{
+                switch(item.type){
+                    case 'number':
+                        value = Number(value);
+                        break;
+                    case 'boolean':
+                        value = ['false','0'].includes(value) ? false : true;
+                        break;
+                }
 
-    }
+            }
+        }
+        
+        if(value !== undefined){
+            res[key] = value;
+        }
+        
+    })
+    return res;
 }
-// dataFilter(req.body,['goods_name','sales_price','img_url'])
+// dataFilter(req.body,['goods_name','sales_price','img_url','price','inventory'])
+// dataFilter(req.query,[{key:'page',type:'number'},'size',{key:'asc',type:'boolean'}])
+// ?asc=false&page=1&sie=10
+
+/**
+ * 
+ * @param {String} str 待加密的数据
+ * @param {String} sf 算法
+ * @param {String} out 输出密文格式
+ * @returns {Sring} 密文
+ */
+function jiamiPassword(str,sf='sha256',out='hex'){
+    // 加密
+    // 1.以md5加密算法创建一个hash对象
+    const hash = crypto.createHash(sf)
+    // 2.加密数据
+    hash.update(str)
+    // 3.输出密文（hex,base64,Buffer）
+    const res = hash.digest(out)
+
+    return res
+
+}
 
 module.exports = {
     formatData,
     formatId,
-    dataFilter
+    dataFilter,
+    jiamiPassword
 }

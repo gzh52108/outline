@@ -84,7 +84,7 @@ async function remove(colname,query={}){
     const col = db.collection(colname)
 
     if(query._id){
-        query._id = ObjectId(query._id)
+        query._id = formatId(query._id)
     }
 
     let res;
@@ -97,12 +97,20 @@ async function remove(colname,query={}){
     return res;
 }
 
+/**
+ * 
+ * @param {String} colname 集合名称
+ * @param {Object} query    查询条件
+ * @param {Object} data     修改的数据
+        data中需要包含操作符：{$set,$inc,$push,$addToSet}
+ * @returns {Boolean}
+ */
 async function update(colname,query={},data={}){
     const {db,client} = await connect()
     const col = db.collection(colname)
 
     if(query._id){
-        query._id = ObjectId(query._id)
+        query._id = formatId(query._id)
     }
 
     let res;

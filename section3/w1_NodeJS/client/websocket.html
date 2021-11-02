@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>基于Websocket的多人聊天室</title>
+    <style>
+        ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .msg-list {
+            position: relative;
+            width: 600px;
+            margin: 0 auto;
+        }
+
+        .msg-list ul {
+            padding: 10px;
+            min-height: 200px;
+            max-height: 400px;
+            overflow-y: auto;
+            border: 1px solid #ddd;
+        }
+
+        .msg-list li {
+            float: left;
+            clear: both;
+            margin: 10px 0;
+            padding: 5px;
+            line-height: 2;
+            border-radius: 5px;
+            background-color: #efefef;
+        }
+
+        .msg-list li.active {
+            float: right;
+            background-color: #58bc58;
+            color: #fff;
+        }
+
+        .msg-list textarea {
+            display: block;
+            min-height: 50px;
+            margin: 10px 0;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .status {
+            display: none;
+            position: absolute;
+            left: 50px;
+            bottom: 0;
+            right: 0;
+            padding: 5px 10px;
+            text-align: center;
+            color: #999;
+        }
+
+        .login {
+            text-align: right;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>基于Websocket的多人聊天室 </h1>
+    <div id="autoAnswer" class="msg-list">
+        <div class="login">
+            <input type="text" name="username" id="username">
+            <button class="btn-login">进入</button>
+            <button class="btn-logout">退出</button>
+        </div>
+        <ul>
+        </ul>
+        <textarea></textarea>
+        <button class="btn-send">提交</button>
+        <div class="status"></div>
+    </div>
+
+    <script>
+        let autoAnswer = document.querySelector('#autoAnswer');
+        let login = autoAnswer.querySelector('.login');
+        let username = login.children[0];
+        let btnLogin = login.children[1];
+        let btnLogout = login.children[2];
+
+        let msglist = autoAnswer.querySelector('ul');
+        let msg = autoAnswer.querySelector('textarea');
+        let btnSend = autoAnswer.querySelector('.btn-send');
+        let status = autoAnswer.querySelector('.status');
+
+        let socket
+
+        btnLogin.onclick = function(){
+            // 连接websocket服务器
+
+            // 连接socket服务器
+			socket = new WebSocket(`ws://localhost:1001`);
+
+            // 监听服务器发送消息
+            socket.onmessage = function(e){
+                console.log('message=',e.data)
+                let li = document.createElement('li')
+                li.innerHTML = e.data;
+
+                msglist.appendChild(li)
+            }
+        }
+
+        // 给服务器发送消息: send()
+        btnSend.onclick = function(){
+            let message = msg.value;
+            socket.send(message)
+        }
+    </script>
+</body>
+
+</html>

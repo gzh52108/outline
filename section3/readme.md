@@ -538,7 +538,7 @@
         * 三次握手
         * 四次挥手
     * UDP
-    * http/https
+    * http/https(SSL证书)
         * 单向
             > 只能客户端发起请求，服务器被动响应
         * 短连接
@@ -585,3 +585,77 @@
 
                 ```
             * websocket
+
+
+## day2-2
+
+### 知识点
+* 实时通讯
+    * 轮询
+    * 长轮询
+    * websocket
+* websocket
+    * 服务端
+        > ws模块/socket.io
+        * 使用步骤
+            1. 安装引用
+                ```
+                    npm install ws
+                ```
+            2. 创建websocket服务器
+                ```js
+                    let socketServer = require('ws').Server;
+                    let wsServer = new socketServer({
+                        port: 1001
+                    });
+                ```
+            3. 监听客户端
+                ```js
+                    // 监听连接
+                    wsServer.on('connection',(client)=>{
+                        // 监听消息发送
+                        client.on('message',(msg)=>{
+
+                        })
+                        client.on('close',()=>{
+
+                        })
+                    })
+                ```
+            4. 给客户端发送消息
+                > wsServer.clients
+                ```js
+                    client.send()
+                ```
+    * 客户端
+        > WebSocket
+        * 特点：
+            * 双向
+            * 长连接
+            * 没有跨域限制
+        * 事件
+            * message
+            * open
+            * close
+            * error
+        * 方法
+            * send()
+            * close()
+        * 使用步骤
+            1. 连接websocket服务器（实例化websocket对象）
+                ```js
+                    const socket = new WebSocket(`ws://localhost:1001`);
+                ```
+            2. 监听服务器消息
+                ```js
+                    socket.onmessage = function(e){
+                        // e.data
+                    }
+                ```
+            3. 给服务器发送消息
+                > 只能发送字符串与二进制数据类型
+                ```js
+                    socket.send()
+                ```
+
+* node.scollIntoView()  把node节点滚动到可是区域

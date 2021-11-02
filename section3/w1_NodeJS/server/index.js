@@ -1,15 +1,10 @@
-// (function(exports,require,module,__filename,__dirname){
-    // const user = {name:'laoxie'}
-    // require()
-    // __dirname
-    // module.export ={}
-// })()
+const http = require('http');
 const path = require('path')
 const express = require('express');
 const router = require('./router')
 const ssrRouter = require('./ssr')
 
-
+// 1. 创建http服务器
 const app = express();
 
 // 静态资源
@@ -34,17 +29,30 @@ app.use('/render',ssrRouter)
 
 
 const PORT = 2108;
-app.listen(PORT,()=>{
-    console.log('server is running at port ' + PORT)
+// app.listen(PORT,()=>{
+//     console.log('server is running at port ' + PORT)
+// })
+
+
+// 2. 创建websocket服务器
+let socketServer = require('ws').Server;
+
+// 3. 利用http连接express服务器
+let server = http.Server(app);
+
+let wsServer = new socketServer({
+    // port: 1001
+    // 4. 利用http连接websocket
+    server
+});
+
+// 5. 使用server监听端口
+server.listen(PORT,()=>{
+    console.log('http server and websocket server are 结合成功');
 })
 
+// http服务器与websocket服务器结合
 
-
-// websocket服务器
-let socketServer = require('ws').Server;
-let wsServer = new socketServer({
-    port: 1001
-});
 
 // 监听客户端连接: 当客户端连接websocket服务器时自动自动connection时间
 wsServer.on('connection',(client)=>{
@@ -70,8 +78,8 @@ wsServer.on('connection',(client)=>{
     })
 
 
-    // 服务器给客户端发送消息
-    client.send('hello my name is 服务器')
+    // 服务器给客户端发送消息: 提示用户进入聊天室
+    // client.send('hello my name is 服务器')
     
 })
 

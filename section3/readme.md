@@ -659,3 +659,42 @@
                 ```
 
 * node.scollIntoView()  把node节点滚动到可是区域
+
+
+## day2-3
+
+### 知识点
+* Vue使用
+    * 安装
+        * 官网下载
+        * npm
+    * 版本
+        * 按环境分
+            * 开发版本: development
+                > 未压缩，包含调试信息代码
+            * 生产版本：production
+                > 压缩、合并，删除调试、提示代码
+
+* 架构分层
+    > 复杂的软件必须有清晰合理的架构，更容易开发、维护和测试，所以需要进行分层
+    * 视图层
+    * 数据层
+    * 控制层
+
+    * MVC
+        * M:Model         数据模型
+        * V:View          视图
+        * C:Controller    控制器
+    * MVP
+        * M: Model
+        * V: View
+        * P: Presenter    优化后的控制器
+    * MVVM
+        * M: Model
+        * V: View
+        * VM: ViewModel 控制器
+
+* Vue指令
+    * v-bind   绑定数据到属性
+    * v-on      绑定事件
+    * v-model   双向数据绑定

@@ -663,6 +663,10 @@
 
 ## day2-3
 
+### 面试题
+* v-show与v-if的区别
+    > 有频繁显示、隐藏的操作建议使用v-show
+
 ### 知识点
 * Vue使用
     * 安装
@@ -695,6 +699,68 @@
         * VM: ViewModel 控制器
 
 * Vue指令
+    > 指令：一种特殊的标签属性
     * v-bind   绑定数据到属性
     * v-on      绑定事件
     * v-model   双向数据绑定
+    * v-for     遍历数据
+    * v-show    是否显示
+
+* 数据绑定
+    * 单向绑定
+        > Model -> View
+        * {{}} 绑定数据到标签内容
+        * v-bind 绑定数据到标签属性
+* 列表渲染: v-for
+    > 可遍历数组，对象，字符串，数字，和一些可迭代的数据
+    * `v-for="item in data"`    等效于原生js中的for...in循环
+    * `v-for="item of data"`    等效于原生js中的for...of
+    ```js
+        // 循环语句
+        for(let i=0;i<10;i++){}
+        for(let key in obj){ // obj={a:10,b:20}
+            //key: 索引、键
+        }
+        while(num>5){
+
+        }
+        for(let item of data){ // Map,Set,NodeList,HTMLCollection,String,Array...
+
+        }
+    ```
+* 条件渲染
+    * v-show
+    * v-if/v-else/v-else-if
+
+
+* 响应式属性
+    * 特点：能监听到数据变化，当数据被修改时，会自动更新页面视图
+    * 原理：
+        * 对象：存储器属性（getter & setter）
+            > Vue实例化时，Vue会递归遍历data中所有属性，如果是普通属性，则通过`Object.defineProperty()`把它们设置为存储器属性（getter & setter），并写入Vue实例
+        * 数组：重写数组原型
+            > Vue实例化时，Vue会递归遍历data中所有属性，如果时数组，则重写数组原型，在重写的数组原型中声明了push,pop,shift,unshift,splice,sort,reverse
+            ```js
+                hobby.__proto__ = {
+                    push(){
+
+                        // 渲染视图
+                        render()
+                    },
+                    __proto__:Array.prototype
+                }
+
+                vm.hobby.push()
+                vm.hobby.forEach()
+            ```
+    * 在Vue中如何设置响应式属性
+        * 初始化设置data数据
+        * Vue.set(target,pro,value)
+            > target不能时vm实例，也不能时data根属性
+            ```js
+                // 以下为错误操作
+                Vue.set(vm,'gender','男')
+                Vue.set(vm.$data,'gender','男')
+            ```
+* 编程思维的改变
+    * 节点操作思维 -> 数据操作思维（数据驱动）

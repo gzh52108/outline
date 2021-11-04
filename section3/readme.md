@@ -767,6 +767,11 @@
 
 ## day2-4
 
+### 面试题
+* computed与methods、watch、data的区别
+    * computed vs methods 优先使用computed
+    * computed vs watch   有限使用computed
+
 ### 复习
 * 指令
     * v-bind
@@ -816,3 +821,31 @@
 ### 知识点
 * ref   引用
     > 通过`this.$refs.xxx`获取引用
+* 实例化选项
+    * el
+    * data
+    * methods
+    * computed  计算属性
+    * watch     监听属性修改
+* 修饰符
+    * 事件修饰符：`v-on:事件类型.修饰符`
+        * 按键修饰符
+            * left,up,right,down
+            * enter
+            * tab
+            * esc
+            * space
+        * 鼠标事件修饰符
+            * stop
+            * prevent
+            * capture
+            * self 只当在event.target 是当前元素自身时触发处理函数(**e.target** === **e.currentTarget**)
+                * e.target: 触发事件的原生
+                * e.currentTarget: 绑定事件的元素
+            * once 事件将只会触发一次
+        * v-model修饰符
+* 简写指令
+    * v-on:      -> @
+    * v-bind:    -> :
+* 事件：v-on:click="handle"
+    * event: 事件处理函数的第一个参数

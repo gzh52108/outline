@@ -764,3 +764,55 @@
             ```
 * 编程思维的改变
     * 节点操作思维 -> 数据操作思维（数据驱动）
+
+## day2-4
+
+### 复习
+* 指令
+    * v-bind
+    * v-on
+    * v-model
+    * v-show
+    * v-for
+    * v-if/v-else/v-else-if
+* 数据绑定
+    * 单向
+        * {{}}
+        * v-bind:attr
+            > style,class
+    * 双向
+        * v-model
+            * 语法糖：v-bind:value + v-on:input
+        * 原理：单向+事件
+* 事件绑定：v-on
+    > 格式：v-on:click="事件处理函数或事件处理函数中的代码"
+    ```js
+        <button v-on:click="handle"></button>
+        <button v-on:click="handle(10)"></button>
+        <button v-on:click="index=idx"></button>
+    ```
+* 列表渲染: v-for
+    > data 可以是数组，对象，字符串，数字，可迭代的数据
+    * v-for="item in data"
+    * v-for="item of data"
+* 条件渲染
+    * v-show
+    * v-if
+    * 三元运算
+* 响应式属性
+    * 原理
+        * 对象
+        * 数组
+
+    * 属性特性
+        * 值属性
+        * 存储器属性
+            * get
+            * set
+    * 如何添加响应式属性
+        * 初始化时在data中设置
+        * Vue.set(target,prop,value)
+
+### 知识点
+* ref   引用
+    > 通过`this.$refs.xxx`获取引用

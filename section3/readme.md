@@ -826,8 +826,33 @@
     * data
     * methods
     * computed  计算属性
+        * 原理：getter+setter，特点：缓存
+        ```js
+            const data = {
+                a:10
+            }
+            const vm = new Vue({
+                computed:{
+                    checkAll(){
+                        return true
+                    },
+                    checkAll:{
+                        get(){
+                            return data.a
+                        },
+                        set(val){
+                            data.a = val;
+                        }
+                    }
+                }
+            })
+            vm.checkAll
+            vm.checkAll = false;
+        ```
     * watch     监听属性修改
+        > 能监听实例下的属性（包括子属性）
 * 修饰符
+    > 指令完整格式：v-name:参数.修饰符="值"
     * 事件修饰符：`v-on:事件类型.修饰符`
         * 按键修饰符
             * left,up,right,down
@@ -844,8 +869,76 @@
                 * e.currentTarget: 绑定事件的元素
             * once 事件将只会触发一次
         * v-model修饰符
+            * lazy
+            * trim
+            * number
 * 简写指令
     * v-on:      -> @
     * v-bind:    -> :
 * 事件：v-on:click="handle"
     * event: 事件处理函数的第一个参数
+        * $event
+    * 参数
+        > v-on:click="事件处理函数(参数)"
+
+## day2-5
+
+### 知识点
+* 梳理与总结
+    ```js
+        const vm = new Vue(options)
+    ```
+    * 类（构造函数）：Vue
+        * 属性
+        * 方法（全局方法、静态方法）
+            * Vue.set()
+            * Vue.delete()
+    * 实例/原型：vm/Vue.prototype
+        * 属性
+            * 内置属性
+                > `$`开头
+                * $refs
+            * 私有属性
+                > `_`开头
+            * 自定义属性
+                > 来源于data,computed,methods等
+        * 方法
+            * $set()
+            * $delete()
+            * $watch()
+    * 实例化选项
+        * el
+        * data
+        * methods
+        * computed
+        * watch
+    * 指令
+        * v-bind    -> :
+        * v-model
+        * v-on  -> @
+        * v-for
+        * v-show
+        * v-if/v-else-if/v-else
+        * v-text
+        * v-html
+            > 实际开发中要慎用v-html，避免XSS（跨域脚本攻击），只有确认html内容安全的情况下才使用v-html（不要用v-html直接显示用户输入的内容）
+
+* 组件化开发
+    * 模块化
+        * 复用
+        * 分工
+        * 维护
+    * 什么是组件化
+        > 在模块化的基础上把一些相关的操作组合到一起使用的开发模式，组件化开发就是把一个大的模块拆分成若干个独立的小模块，然后再组装起来实现一个完整功能的开发模式
+    * 为什么要组件化
+        * 为了更好的复用代码
+        * 为了更容易一分工
+        * 为了后期更方便维护
+    * 如何做组件化
+        * 学会划分组件
+        * 学会定义组件
+        * 学会使用组件
+* 定义组件
+    > 一个组件就是一个Vue的实例
+    * 全局组件：Vue.component(name,options)
+    * 局部组件: components:{name:options}

@@ -15,7 +15,6 @@
         <div id="app">
             <!-- 只有在vm实例中的属性（包含原型属性）才能在视图中使用 -->
             <div class="input-group mb-3">
-                {{todo}}
                 <input type="text" class="form-control" ref="input" v-model="todo" @keyup.enter="addItem">
                 <button class="btn btn-success" @click="addItem">添加</button>
             </div>

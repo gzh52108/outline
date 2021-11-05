@@ -36,7 +36,7 @@
         </div>
     </template>
     <template id="todoItem">
-        <tr @click="selectItem(item.id)">
+        <tr>
             <td><input type="checkbox"></td>
             <th scope="row">{{idx+1}}</th>
             <td>{{item.todo}}</td>
@@ -45,7 +45,7 @@
             <td>
                 <button class="btn btn-outline-primary btn-sm"
                     v-on:click.stop="completeItem(item.id)">{{item.done ? '取消' : '完成'}}</button>
-                <button class="btn btn-outline-danger btn-sm" v-on:click.stop.="removeItem(item.id,$event)">删除</button>
+                <button class="btn btn-outline-danger btn-sm" v-on:click.stop="removeItem(item.id)">删除</button>
             </td>
         </tr>
     </template>
@@ -54,19 +54,42 @@
         /**
             * 13.组件化todolist
          */
+
+        // 事件总线：利用一个Vue实例作为事件载体配合事件实现数据共享
+        const Bus = new Vue()
+        // Bus.$on('hello',function(num){
+        //     console.log('xxx',num)
+        // })
+        
+
         const todoItem = {
             props:['item','idx'],
-            template:`#todoItem`
+            template:`#todoItem`,
+            methods:{
+                completeItem(id){
+                    Bus.$emit('complete',id)
+                },
+                removeItem(id){
+                    Bus.$emit('remove',id)
+                }
+            }
         }
         const todoForm = {
+            // props:['add'],
             data(){
+                // this.$on('additem',)
                 return {
                     todo:''
                 }
             },
             methods:{
                 addItem(){
+                    // this.add(this.todo);
 
+                    this.$emit('additem',this.todo)
+
+                    this.todo = ''
+                    this.$refs.input.focus();
                 }
             },
             template:`<div>
@@ -108,6 +131,12 @@
         }
         Vue.component('TodoList',{
             data(){
+                // console.log('todoList',this,this.$refs);
+
+                // 给Bus添加事件，并把todoList的方法作为事件处理函数
+                Bus.$on('remove',this.removeItem)
+                Bus.$on('complete',this.completeItem)
+
                 return {
                     datalist: [{
                         id: 1,
@@ -129,7 +158,7 @@
             },
             template:`
                 <div class="container">
-                    <todo-form></todo-form>
+                    <todo-form :add="addItem" v-on:additem="addItem"  ref="todoForm"></todo-form>
                     <todo-control></todo-control>
                     <todo-content :list="datalist"></todo-content>
                     <todo-footer :list="datalist"></todo-footer>
@@ -140,7 +169,33 @@
                 todoControl,
                 todoContent,
                 todoFooter
-            }
+            },
+            methods:{
+                addItem(todo){
+                    const newData = {
+                        id: parseInt(Math.random() * 10000),
+                        // 需要输入框中的内容
+                        todo,
+                        done: false,
+                        addtime: Date.now()
+                    }
+                    this.datalist.unshift(newData)
+                },
+                completeItem(id){
+                    this.datalist.forEach(item => {
+                        if (item.id === id) {
+                            item.done = !item.done;
+                        }
+                    })
+                },
+                removeItem(id){
+                    this.datalist = this.datalist.filter(item => item.id !== id)
+                }
+            },
+            // mounted(){
+            //     console.log('todoList',this.$refs)
+            //     this.$refs.todoForm.$on('additem',this.addItem)
+            // }
         })
         
 

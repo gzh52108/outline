@@ -939,6 +939,49 @@
         * 学会定义组件
         * 学会使用组件
 * 定义组件
-    > 一个组件就是一个Vue的实例
+    > 一个组件就是一个Vue的实例，所有组件拥有与Vue实例几乎一致的配置选项
     * 全局组件：Vue.component(name,options)
     * 局部组件: components:{name:options}
+    * options选项
+        * 没有el
+        * data必须为函数类型：为了复用，每个组件实例必须为独立的
+* 组件的使用
+    > 定义一个组件就相当于创建一个标签
+* 组件要求
+    * data必须为Function类型
+    * 每个组件必须只有一个根元素
+    * 注册时组件名可以是kebab-case或PascalCase，但在html页面上使用时，必须写成遵循W3C 规范中的自定义组件名 (字母全小写或包含一个连字符)
+
+* 组件渲染
+    > 组件渲染过程
+    1. 先查找是否提供render，有则渲染，否则进入第2步
+    2. 查找是否有template，有则把template中的内容编译到render，无则报错
+    * render: 组件渲染函数
+        * createElement(name,props,children)创建虚拟节点（对象）
+            * name: 节点名称
+            * props:节点属性
+            * children:子节点
+        ```js
+            {
+                render(createElement){
+                    return createElement()
+                }
+            }
+        ```
+    * template: 组件模板
+        > Vue中自带一个编译器，编译器会把template中的代码编译到render函数中生成虚拟节点
+* 根实例渲染
+    > 根实例渲染过程：
+    1. 先查找是否有**render**，有则渲染，无则进入第2不
+    2. 查找是否有**template**，有则把template编译到render，没有则进入第3步
+    3. 把**el**的outerHTML(标签本身+innerHTML)作为template
+
+* 组件通讯
+    > 每一个组件都是相互独立的，要使用其他组件的数据，必须采用通讯方式传递数据
+    * 父->子: 把数据从父组件传入子组件
+        1. 父组件操作：给子组件定义属性，并传递父组件数据
+        2. 子组件操作：通过props选项接收父组件数据，props中的数据会自动写入组件实例
+        ```js
+            // todolist -> todofooter
+            // todolist -> todocontent -> todoitem
+        ```

@@ -29,7 +29,8 @@
                 <!-- 在tbody中直接使用todo-item组件会导致浏览器解析错误 -->
                 <!-- <todo-item v-for="(item,idx) in list" :item="item" :idx="idx"></todo-item> -->
                 <!-- 解决方案如下 -->
-                <tr is="todo-item" v-for="(item,idx) in list" :item="item" :idx="idx"></tr>
+                <tr is="todo-item" v-for="(item,idx) in list" :key="item.id" :item="item" :idx="idx" 
+                ></tr>
             </tbody>
         </table>
             
@@ -40,7 +41,8 @@
             <td><input type="checkbox" :checked="selectIds.includes(item.id)"></td>
             <th scope="row">{{idx+1}}</th>
             <td>{{item.todo}}</td>
-            <td>{{item.addtime}}</td>
+            <!-- <td v-once>{{formatDate(item.addtime)}}</td> -->
+            <td>{{date}}</td>
             <td>{{item.done ? '是' : '否'}}</td>
             <td>
                 <button class="btn btn-outline-primary btn-sm"
@@ -66,6 +68,12 @@
             props:['item','idx'],
             template:`#todoItem`,
             inject:['selectItem','selectIds'],
+            computed:{
+                date(){
+                    // console.log('computed.date')
+                    return new Date(this.item.addtime).toLocaleDateString()
+                }
+            },
             methods:{
                 completeItem(id){
                     Bus.$emit('complete',id)
@@ -73,6 +81,10 @@
                 removeItem(id){
                     Bus.$emit('remove',id)
                 },
+                formatDate(d){
+                    console.log('formatDate')
+                    return new Date(d).toLocaleDateString()
+                }
             }
         }
         const todoForm = {
@@ -125,12 +137,26 @@
                             this.$parent.selectIds.push(...ids)
                         }
                     }
-                }
+                },
+
+                // 测试代码：computed返回一个函数
+                // date(){
+                //     return function(d){
+                //         console.log('computed.date',d)
+                //         return new Date(d).toLocaleDateString()
+                //     }
+                // }
             },
             template:`#todoContent`,
             components:{
                 todoItem
-            }
+            },
+            // methods:{
+            //     date(d){
+            //         console.log('method.date')
+            //         return new Date(d).toLocaleDateString()
+            //     }
+            // }
         }
         const todoFooter = {
             // 接收父组件传入的数据
@@ -192,7 +218,7 @@
             template:`
                 <div class="container">
                     <todo-form :add="addItem" v-on:additem="addItem"  ref="todoForm"></todo-form>
-                    <todo-control :completeItems="completeItems" :removeItems="removeItems" ></todo-control>
+                    <todo-control :completeItems="completeItems" :removeItems="removeItems"></todo-control>
                     <todo-content :list="datalist"></todo-content>
                     <todo-footer :list="datalist"></todo-footer>
                 </div>
@@ -262,7 +288,8 @@
                 // mounted(){
                 //     console.log('todoList',this.$refs)
                 //     this.$refs.todoForm.$on('additem',this.addItem)
-                // }
+                // },
+                
             }
         })
         

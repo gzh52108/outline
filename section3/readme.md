@@ -1092,9 +1092,10 @@
 
 * 利用组件层级操作
     * 在子组件中修改父组件数据
+        > 正常情况下不能修改父组件传入的props数据，但有时需要进行一些特殊的操作
         * 方式一：把父组件方法传入子组件中执行
         * 方式二：自定义事件（把父组件方法作为事件处理函数）
-            > this.$emit()
+            > this.$emit(event,data)
             * 语法糖：v-bind:qty.sync="qty" 
                 > 等效于： v-bind:qty="qty" v-on:update:qty="qty=$event"
         * 方式三：在子组件中直接通过父组件实例修改
@@ -1139,5 +1140,32 @@
             }
         ```
     * 在父组件中修改子组件数据
-        * 方式一：$children
-        * 方式二：
+        * 方式一：$children （不推荐）
+            > 必须拿到对应索引值
+        * 方式二：ref
+            > ref用在组件上得到改组件实例的引用
+
+* 组件封装
+    * 非prop属性(attrs，组件实例中通过$attrs获取)
+        > 父组件传递数据，但子组件不接收，此类属性会自动成为组件根节点的html属性（可通过{inheritAttrs: false} 关闭）
+    * v-bind无参数绑定
+        ```js
+            <button v-bind="{a:10,b:20}"></button>
+            // 等效于
+            <button v-bind:a="10" v-bind:b="20">
+        ```
+    * props数据类型校验
+        * type
+        * required
+        * default
+        * validator
+
+### 练习
+* 完成按钮封装
+    * 可定制化
+        * 颜色
+        * 块级按钮
+        * 大小
+        * 线框按钮
+    * 事件绑定
+    

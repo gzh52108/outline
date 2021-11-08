@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>16.父组件操作子组件数据</title>
+</head>
+<body>
+    <h1>16.父组件操作子组件数据</h1>
+    <div id="app">
+        <child ref="myson"></child>
+        <button @click="$children[0].counter++">父组件通过$children修改子组件counter</button>
+        <button @click="$refs.myson.counter++">父组件通过ref修改子组件counter</button>
+    </div>
+
+    <script src="js/vue.js"></script>
+    <script>
+        /**
+         *  16.父组件操作子组件数据 
+            
+         */
+
+        const child = {
+            data(){
+                return {
+                    counter:1
+                }
+            },
+           template:`<div>
+                child counter: <button @click="counter++">{{counter}}</button>
+            </div>`
+        }
+
+
+        const vm = new Vue({
+            el:'#app',
+            data:{
+                qty:10
+            },
+            components:{
+                child
+            },
+            methods:{
+                
+            }
+        })
+
+
+    </script>
+</body>
+</html>

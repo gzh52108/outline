@@ -1032,3 +1032,112 @@
 ### 练习
 * 完成选择数据功能
 * 完成批量操作功能
+
+## day3-1
+
+### 复习
+* 组件化开发
+    * 定义
+        > 一个组件就是一个Vue实例，拥有与Vue实例化时几乎一致的配置选项
+        * 全局: Vue.component(name,options)
+        * 局部：components:{name:options}
+
+        > 定义一个组件相当于创建了一个标签，并创建了一个**组件实例**，每一个组件都时一个**独立的模块**
+    * options配置选项
+        * data必须为 函数形式
+        * 没有el
+        * render
+        * template
+
+        ```js
+            // Vue实例
+            const vm = new Vue(options)
+
+            Vue.prototype.a = 100;
+
+            // 组件实例
+            Vue.component('parent',{
+                data(){
+                    return {name:'component'}
+                },
+                template:`<div>{{name}} - {{a}} <child></child></div>`,
+                components:{
+                    child:{}
+                }
+            });
+
+            // jQuery(); // new jQuery.fn.init()
+        ```
+    * 使用
+        > 
+        ```js
+            <parent>
+            </parent>
+        ```
+    * 通讯
+        * 父->子:props
+        * 子->父:
+            * 把父组件的方法传到子组件中执行
+            * 自定义事件
+        * 兄弟->兄弟
+            * 状态提升
+        * 深层及组件通讯
+            * 父逐层传递到子（不推荐）
+            * Bus事件总线
+### 知识点
+* 依赖注入 provide / inject
+    > provide共享的数据不是响应式的（但如果提供的数据时引用数据类型，且引用数据是响应式的，则也能实现响应式通讯）
+    1. 父组件操作: 父组件定义provide，并共享数据
+    2. 子组件操作：通过inject注入provide共享的数据
+
+* 利用组件层级操作
+    * 在子组件中修改父组件数据
+        * 方式一：把父组件方法传入子组件中执行
+        * 方式二：自定义事件（把父组件方法作为事件处理函数）
+            > this.$emit()
+            * 语法糖：v-bind:qty.sync="qty" 
+                > 等效于： v-bind:qty="qty" v-on:update:qty="qty=$event"
+        * 方式三：在子组件中直接通过父组件实例修改
+            > this.$parent
+        ```js
+            <pranet></parent>
+            {
+                data(){
+                    return {
+                        qty:10
+                    }
+                },
+                // 方式一: this.changeQty()
+                template:`<child :qty="qty" :changeQty="changeQty"></child>`
+
+                // 方式二：this.$emit('change')
+                template:`<child :qty="qty" v-on:change="changeQty"></child>`
+
+                // 方式二语法糖：等效于<child v-bind:qty="qty" v-on:update:qty="qty=$event">
+                // 子组件操作：this.$emit('update:qty',10)
+                template:`<child v-bind:qty.sync="qty"></child>`
+                methods:{
+                    changeQty(){
+                        this.qty++
+                    }
+                }
+            }
+
+            <child></child>
+            {
+                props:['qty'],
+                data(){
+                    // 不能修改父组件传入的props
+                    // this.qty++;
+
+                    // 通过父组件实例修改它的数据、执行它的方法
+                    // 父组件实例.qty++
+                    return {
+
+                    }
+                }
+            }
+        ```
+    * 在父组件中修改子组件数据
+        * 方式一：$children
+        * 方式二：

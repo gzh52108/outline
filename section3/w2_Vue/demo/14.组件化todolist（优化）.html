@@ -4,11 +4,11 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>13.组件化todolist</title>
+    <title>14.组件化todolist（优化）</title>
     <link rel="stylesheet" href="./css/bootstrap.css">
 </head>
 <body>
-    <h1>13.组件化todolist</h1>
+    <h1>14.组件化todolist（优化）</h1>
     <div id="app">
        <todo-list></todo-list>
     </div>
@@ -52,7 +52,7 @@
     <script src="js/vue.js"></script>
     <script>
         /**
-            * 13.组件化todolist
+            * 14.组件化todolist（优化）
          */
 
         // 事件总线：利用一个Vue实例作为事件载体配合事件实现数据共享
@@ -118,7 +118,12 @@
                         return this.list.every(item=>this.selectIds.includes(item.id))
                     },
                     set(newValue){
-                        this.selectAll(newValue)
+                        // this.selectAll(newValue)
+                        this.$parent.selectIds.splice(0,this.$parent.selectIds.length)
+                        if(newValue){
+                            const ids = this.list.map(item=>item.id)
+                            this.$parent.selectIds.push(...ids)
+                        }
                     }
                 }
             },
@@ -168,6 +173,9 @@
                         done: false,
                         addtime: Date.now() + 3600 * 1000 * 5
                     }],
+
+                    // 测试数据
+                    qty:10
                 }
             },
             // 依赖注入: provide(Object|Function)
@@ -184,7 +192,7 @@
             template:`
                 <div class="container">
                     <todo-form :add="addItem" v-on:additem="addItem"  ref="todoForm"></todo-form>
-                    <todo-control :completeItems="completeItems" :removeItems="removeItems"></todo-control>
+                    <todo-control :completeItems="completeItems" :removeItems="removeItems" ></todo-control>
                     <todo-content :list="datalist"></todo-content>
                     <todo-footer :list="datalist"></todo-footer>
                 </div>

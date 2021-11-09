@@ -1211,8 +1211,56 @@
     * 插槽： 在父组件生成html结构再传入子组件
 
 
-* vue单文件组件
+* VueCLI(vue command line interface)
+    > webpack + babel
+    * 安装
+        ```js
+            npm install -g @vue/cli
+        ```
+    * 创建项目
+        ```bash
+            # 命令行创建项目
+            vue create <projectName>
 
+            # 可视化界面创建项目
+            vue ui
+        ```
+    * vue单文件组件
+        * template
+        * script
+            * render
+        * style
+* 版本
+    * 按环境分
+        * 开发版本development: vue.js,vue.development.js
+            > 未压缩，包含调试信息代码
+        * 生产版本production：vue.min.js, vue.production.js
+            > 压缩、合并，删除调试、提示代码
+    * 按模块化规范分
+        * commonJS: vue.common.js
+        * ESModule: vue.esm.js
+        * AMD
+        * CMD
+        * UMD   通用模块化规范（支持以上模块和全局引用方式）
+    * 按编译方式分
+        * 完整版(运行时版+编译器): vue.js
+            > template选项 -> render
+        * 运行时版（runtime）: vue.runtime.js
+            > 使用`vue-template-compiler` 把 `<template> -> render` 
+
+* ESModule
+    > ES6退出的模块化开发规范，把一个文件当作一个模块，一个模块的作用域时独立作用域，如果想要读取某个模块中的数据，必须导入导出（**只能在服务器环境中使用，只能引入js文件**）
+    * 导入: `import <module> from <url>`
+        * url：模块地址，必须为相对路径或绝对路径
+        ```js
+            import username from './user.js'
+        ```
+    * 导出: `export`
+        > export后只能跟`function`、`class`、`var`、`let`、`const`、`default`、`{}`
+        ```
+
+        ```
 
 ### 练习
 * 利用插槽重写todolist
+* 移植todolist到vueCLI项目

@@ -1168,4 +1168,51 @@
         * 大小
         * 线框按钮
     * 事件绑定
-    
+
+
+## day3-2
+
+### 复习
+* 依赖注入
+    * provide
+    * inject
+* 利用组件层级实现父子组件操作
+    * 在父组件操作子组件
+    * 在子组件操作父组件
+* 组件封装
+    * 组件通讯
+    * props数据类型校验 
+    * 非props（attr）
+        * setAttribute() / attr()
+        * 点语法：node.idx=10 / prop()
+            ```js
+                node.id = 'box'
+                img.src=
+            ```
+* v-bind无参数绑定
+    > 指令完整格式：v-name:参数.修饰符="值"
+    > v-model="username" -> v-bind:value + v-on:input
+
+
+### 知识点
+* 插槽：`<slot></slot>`
+    * 插槽默认值：当不适用插槽时显示的内容
+    * 默认插槽
+        > 默认插槽也有一个名字：default
+    * 具名插槽：有名字的插槽`<slot name="xxx" />`
+        * name
+        * v-slot -> 简写: #
+    * 作用域插槽
+        > 利用v-slot的值实现子组件数据往父组件传递，实现特殊定制
+
+
+* 插槽与props的区别
+    * props： 把数据传入组件，然后在组件中生成html结构
+    * 插槽： 在父组件生成html结构再传入子组件
+
+
+* vue单文件组件
+
+
+### 练习
+* 利用插槽重写todolist

@@ -23,6 +23,7 @@
   </tr>
 </template>
 <script>
+import Bus from './Bus'
 export default {
   name: "TodoItem",
   props: ["item", "idx"],

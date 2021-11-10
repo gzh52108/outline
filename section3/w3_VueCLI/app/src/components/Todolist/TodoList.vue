@@ -17,10 +17,13 @@ import TodoFooter from "./TodoFooter.vue";
 
 // 引入样式
 import 'bootstrap/dist/css/bootstrap.css'
+import Bus from './Bus'
 
 export default {
   name: "TodoList",
   data() {
+    Bus.$on('remove',this.removeItem)
+    Bus.$on('complete',this.completeItem)
     return {
       selectIds: [],
       datalist: [

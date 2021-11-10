@@ -1264,3 +1264,64 @@
 ### 练习
 * 利用插槽重写todolist
 * 移植todolist到vueCLI项目
+
+
+## day3-3
+
+### 复习
+* ESModule
+    > 只能在服务器环境下使用
+    * 导入: import
+        * url   相对路径或绝对路径，只能引入js，只支持静态导入
+        ```js
+            // commonJS
+            require('./js/a.js');
+            const path = './js/a.js'
+            require(path)
+
+            // ESModule
+            import a from './js/a.js'
+            import a from path;// 不支持
+
+            // 在webpack下进行了处理，所以支持以下写法
+            import Vue from 'vue'
+            import App from './App.vue'
+            import a from './js/a'
+            // 引入目录
+            // 1.查看目录中是否存在package.json中的module/main
+            // 2.如无packaga.json，则引入目录下的index.js
+            import b from './js';
+        ```
+    * 导出: export
+* VueCLI
+    * webpack
+    * 单文件组件
+        * template
+        * script
+        * style
+    * 
+* 插槽
+    > 可定制化
+
+
+### 知识点
+* 生命周期
+    * 搞懂以下问题
+        * 搞懂执行过程
+        * 搞懂有几个阶段
+        * 搞懂开发者在Vue的生命周期过程中能做什么
+    * 阶段
+        > 每个阶段都有相应的钩子函数（生命周期函数），这些函数在执行到相应的阶段时自动执行，用户可以在钩子函数中实现一些效果
+        * 创建阶段
+            > 初始化操作，注入属性，设置响应式属性
+            * beforeCreate
+            * created
+        * 挂载阶段
+            > 把渲染函数生成的虚拟节点挂在到页面形成真实节点
+            * beforeMount
+            * mounted
+        * 更新阶段
+        * 销毁阶段
+            > 当执行$destroy()/v-if时，切断所有的监听器和父子组件关系
+            * beforeDestroy -> Vue3: beforeUnmount
+            * destroyed     -> Vue3: Unmounted

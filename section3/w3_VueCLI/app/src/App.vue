@@ -2,16 +2,25 @@
   <div id="app">
     <TodoList />
     <p>Hello Vue</p>
+    <Lifecycle v-show="show"/>
+    <button @click="show=!show">销毁</button>
   </div>
 </template>
 
 <script>
 import TodoList from './components/Todolist/TodoList.vue'
+import Lifecycle from './components/Lifecycle.vue'
 
 export default {
   name: 'App',
+  data(){
+    return {
+      show:true
+    }
+  },
   components: {
-    TodoList
+    TodoList,
+    Lifecycle
   }
 }
 </script>

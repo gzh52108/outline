@@ -1321,7 +1321,94 @@
             * beforeMount
             * mounted
         * 更新阶段
+            > 虚拟DOM的重渲染与打补丁
+            * beforeUpdate
+            * updated
         * 销毁阶段
             > 当执行$destroy()/v-if时，切断所有的监听器和父子组件关系
             * beforeDestroy -> Vue3: beforeUnmount
             * destroyed     -> Vue3: Unmounted
+
+* 虚拟节点
+    > 虚拟节点（Virtual Node）: 一个结构类似于真是节点的js对象
+    * 页面渲染过程：
+        * 原生：真实节点操作 -> 页面渲染
+        * Vue: 数据修改 -> diff算法对比虚拟节点前后状态（得到差异项） -> 真实节点操作 -> 页面渲染
+            * 有效较少节点操作数量
+            * 异步更新:在一个时间周期内，所有的修改都进行合并
+            * diff算法
+        * 虚拟节点对比
+            > Vue会对比虚拟节点前后状态得到差异项
+            * 如何对比
+                * 只对比同级虚拟节点
+                * 根据类型进行对比
+                * 根据key值进行对比
+                    > 如没有提供key值，则按顺序对比
+    ```js
+        // 原生
+        <div id="box">
+            <span>1</span>
+            <strong>1</strong>
+        </div>
+        for(let i=1;i<=100;i++){
+            box.innerText = i;
+        }
+
+
+        // Vue
+        <div>
+            <span>{{qty}}</span>
+            <strong>1</strong>
+        <div>
+        data:{
+            qty:1
+        }
+        for(let i=1;i<=100;i++){
+            vm.qty = i;
+        }
+
+        // 虚拟节点初始状态
+        {
+            type:'div',
+            attrs:{},
+            props:{},
+            chilren:[
+                {type:'span',chilren:'1'},
+                {type:'strong',chilren:'1'},
+                {
+                    type:'ul',
+                    chilren:[
+                        {type:'li',children:'A',key:1}
+                        {type:'li',children:'B',key:2}
+                        {type:'li',children:'C',key:3}
+                    ]
+                },
+                {type:'p',children:'A'},
+                {type:'p',children:'B'},
+                {type:'p',children:'C'},
+            ]
+        }
+
+        // 虚拟节点最终状态
+        {
+            type:'div',
+            attrs:{},
+            props:{},
+            chilren:[
+                {type:'span',chilren:'100'},
+                {type:'strong',chilren:'1'},
+                {
+                    type:'ul',
+                    chilren:[
+                        {type:'li',children:'A',key:1}
+                        {type:'li',children:'B',key:2}
+                        {type:'li',children:'CC',key:3}
+                    ]
+                },
+                {type:'p',children:'C'},
+                {type:'p',children:'B'},
+                {type:'p',children:'A'},
+            ]
+        }
+
+    ```

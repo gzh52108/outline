@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>22.key值的作用</title>
+</head>
+<body>
+    <h1>22.key值的作用</h1>
+    <div id="app">
+
+        <ul>
+            <li v-for="item in letters" :key="item">{{item}}</li>
+        </ul>
+        <button @click="addItem">添加F</button>
+    </div>
+    <script src="js/vue.js"></script>
+    <script>
+        const vm = new Vue({
+            data:{
+                letters:['A','B','C','D','E']
+            },
+
+            methods:{
+                addItem(){
+                    // this.letters.push('F')
+                    this.letters.splice(2,0,'F')
+                }
+            },
+
+            mounted(){
+                const lis = document.querySelectorAll('#app li')
+                lis.forEach(item=>{
+                    item.setAttribute('data-letter',item.innerText)
+                })
+            }
+        })
+
+        vm.$mount('#app')
+
+        /**
+            // 虚拟DOM初始状态
+            {
+                type:'ul',
+                children:[
+                    {type:'li',children:'A'},
+                    {type:'li',children:'B'},
+                    {type:'li',children:'C'},
+                    {type:'li',children:'D'},
+                    {type:'li',children:'E'},
+                ]
+            }
+
+            // 虚拟DOM最终状态
+            {
+                type:'ul',
+                children:[
+                    {type:'li',children:'A'},
+                    {type:'li',children:'B'},
+                    {type:'li',children:'F'},
+                    {type:'li',children:'C'},
+                    {type:'li',children:'D'},
+                    {type:'li',children:'E'},
+                ]
+            }
+
+            // 真实节点
+            <li>A</li>
+            <li>B</li>
+            <li>F</li>
+            <li>C</li>
+            <li>D</li>
+            <li>E</li>
+         */
+    </script>
+</body>
+</html>

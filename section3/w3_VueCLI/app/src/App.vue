@@ -2,7 +2,7 @@
   <div id="app">
     <TodoList />
     <p>Hello Vue</p>
-    <Lifecycle v-show="show"/>
+    <Lifecycle v-if="show"/>
     <button @click="show=!show">销毁</button>
   </div>
 </template>

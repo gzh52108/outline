@@ -58,6 +58,15 @@
             destroyed(){
                 console.log('destroyed')
             },
+            
+            // 更新阶段：beforeUpdate + updated
+            beforeUpdate(){
+                console.log('beforeUpdate',document.querySelector('#app').innerHTML)
+            },
+            updated(){
+                console.log('updated',document.querySelector('#app').innerHTML)
+            },
+            
 
         
         })

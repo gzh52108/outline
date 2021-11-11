@@ -1,20 +1,21 @@
 <template>
   <div id="app">
-     <div>
-      <button @click="$router.back()">回退</button>
-      <button @click="$router.forward()">前进</button>
-    </div>
+     
     <!-- 路由视图显示：用于渲染路由对应的组件 -->
     <router-view></router-view>
 
-    <router-link to="/home" tag="span" active-class="current" replace>首页</router-link>
-    <router-link to="/reg">注册</router-link>
-    <router-link to="/login">登录</router-link>
-
-    <div>
-      <button @click="goto('/login')">登录</button>
-      <button @click="goto('/reg')">注册</button>
-    </div>
+    <!-- <van-tabbar v-model="active" @change="changeMenu"> -->
+    <van-tabbar v-model="active" route>
+      <van-tabbar-item 
+      v-for="item in menu" 
+      :key="item.path" 
+      :icon="item.icon" 
+      :to="item.path"
+      :badge="item.path==='/cart' ? 5 : null"
+      >
+      {{item.text}}
+      </van-tabbar-item>
+  </van-tabbar>
   </div>
 </template>
 
@@ -22,27 +23,54 @@
 
 export default {
   name: 'App',
+  data(){
+    return {
+      active:0,
+      menu:[
+        {
+          path:'/home',
+          text:'首页',
+          icon:'wap-home-o'
+        },
+        {
+          path:'/discover',
+          text:'发现',
+          icon:'eye-o'
+        },
+        {
+          path:'/cart',
+          text:'购物车',
+          icon:'cart-o'
+        },
+        {
+          path:'/mine',
+          text:'我的',
+          icon:'manager-o'
+        },
+      ]
+    }
+  },
   created(){
-    console.log('App',this)
+    // const index = this.menu.findIndex(item=>{
+    //   return item.path === this.$route.path
+    // })
+    //   console.log('App',this.$route,index)
+    //   this.active = index;
   },
   methods:{
     goto(url){
       // this.$router.push(url)
       this.$router.replace(url)
-    }
+    },
+    // changeMenu(index){
+    //   console.log('index',index)
+    //   const current = this.menu[index].path
+    //   this.$router.push(current)
+    // }
   }
 }
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-.router-link-active{color:#f00}
-.current{color:#f00;font-weight:bold}
+
 </style>

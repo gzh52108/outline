@@ -1467,3 +1467,87 @@
                 * forward()
                 * go()
             * $route
+        * 路由传参
+            > 从一个路由跳到另一个路由时携带参数，刷新后数据依然存在（实现数据持久化）
+            * query参数
+                > ?后的参数
+                * 传递
+                    ```js
+                        $router.push('/search?keyword=xxx')
+                        $router.push({
+                            path:'/search',
+                            query:{
+                                keyword:'xxx'
+                            }
+                        })
+                    ```
+                * 接收：`$route.query.keyword`
+            * params
+                > params参数在页面刷新后会丢失，动态路由例外
+                * 传递
+                    ```js
+                        // 动态路由
+                        $router.push('/goods/'+id)
+
+                        // 必须使用对象形式
+                        $router.push({
+                            // path:'/goods', // params传参只支持name方式跳转
+                            name:'Goods',
+                            params:{
+                                id:'xxx'
+                            }
+                        })
+                    ```
+                * 接收：`$route.params.id`
+
+
+        * 命名路由：给路由起个名字
+            ```js
+                new VueRouter({
+                    routes:[
+                        {
+                            path:'/home/asd/bsdf/csdf/sd',
+                            component:Home,
+                            name:'Home'
+                        }
+                    ]
+                })
+
+
+                $router.push({
+                    name:'Home'
+                })
+            ```
+
+* Vue的UI组件库
+    * elementUI     饿了么出品
+    * ant-design    蚂蚁金服
+    * iView         腾讯出品
+    * bootstrap-vue 
+    * vantUI        有赞   
+        1. 安装
+            ```js
+                npm i vant
+            ```
+        2. 引入
+            * 全部引入
+                ```js
+                    // 引入所有组件
+                    import Vant from 'vant'
+
+                    // 引入样式
+                    import 'vant/lib/index.css'
+                ```
+            * 按需引入
+        3. 安装插件
+            > 注册65+的全局组件
+            ```js
+                Vue.use(Vant)
+            ```
+
+* axios
+
+
+### 练习
+* 完成/goods页面
+* 完成注册、登录

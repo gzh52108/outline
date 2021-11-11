@@ -1412,3 +1412,58 @@
         }
 
     ```
+
+## day3-4
+
+### 知识点
+* 单页面应用SPA(Single Page Application)
+    > 整个应用只有一个页面
+    * 多视图的单页Web应用
+* 多页面应用MPA(Multiple Page Application)
+    > 传统效果，页面需要用链接进行跳转，跳转后页面会刷新
+
+* VueRouter 路由
+    * 使用步骤
+        1. 安装vue-router
+            ```js
+                npm install vue-router
+            ```
+        2. 引入vue-router
+            ```js
+                import VueRouter from 'vue-router'
+            ```
+        3. 安装路由插件
+            > 安装路由插件会自动创建两个全局组件`<router-view/>` 与 `<router-link/>`
+            ```js
+                Vue.use(VueRouter)
+            ```
+        4. 实例化路由,并配置参数
+            ```js
+                const router = new VueRouter()
+            ```
+        5. 把路由实例注入Vue
+            > 注入后，会给所有的组件实例添加`$router`与`$route`属性
+            * $router: 路由实例
+            * $route: 当前路由对象（保存着当前路由所有信息）
+            ```js
+                new Vue({
+                    ...
+                    router:router
+                })
+            ```
+        6. 在组件中使用
+            * 使用`<router-view/>`显示路由组件
+            * 使用`<router-link/>`跳转路由
+    * hash哈希路由
+        > 根据hash值的变化显示不同的内容，实现单页面多视图的效果
+        * 原理：window下的hashchange事件
+    * 路由跳转(导航)
+        * 声明式导航：使用`<router-link/>`跳转路由
+        * 编程式导航：使用js代码实现导航
+            * $router
+                * push()        跳转并产生浏览记录（等效于：`<router-link to/>`）
+                * replace()     跳转但不产生浏览记录（等效于：`<router-link to replace/>`）
+                * back()
+                * forward()
+                * go()
+            * $route

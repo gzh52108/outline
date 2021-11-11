@@ -50,6 +50,7 @@ export default {
     },
 
     beforeUpdate(){
+        
     },
     updated(){
         console.log('update')

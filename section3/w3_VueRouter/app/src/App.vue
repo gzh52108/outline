@@ -5,7 +5,7 @@
     <router-view></router-view>
 
     <!-- <van-tabbar v-model="active" @change="changeMenu"> -->
-    <van-tabbar v-model="active" route>
+    <van-tabbar v-model="active" route v-show="showTabbar">
       <van-tabbar-item 
       v-for="item in menu" 
       :key="item.path" 
@@ -26,6 +26,7 @@ export default {
   data(){
     return {
       active:0,
+      showTabbar:true,
       menu:[
         {
           path:'/home',
@@ -72,5 +73,12 @@ export default {
 </script>
 
 <style>
-
+.price del{color:#666;margin-right: 5px;}
+.price del::before{
+    content:'￥'
+}
+.price span{color:#f00}
+.price span::before{
+    content:'￥'
+}
 </style>

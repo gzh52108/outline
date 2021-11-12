@@ -1551,3 +1551,46 @@
 ### 练习
 * 完成/goods页面
 * 完成注册、登录
+
+
+## day3-5
+
+### 面试题
+* vue组件局部样式的原理
+    > 自定义属性（data-v-[hash]） + css属性选择器
+
+### 复习
+* 路由传参
+    * 跳转传参
+        * query
+            > 数据持久化
+        * params
+            > 刷新后数据丢失（动态路由参数例外）
+* axios
+    > 基于promise的ajax请求封装
+    * 常用方法
+        * axios(config)
+        * get(url,config)
+        * post(url,data,config)
+        * put(url,data,config)/patch(url,data,config)
+        * delete(url,config)
+
+    * config
+        * url
+        * method    
+        * params    通过url传参（?号后的参数）
+        * data      通过请求体传参
+            * x-www-form-urlencoded     name=value&nanme=value
+            * json                      {"name":"value"}
+            * formData              
+        * headers   通过请求头传参    
+
+    * axios二次封装
+        * 所有的组件都是Vue的实例
+* 组件局部样式
+    > `<style scoped>`
+    * 原理:自定义属性（data-v-[hash]） + css属性选择器
+        > Vue组件局部样式：给style添加scoped属性后，Vue组件在编译时自动给当前组件所有元素添加`data-v-[hash]`属性，并把添加了scoped属性的style标签下的样式添加属性选择器进行精确匹配
+
+* 动态路由跳转
+    > /goods/6037755f08f65d3a6c243514（Goods） -> /goods/6037755f08f65d3a6c243516（Goods）

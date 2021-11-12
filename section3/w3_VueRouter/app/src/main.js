@@ -1,10 +1,15 @@
 import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
+import request from './utils/request'
 import Vant from 'vant'
 import 'vant/lib/index.css'
 
 Vue.use(Vant)
+
+
+// 给Vue的原型添加方法
+Vue.prototype.$request = request
 
 
 Vue.config.productionTip = false

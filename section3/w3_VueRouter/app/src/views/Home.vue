@@ -34,8 +34,7 @@
     </div>
 </template>
 <script>
-import axios from 'axios'
-console.dir(axios);
+// import axios from 'axios'
 export default {
     name:'Home',
     data(){
@@ -45,8 +44,16 @@ export default {
             hotlist:[],
         }
     },
+    beforeRouteEnter(to,from,next){
+        console.log('Home.beforeRouteEnter')
+        next();
+    },
+    beforeRouteLeave(to,from,next){
+        console.log('Home.beforeRouteLeave')
+        next();
+    },
   created(){
-    console.log('Home',this);
+    console.log('Home.created',this);
 
     // 请求最新商品
     // axios.get('http://120.76.247.5:2003/api/goods',{
@@ -74,7 +81,7 @@ export default {
             size:8
         }
     }).then(({data})=>{
-        console.log('data',data);// {code,data,msg}
+        // console.log('data',data);// {code,data,msg}
         this.newlist = data.data;
     })
 

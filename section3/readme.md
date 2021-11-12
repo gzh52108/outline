@@ -1594,3 +1594,76 @@
 
 * 动态路由跳转
     > /goods/6037755f08f65d3a6c243514（Goods） -> /goods/6037755f08f65d3a6c243516（Goods）
+    * 监听动态路由变化
+        * watch
+            $route
+        * beforeRouteUpdate 
+            > 在路由**变化前**自动执行
+
+* 路由守卫
+    > 类似与组件生命周期函数的钩子函数，与路由相关，只有在路由变化时才执行的函数
+    * 与生命周期函数的区别
+        * 生命周函数：在组件创建、销毁、更新时执行
+        * 路由守卫：在路由跳转时执行
+    * 分类
+        * 组件内守卫
+            > 写在组件配置中
+            * beforeRouteUpdate(to,from,next)       一般在路由发生变化且组件复用时时触发（动态路由）
+            * beforeRouteEnter(to,from,next)        进入当前路由时触发
+            * beforeRouteLeave(to,from,next)        离开当前路由时触发
+        * 路由独享守卫
+            > 写在路由配置中
+            * beforeEnter(to,from,next)
+        * 全局守卫
+            > 是路由实例的方法，一般写在路由配置文件中
+            * router.beforeEach(fn)
+                * to
+                * from
+                * next()
+            * router.afterEach(fn)
+                * to
+                * from
+            * router.beforeResolve(fn)
+                * to
+                * from
+                * next()
+    
+    * 参数
+        * to        目标路由对象（$route）
+        * from      来源路由对象（$route）
+        * next()    是否放行
+    * 路由守卫应用
+        * 限制页面访问来源
+            * 商品页面只允许从首页、发现、购物车、搜索等页面进入
+                > 在组件内守卫实现效果
+        * 页面需要登录后才能访问
+            > 在全局守卫中实现效果
+            * 校验用户什么：token（令牌）
+
+* 路由变化时组件渲染过程
+    > 路由切换（路由守卫） -> 组件渲染（生命周期函数）
+    * 正常切换：`/home（Home失活组件） -> /goods/1（Goods激活组件）`
+        1. 导航被触发。
+        2. 在失活的组件里调用beforeRouteLeave离开守卫。
+        3. 调用全局的 beforeEach 守卫。
+        4. 在路由配置里调用 beforeEnter。
+        5. 解析异步路由组件。
+        6. 在被激活的组件里调用 beforeRouteEnter。
+        7. 调用全局的 beforeResolve 守卫 (2.5+)。
+        8. 导航被确认。
+        9. 调用全局的 afterEach 钩子。
+        10. 触发 DOM 更新。
+            > 执行组件生命周期函数
+    * 组件复用切换：`/goods/1（Goods） -> /goods/2（Goods）`
+        1. 导航被触发。
+        2. 调用全局的 beforeEach 守卫。
+        3. 在重用的组件里调用 beforeRouteUpdate 守卫 (2.2+)。
+        4. 解析异步路由组件。
+        5. 调用全局的 beforeResolve 守卫 (2.5+)。
+        6. 导航被确认。
+        7. 调用全局的 afterEach 钩子。
+        8. 触发 DOM 更新。
+            > 不会执行组件生命周期函数，需要手动处理页面刷新问题
+
+### 练习
+* 完成搜索、发现、购物车、注册页面

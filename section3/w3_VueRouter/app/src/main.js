@@ -5,6 +5,7 @@ import request from './utils/request'
 import Vant from 'vant'
 import 'vant/lib/index.css'
 
+// Vue.use(Vant)：注册全局组件，给原型添加$notify()，$toast()方法
 Vue.use(Vant)
 
 

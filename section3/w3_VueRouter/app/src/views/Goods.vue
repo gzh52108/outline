@@ -29,7 +29,7 @@
 
         <h4>{{data.category}}相关商品</h4>
             <van-row gutter="20">
-                <van-col span="12" v-for="item in goodslist" :key="item._id" style="height:260px;">
+                <van-col span="12" v-for="item in showlist" :key="item._id" style="height:260px;">
                     <div style="text-align:center" @click="goto('/goods/'+item._id)">
                         <van-image
                             width="100"
@@ -56,6 +56,7 @@
 </template>
 <script>
 // import request from '../utils/request'
+import {Notify} from 'vant'
 export default {
     name:'Goods',
     data(){
@@ -67,16 +68,22 @@ export default {
         }
     },
 
+    computed:{
+        showlist(){
+            return this.goodslist.filter(item=>item._id !== this.data._id).slice(0,6)
+        }
+    },
+
     // watch 监听路由变化
     watch:{
         '$route.params.id':function(n,o){
-            console.log(n,o)
-            this.getData()
+            console.log('watch=',n,o)
+            // this.getData()
         }
     },
 
     created(){
-        console.log('Goods',this)
+        console.log('Goods.created',this)
         
 
         // 未封装
@@ -125,34 +132,64 @@ export default {
     destroyed(){
         this.$parent.showTabbar = true;
     },
+
+    // 路由钩子函数
+    beforeRouteUpdate(to,from,next){
+        console.log('Goods.beforeRouteUpdate',to,from); 
+        const {id} = to.params;
+        // 跳转前进入该守卫，所以$route中的id与from中的id一致
+        // this.$route.params.id === from.params.id
+
+        this.getData(id)
+
+        next();
+    },
+    // beforeRouteEnter(to,from,next){
+    //     console.log('Goods.beforeRouteEnter')
+    //     next();
+    // },
+    beforeRouteEnter(to,from,next){console.log('from.path',from.path)
+        // 只允许从首页进入该页面
+        if(['/home','/discover','/cart'].includes(from.path)){
+            next();
+        }else{
+            Notify({ type: 'warning', message: '不能从当前页面进入商品页'});
+        }
+    },
+    beforeRouteLeave(to,from,next){
+        console.log('Goods.beforeRouteLeave')
+        next();
+    },
+
     methods:{
         goto(url){
             this.$router.push(url)
         },
-        getData(){
-            const {id} = this.$route.params;
+        getData(goodsid){
+            const id = goodsid || this.$route.params.id;
 
             this.$request.get('/goods/'+id).then(({data})=>{
-            console.log('goods',data)
-            this.data = data.data;
+                console.log('goods',data)
+                this.data = data.data;
 
+                if(this.goodslist.length === 0){
+                    this.getList(data.data.category);
+                }
+            });
+
+        },
+        getList(category){
             // 请求相关商品
             this.$request('/goods',{
                 params:{
-                    category:data.data.category,
+                    category,
                     total:false,
                     size:8
                 }
             }).then(({data})=>{
-                this.goodslist = data.data.filter(item=>{
-                    return item._id != this.data._id
-                });
-
-                if(this.goodslist.length > 6){
-                    this.goodslist = this.goodslist.slice(0,6)
-                }
+                
+                this.goodslist = data.data
             })
-        });
         }
     }
 }

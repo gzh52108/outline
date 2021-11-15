@@ -20,7 +20,7 @@
       <van-step>3.支付</van-step>
       <van-step>4.购买成功</van-step>
     </van-steps>
-    <van-empty description="购物车空空的" v-if="goodslist.length === 0">
+    <van-empty description="购物车空空的" v-if="cartlist.length === 0">
       <van-button
         round
         plain
@@ -30,7 +30,7 @@
         >去购买</van-button
       >
     </van-empty>
-    <van-swipe-cell v-else v-for="item in goodslist" :key="item._id">
+    <van-swipe-cell v-else v-for="item in cartlist" :key="item._id">
       <van-row type="flex" align="center" style="padding-left: 15px">
         <van-col span="2">
           <van-checkbox
@@ -92,45 +92,14 @@ export default {
     return {
       edit: false,
       selectIds: [],
-      goodslist: [
-        // {
-        //   _id: "6037755f08f65d3a6c243510",
-        //   goods_name:
-        //     "瑞士 爱宝时（EPOS）-Sportive运动系列海兽克拉肯 深海蓝 3441.131.96.56.30 潜水机械男表",
-        //   category: "运动表",
-        //   price: 9900,
-        //   sales_price: 7095,
-        //   img_url: "/img/a6e3bdaff5094acb86e77320d3074c47.jpg",
-        //   qty: 5,
-        // },
-        // {
-        //   _id: "6037755f08f65d3a6c243511",
-        //   goods_name:
-        //     "瑞士艺术制表大师 爱宝时（EPOS）-Sportive运动系列海兽克拉肯 砾岩黑 3441.131.20.55.30 潜水机",
-        //   category: "运动表",
-        //   price: 9900,
-        //   sales_price: 7095,
-        //   img_url: "/img/62973840d24947d696882fdec2174492.jpg",
-        //   qty: 1,
-        // },
-        // {
-        //   _id: "6037755f08f65d3a6c243512",
-        //   goods_name:
-        //     "瑞士艺术制表大师 爱宝时（EPOS）-Sportive运动系列 飞行员 3401.132.20.35.30 机械男表",
-        //   category: "运动表",
-        //   price: 9500,
-        //   sales_price: 6865,
-        //   img_url: "/img/6efd68a992fe4594b45eba4763c45a3f.jpg",
-        //   qty: 2,
-        // },
-      ],
+      
     };
   },
   computed: {
     totalPrice() {
       return (
         100 *
-        this.goodslist.reduce(
+        this.cartlist.reduce(
           (val, item) => val + item.sales_price * item.qty,
           0
         )
@@ -138,24 +107,20 @@ export default {
     },
     selectAll: {
       get() {
-        return this.goodslist.every((item) =>
+        return this.cartlist.every((item) =>
           this.selectIds.includes(item._id)
         );
       },
       set(val) {
-        this.selectIds = val ? this.goodslist.map((item) => item._id) : [];
+        this.selectIds = val ? this.cartlist.map((item) => item._id) : [];
       },
     },
+    cartlist(){
+      return this.$store.state.cartlist;
+    }
   },
   created(){
-    let cartlist = localStorage.getItem('cartlist'); // null
-    try{
-        cartlist = JSON.parse(cartlist) || [];
-    }catch(err){
-        cartlist = []
-    }
-
-    this.goodslist = cartlist;
+    
   },
   methods: {
     changeGoodsQty() {},
@@ -174,12 +139,12 @@ export default {
     remove(id){
         if(typeof id === 'string'){
             // 删除单个商品
-                this.goodslist = this.goodslist.filter(item=>{
+                this.cartlist = this.cartlist.filter(item=>{
                    return item._id != id
                })
         }else{
             // 批量删除
-            this.goodslist = this.goodslist.filter(item=>{
+            this.cartlist = this.cartlist.filter(item=>{
                 return !this.selectIds.includes(item._id)
             })
         }

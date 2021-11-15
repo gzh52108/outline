@@ -49,24 +49,15 @@ export default {
           icon:'manager-o'
         },
       ],
-      cartlist:[]
+    }
+  },
+  computed:{
+    cartlist(){
+      return this.$store.state.cartlist;
     }
   },
   created(){
-    // const index = this.menu.findIndex(item=>{
-    //   return item.path === this.$route.path
-    // })
-    //   console.log('App',this.$route,index)
-    //   this.active = index;
-
-
-    let cartlist = localStorage.getItem('cartlist'); // null
-    try{
-        cartlist = JSON.parse(cartlist) || [];
-    }catch(err){
-        cartlist = []
-    }
-    this.cartlist = cartlist;
+    
   },
   methods:{
     goto(url){

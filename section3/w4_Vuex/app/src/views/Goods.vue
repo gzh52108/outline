@@ -65,13 +65,15 @@ export default {
                 
             },
             goodslist:[],
-            cartlist:[]
         }
     },
 
     computed:{
         showlist(){
             return this.goodslist.filter(item=>item._id !== this.data._id).slice(0,6)
+        },
+        cartlist(){
+            return this.$store.state.cartlist;
         }
     },
 
@@ -87,56 +89,12 @@ export default {
         console.log('Goods.created',this)
         
 
-        // 未封装
-        // axios.get('http://120.76.247.5:2003/api/goods/'+id).then(({data})=>{
-        //     console.log('data',data);// {code,data,msg}
-        //     this.newlist = data.data;
-        // })
-
-        // 二次封装
-        // request.get('/goods/'+id).then(({data})=>{
-        //     console.log('goods',data)
-        // })
-
-        // 二次封装+原型链
-        // this.$request.get('/goods/'+id).then(({data})=>{
-        //     console.log('goods',data)
-        //     this.data = data.data;
-
-        //     // 请求相关商品
-        //     this.$request('/goods',{
-        //         params:{
-        //             category:data.data.category,
-        //             total:false,
-        //             size:8
-        //         }
-        //     }).then(({data})=>{
-        //         this.goodslist = data.data.filter(item=>{
-        //             return item._id != this.data._id
-        //         });
-
-        //         if(this.goodslist.length > 6){
-        //             this.goodslist = this.goodslist.slice(0,6)
-        //         }
-        //     })
-        // });
-
         this.getData();
 
 
         // 隐藏Tabbar
         this.$parent.showTabbar = false
 
-
-        // 获取本地存储数据
-        let cartlist = localStorage.getItem('cartlist'); // null
-        try{
-            cartlist = JSON.parse(cartlist) || [];
-        }catch(err){
-            cartlist = []
-        }
-
-        this.cartlist = cartlist
     },
     destroyed(){
         this.$parent.showTabbar = true;
@@ -153,22 +111,7 @@ export default {
 
         next();
     },
-    // beforeRouteEnter(to,from,next){
-    //     console.log('Goods.beforeRouteEnter')
-    //     next();
-    // },
-    // beforeRouteEnter(to,from,next){console.log('from.path',from.path)
-    //     // 只允许从首页进入该页面
-    //     if(['/home','/discover','/cart'].includes(from.path)){
-    //         next();
-    //     }else{
-    //         Notify({ type: 'warning', message: '不能从当前页面进入商品页'});
-    //     }
-    // },
-    beforeRouteLeave(to,from,next){
-        console.log('Goods.beforeRouteLeave')
-        next();
-    },
+    
 
     methods:{
         goto(url){
@@ -209,17 +152,17 @@ export default {
             // 不存在：添加
             const current = this.cartlist.find(item=>item._id === _id);
             if(current){
-                current.qty++;
+                this.$store.commit('changeqty',{_id,qty:current.qty+1})
             }else{
                 const goodsData = {
                     _id,goods_name,price,sales_price,img_url,
                     qty:1
                 }
-                this.cartlist.push(goodsData)
+                this.$store.commit('add',goodsData)
 
             }
 
-            localStorage.setItem('cartlist',JSON.stringify(this.cartlist))
+            
         },
         buyNow(){
             this.addToCart();

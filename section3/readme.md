@@ -1693,3 +1693,63 @@
                 2. 客户端存储token到cookie或localStorage
                 3. 每次请求携带token发送给服务器校验（一般通过请求头发送token）
                 4. 服务器校验token，并返回校验结果
+* 多组件数据共享
+    * 共享购物车数据
+        * App
+        * Goods
+        * Cart
+    * 方案
+        * locaStorage
+        * vuex
+* Vuex
+    > Vue的核心插件，用于实现数据共享（实现全局共享：所有的组件可以直接获取、修改、监听等操作）
+    * 使用步骤
+        1. 安装vuex
+            ```bash
+                npm install vuex
+            ```
+        2. 引入与安装插件
+            ```js
+                import Vuex from 'vuex'
+
+                Vue.use(Vuex);
+            ```
+        3. 实例化一个数据仓库store
+            > 设置核心配置
+            ```js
+                const store = new Vuex.Store({
+                    state:{
+                        cartlist:[]
+                    },
+                    mutations:{
+                        add(state,payload){
+                            // state: 状态
+                            // payload: 触发当前mutation时传入的参数
+                            state.cartlist.unshift(payload);
+                        }
+                    }
+                })
+            ```
+        4. 把store注入Vue根实例
+            > 注入store后，给每一组件实例添加`$store`属性
+            ```js
+                new Vue({
+                    ...,
+                    store:store
+                })
+            ```
+        5. 在组件中使用
+            > this.$store
+
+    * 核心配置
+        * state 状态，类似与组件中的data，用于存放需要共享的数据
+            > 组件中获取：this.$store.state
+        * muations  修改state的唯一方法，类似于组件中的methods，用于修改state
+            > 调用方式：this.$store.commit(mutation)
+            ```js
+                this.$store.commit('add')
+                this.$store.commit('add',{_id,goods_name,price})
+            ```
+
+* 数据持久化
+    > 利用本地存储技术实现数据长期存储的方案

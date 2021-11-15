@@ -11,16 +11,24 @@ import Cart from '../views/Cart.vue'
 import Mine from '../views/Mine.vue'
 import Search from '../views/Search.vue'
 import Goods from '../views/Goods.vue'
+import NotFound from '../views/NotFound.vue'
 
 // 3. 安装路由插件
 Vue.use(VueRouter)
 // 4. 实例化路由，并配置参数
 const router = new VueRouter({
   routes:[
+    {
+      path:'/',
+      // 路由重定向
+      redirect:'/home',
+      // redirect:{name:'Home'}
+    },
     // 当浏览器地址为/home时，渲染Home组件的内容
     {
       path:'/home',
       component:Home,
+      name:'Home',
     //   路由独享守卫
       beforeEnter(to,from,next){
           console.log('Home.beforeEnter')
@@ -67,6 +75,15 @@ const router = new VueRouter({
           next();
       }
     },
+    // 404页面
+    {
+      path:'/notfound',
+      component:NotFound,
+    },
+    {
+      path:'*',
+      redirect:'/notfound'
+    }
   ]
 })
 
@@ -86,7 +103,7 @@ router.beforeEach(function(to,from,next){
         userInfo = {}
       }
       if(userInfo._id){
-        // 假设所有的用户都是好人,先放行
+        // 假设所有的用户都是好人,先放行，后校验
         // 如果用户已登录，则校验用户身份
         router.app.$request.get('/user/verify',{
           params:{
@@ -96,7 +113,7 @@ router.beforeEach(function(to,from,next){
             Authorization:userInfo.authorization
           }
         }).then(({data})=>{
-          if(data.code === 400){
+          if(data.code === 401){
             localStorage.removeItem('userInfo')
             router.push({
               path:'/login',

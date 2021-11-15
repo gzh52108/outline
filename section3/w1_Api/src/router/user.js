@@ -5,6 +5,7 @@ module.exports = router;
 
 const db = require('../db')
 const { formatData, dataFilter, jiamiPassword } = require('../utils')
+const token = require('../utils/token')
 
 const colName = 'user'
 
@@ -44,6 +45,17 @@ router.post('/add', async function (req, res) {
 
     res.send(formatData({
         code: result.code
+    }))
+})
+
+// 校验用户token: /api/user/verify
+router.get('/verify', async function (req, res) {
+    const Authorization = req.get('Authorization')
+
+    const result = token.verify(Authorization)
+    
+    res.send(formatData({
+        code: result ? 200 : 400
     }))
 })
 

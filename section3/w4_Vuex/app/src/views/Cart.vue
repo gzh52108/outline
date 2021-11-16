@@ -50,7 +50,7 @@
           >
             <template #num>
               <van-stepper
-                v-model="item.qty"
+                v-bind:value="item.qty"
                 :name="item._id"
                 theme="round"
                 button-size="20px"
@@ -96,14 +96,17 @@ export default {
     };
   },
   computed: {
-    totalPrice() {
-      return (
-        100 *
-        this.cartlist.reduce(
-          (val, item) => val + item.sales_price * item.qty,
-          0
-        )
-      );
+    // totalPrice() {
+    //   return (
+    //     100 *
+    //     this.cartlist.reduce(
+    //       (val, item) => val + item.sales_price * item.qty,
+    //       0
+    //     )
+    //   );
+    // },
+    totalPrice(){
+      return this.$store.getters.totalPrice*100
     },
     selectAll: {
       get() {
@@ -123,7 +126,10 @@ export default {
     
   },
   methods: {
-    changeGoodsQty() {},
+    changeGoodsQty(val,detail) {
+      console.log('changeQty',val,detail)
+      this.$store.commit('changeqty',{_id:detail.name,qty:val})
+    },
     goto(url) {
       this.$router.push(url);
     },
@@ -138,15 +144,9 @@ export default {
     },
     remove(id){
         if(typeof id === 'string'){
-            // 删除单个商品
-                this.cartlist = this.cartlist.filter(item=>{
-                   return item._id != id
-               })
+          this.$store.commit('remove',{_id:id})
         }else{
-            // 批量删除
-            this.cartlist = this.cartlist.filter(item=>{
-                return !this.selectIds.includes(item._id)
-            })
+          this.$store.commit('remove',{_id:this.selectIds})
         }
     }
   },

@@ -1701,6 +1701,11 @@
     * 方案
         * locaStorage
         * vuex
+    * 多组件共享需要解决以下问题
+        1. 数据唯一性：一个应用之应该有一份共享的数据
+        2. 数据维护问题：方便实现数据的CRUD
+        3. 数据更新问题：在某个组件中跟新数据，其他组件中的数据跟着改变
+        4. 组件刷新问题：数据有修改时，组件自动刷新
 * Vuex
     > Vue的核心插件，用于实现数据共享（实现全局共享：所有的组件可以直接获取、修改、监听等操作）
     * 使用步骤
@@ -1739,13 +1744,19 @@
                 })
             ```
         5. 在组件中使用
-            > this.$store
+            * 读取数据：`this.$store.state.xxx`
+            * 修改数据：`this.$store.commit(mutation,payload)`
+            * 监听数据
+                > vuex自定监听state状态修改，当state被修改时，组件会自动刷新
 
     * 核心配置
         * state 状态，类似与组件中的data，用于存放需要共享的数据
-            > 组件中获取：this.$store.state
+            > 组件中获取：`this.$store.state`
         * muations  修改state的唯一方法，类似于组件中的methods，用于修改state
             > 调用方式：this.$store.commit(mutation)
+            * 参数
+                * state     状态
+                * payload   调用时传入的参数
             ```js
                 this.$store.commit('add')
                 this.$store.commit('add',{_id,goods_name,price})
@@ -1753,3 +1764,29 @@
 
 * 数据持久化
     > 利用本地存储技术实现数据长期存储的方案
+
+
+## day4-2
+
+### 面试题
+* 重定向中301与302状态码有什么不同
+    * 301 代表永久重定向
+    * 302 代表临时重定向
+
+### 知识点
+* 核心配置
+    * state 状态，类似与组件中的data，用于存放需要共享的数据
+        * 获取方式：`store.state.xxx`
+    * muations  修改state的唯一方法，类似于组件中的methods，用于修改state
+        * 调用方式：`store.commit(mutation)`
+    * getters   类似于组件中的computed，一般用于根据state的值计算出其他值
+        * 参数  
+            1. state
+            2. getters
+        * 获取方式：`store.getters.xxx`
+
+
+
+
+### 练习
+* 把用户信息写入vuex

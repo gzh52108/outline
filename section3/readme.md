@@ -1785,7 +1785,17 @@
             2. getters
         * 获取方式：`store.getters.xxx`
 
+    * actions 类似于mutation，一般用户异步操作
+        * 参数
+            * context   一个类似于store的对象，拥有与store几乎一致的属性、方法
+            * payload
+        * 调用方式：`store.dispatch(action)`
 
+* vuex的模块化
+    > 每个模块拥有自己的 state、mutations、actions、getters等，模块化默认只影响state的获取，mutations,actions,getters公用命名空间（getters有重名属性时报错，mutations,actions会变成一个数组）
+    * modules
+        * namespaced 命名空间
+            > 设置命名空间后，影响mutations,actions,getters的获取
 
 
 ### 练习

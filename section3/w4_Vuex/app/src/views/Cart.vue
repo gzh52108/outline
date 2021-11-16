@@ -119,7 +119,7 @@ export default {
       },
     },
     cartlist(){
-      return this.$store.state.cartlist;
+      return this.$store.state.cart.cartlist;
     }
   },
   created(){

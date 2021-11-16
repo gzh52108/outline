@@ -33,25 +33,40 @@ export default {
     }
   },
   created() {
-    console.log("Login", this);
+    console.log("Login", this.$store.state);
   },
   methods:{
-    onSubmit(values){
+    async onSubmit(values){
       // values： 必须给表单元素添加name属性才能获取值
       console.log('values',values)
 
     // axios.get(url,config)
     // axios.post(url,data,config)
-      this.$request.post('/login',values).then(({data})=>{
-        console.log('data=',data);
+      // this.$request.post('/login',values).then(({data})=>{
+      //   console.log('data=',data);
 
-        localStorage.setItem('userInfo',JSON.stringify(data.data))
+      //   this.$store.commit('login',data.data)
 
+        
+
+      //   this.$toast('登录成功')
+
+      //   const {targetUrl='/mine'} = this.$route.query;
+      //   this.$router.replace(targetUrl)
+      // })
+
+      const data = await this.$store.dispatch('login',values)
+      // 设置命名空间后写法
+      // const data = await this.$store.dispatch('user/login',values)
+
+      console.log('data=',data);
+      if(data.code === 200){
         this.$toast('登录成功')
-
+  
         const {targetUrl='/mine'} = this.$route.query;
         this.$router.replace(targetUrl)
-      })
+
+      }
     }
   }
 };

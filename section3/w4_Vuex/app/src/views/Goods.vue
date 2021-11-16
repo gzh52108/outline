@@ -73,7 +73,7 @@ export default {
             return this.goodslist.filter(item=>item._id !== this.data._id).slice(0,6)
         },
         cartlist(){
-            return this.$store.state.cartlist;
+            return this.$store.state.cart.cartlist;
         }
     },
 

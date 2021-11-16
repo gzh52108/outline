@@ -13,7 +13,7 @@
       :to="item.path"
       :badge="item.path==='/cart' ? cartlist.length : null"
       >
-      {{item.text}}
+      {{item.path === '/mine' && isLogin ? userInfo.username : item.text}}
       </van-tabbar-item>
   </van-tabbar>
   </div>
@@ -53,7 +53,19 @@ export default {
   },
   computed:{
     cartlist(){
-      return this.$store.state.cartlist;
+      // 模块化前写法
+      // return this.$store.state.cartlist;
+      // 模块化后写法
+      return this.$store.state.cart.cartlist;
+    },
+    isLogin(){
+      return this.$store.getters.isLogin;
+      // 设置命名空间后
+      return this.$store.getters['user/isLogin']
+    },
+    userInfo(){
+      // return this.$store.state.userInfo;
+      return this.$store.state.user.userInfo;
     }
   },
   created(){

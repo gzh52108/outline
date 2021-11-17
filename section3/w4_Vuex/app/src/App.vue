@@ -116,7 +116,7 @@ export default {
 <style>
 .price del{color:#666;margin-right: 5px;}
 .price del::before{
-    content:'￥'
+    content:'￥';
 }
 .price span{color:#f00}
 .price span::before{

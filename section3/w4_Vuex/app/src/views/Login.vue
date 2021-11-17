@@ -24,6 +24,7 @@
   </div>
 </template>
 <script>
+import {mapActions} from 'vuex'
 export default {
   name: "Login",
   data(){
@@ -33,9 +34,40 @@ export default {
     }
   },
   created() {
-    console.log("Login", this.$store.state);
+    console.log("Login", this);
   },
   methods:{
+    // @mapActions
+    // 数组写法
+    ...mapActions(['globalLogin']),
+    // 对象写法
+    ...mapActions({
+      login:'user/login',
+      login2:async function(dispatch,payload){
+        const data = await dispatch('user/login',payload)
+        if(data.code === 200){
+          this.$toast('登录成功')
+  
+          const {targetUrl='/mine'} = this.$route.query;
+          this.$router.replace(targetUrl)
+
+        }
+      }
+    }),
+    // 命名空间写法
+    ...mapActions('user',{
+      login3:'login',
+      async login4(dispatch,payload){
+        const data = await dispatch('login',payload)
+        if(data.code === 200){
+          this.$toast('登录成功')
+  
+          const {targetUrl='/mine'} = this.$route.query;
+          this.$router.replace(targetUrl)
+
+        }
+      }
+    }),
     async onSubmit(values){
       // values： 必须给表单元素添加name属性才能获取值
       console.log('values',values)
@@ -55,18 +87,23 @@ export default {
       //   this.$router.replace(targetUrl)
       // })
 
-      const data = await this.$store.dispatch('login',values)
+      // const data = await this.$store.dispatch('login',values)
       // 设置命名空间后写法
       // const data = await this.$store.dispatch('user/login',values)
+      
 
-      console.log('data=',data);
-      if(data.code === 200){
-        this.$toast('登录成功')
+      // console.log('data=',data);
+      // if(data.code === 200){
+        //   this.$toast('登录成功')
   
-        const {targetUrl='/mine'} = this.$route.query;
-        this.$router.replace(targetUrl)
+      //   const {targetUrl='/mine'} = this.$route.query;
+      //   this.$router.replace(targetUrl)
 
-      }
+      // }
+
+        // mapActions后的写法
+        // const data = await this.login(values);
+        this.login4(values)
     }
   }
 };

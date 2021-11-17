@@ -20,7 +20,7 @@
 </template>
 
 <script>
-
+import {mapState,mapGetters,mapMutations,mapActions} from 'vuex'
 export default {
   name: 'App',
   data(){
@@ -52,6 +52,34 @@ export default {
     }
   },
   computed:{
+    // @mapState
+    // 数组写法：映射全局state（属性不可修改）
+    ...mapState(['index','a']),
+    // 对象写法：映射所有state
+    ...mapState({
+      idx:'index', // 映射全局state中的index到idx
+      cartlist2:function(state){
+        return state.cart.cartlist
+      },
+      userInfo2:state=>state.user.userInfo,
+    }),
+    // 设置命名空间后简化写法
+    ...mapState('user',{
+      user:'userInfo'
+    }),
+
+    // @mapGetters
+    // 数组写法：映射全局getters（属性不可修改）
+    ...mapGetters(['globalA','totalPrice']),
+    // 对象写法：可以修改属性名，不支持函数
+    ...mapGetters({
+      ga:'globalA',
+      isLogin2:'user/isLogin'
+    }),
+    // 设置命名空间后简化写法
+    ...mapGetters('user',{
+      isLogin3:'isLogin'
+    }),
     cartlist(){
       // 模块化前写法
       // return this.$store.state.cartlist;
@@ -66,7 +94,7 @@ export default {
     userInfo(){
       // return this.$store.state.userInfo;
       return this.$store.state.user.userInfo;
-    }
+    },
   },
   created(){
     

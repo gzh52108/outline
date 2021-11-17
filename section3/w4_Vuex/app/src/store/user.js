@@ -1,4 +1,5 @@
 import {updateStorage} from '@/utils'
+import request from '@/utils/request'
 
 let userInfo = localStorage.getItem('userInfo'); // null
 try{
@@ -9,13 +10,14 @@ try{
 
 export default {
     // 设置命名空间
-    // namespaced:true,
+    namespaced:true,
 
     state:{
         userInfo,
     },
     getters:{
         isLogin(state,getters,rootState,rootGetters){
+            console.log('user.getters=',state,getters,rootState,rootGetters)
             // state: 当前模块的state：{userInfo}
             // getters:当前模块的getters
             // rootState: 全局state: {user:{userInfo},cart:{cartlist}}
@@ -29,6 +31,7 @@ export default {
          // 用户相关
         // store.commit('login',userInfo)
         login(state,payload){
+            console.log('mutations',arguments)
             state.userInfo = payload;
 
             updateStorage('userInfo',payload)
@@ -50,6 +53,10 @@ export default {
         
             // 触发mutation，进而修改userInfo
             context.commit('login',data.data)
+
+            // 触发其他模块mutation/action
+            // context.commit('cart/add')
+            // context.dispatch('cart/add')
             
             // 不因该在actions中编写页面业务逻辑代码，而是把后端返回的数据返回到调用action的位置再进行页面业务逻辑的操作
 

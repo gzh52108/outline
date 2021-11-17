@@ -1800,3 +1800,41 @@
 
 ### 练习
 * 把用户信息写入vuex
+
+
+## day4-3
+
+### 复习
+* vuex
+    * 是什么
+    * 有什么用
+    * 怎么用
+* Vue核心配置
+    * state
+    * getters
+    * mutations
+    * actions
+    * modules       模块化
+        > 模块化默认只影响state的操作
+        ```js
+            store.state.xxx
+            store.state.[module].xxx
+        ```
+        * 命名空间
+            > 设置命名空间后，影响getters、mutations、actions的操作
+            ```js
+                store.getters.xxx -> store.getters['module/xxx']
+                store.commit('xxx') -> store.commit['module/xxx']
+                store.dispatch('xxx') -> store.dispatch['module/xxx']
+            ```
+
+### 知识点
+* Vuex映射
+    * 映射方法
+        * mapState(namespace?,data)      映射state到组件的computed
+        * mapGetters(namespace?,data)    映射getter到组件的computed
+        * mapMutations(namespace?,data)  映射mutation到组件的methods
+        * mapActions(namespace?,data)    映射action到组件的methods
+    * 解决了什么问题
+        * 方便获取vuex数据与方法的问题
+        * 代码可维护性的问题

@@ -20,7 +20,8 @@ const store  = new Vuex.Store({
     // 核心配置
     // 全局状态
     state:{
-        
+        index:10,
+        a:20
         
     },
     getters:{

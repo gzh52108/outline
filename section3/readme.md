@@ -1846,3 +1846,30 @@
     * git
         * 远程仓库
         * 代码冲突
+
+* 后台管理系统
+    * 必须登录后才能访问
+    * 页面访问权
+        * 先配置所有路由，然后通过路由守卫控制页面是否可访问
+        * 先配置基础路由，然后根据用户登录状态**动态添加路由**
+            * router.addRoute()
+            ```js
+                // 用户登录成功后，执行以下代码
+                router.addRoute({
+                    path:'/home',
+                    component:Home
+                })
+                router.addRoute('manage',{
+                    path:'/home',
+                    component:Home
+                })
+            ```
+
+* vueCLI创建的项目支持sass
+    * 依赖
+        * sass-loader@10.2.0
+        * sass (dart sass/node-sass(不推荐))
+
+* 嵌套路由（子路由）
+    * 配置children
+    * 嵌套<router-view/>

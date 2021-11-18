@@ -107,8 +107,9 @@ export default {
               type: "success",
             });
 
-            // 动态添加路由
+            // 登录成功后，动态添加路由
             // this.$router.addRoute(authRoutes)
+            // this.$store.commit('addRoute')
 
             const { redirectTo = "/manage/home" } = this.$route.query;
 

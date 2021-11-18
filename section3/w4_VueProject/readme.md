@@ -24,4 +24,4 @@
 ![](./imgs/2.png)
 ![](./imgs/3.png)
 
-<img src="./img/4.png" style="width:200px" />
+<img src="./img/4.png" style="width:300px" />

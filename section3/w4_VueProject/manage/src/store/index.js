@@ -40,6 +40,14 @@ const store = new Vuex.Store({
             state.addedRoute = true;
         }
     },
+    removeRoute(state){
+      console.log('removeRoute')
+      router.addRoute({
+        path:'/manage',
+        name:'Manage',
+        children:[]
+      })
+    }
   },
   actions: {
     async login(ctx,payload){
@@ -54,6 +62,10 @@ const store = new Vuex.Store({
 
     //   把请求回来的数据返回组件（组件需要页面业务逻辑操作）
       return data;
+    },
+    logout(ctx){
+      ctx.commit('logout')
+      ctx.commit('removeRoute')
     }
   }
 });

@@ -54,7 +54,7 @@
   </el-container>
 </template>
 <script>
-import { mapState, mapGetters, mapMutations } from "vuex";
+import { mapState, mapGetters, mapMutations, mapActions } from "vuex";
 export default {
   name: "Manage",
   data() {
@@ -144,7 +144,13 @@ export default {
     ...mapGetters(["isLogin"]),
   },
   methods: {
-    ...mapMutations(["logout"]),
+    ...mapActions({
+      logout(dispatch){
+        dispatch('logout');
+
+        this.$router.push('/login')
+      }
+    }),
   },
 };
 </script>

@@ -38,6 +38,7 @@ export default {
                 },
                 {
                     path:'edit/:id',
+                    name:'UserEdit',
                     component:UserEdit,
                 },
             ]

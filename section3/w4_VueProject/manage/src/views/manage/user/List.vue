@@ -29,9 +29,10 @@
     </el-table>
     <el-pagination
       :page-size="size"
-      layout="total, prev, pager, next"
+      layout="total, prev, pager, next,sizes"
       :total="total"
     @current-change="pageChange"
+    @size-change="sizeChange"
       >
     </el-pagination>
   </div>
@@ -43,12 +44,23 @@ export default {
       return {
           tableData:[],
         total:0,
-        size:10,
+        size:20,
         page:1,
       }
   },
   created() {
+      console.log('List.created')
       this.getData();
+  },
+  destroyed(){
+      console.log('List.destroyed')
+  },
+  activated(){
+      console.log('List.activated')
+  },
+  deactivated(){
+      console.log('List.deactivated')
+
   },
   methods: {
     async getData() {
@@ -79,6 +91,11 @@ export default {
     },
     pageChange(pageNum){
         this.page = pageNum;
+
+        this.getData();
+    },
+    sizeChange(size){
+        this.size = size;
 
         this.getData();
     }

@@ -1,7 +1,10 @@
 <template>
     <div>
         用户管理
-        <router-view/>
+        <!-- <keep-alive include="UserList"> -->
+        <keep-alive :include="/List$/">
+            <router-view/>
+        </keep-alive>
     </div>
 </template>
 <script>

@@ -1873,3 +1873,13 @@
 * 嵌套路由（子路由）
     * 配置children
     * 嵌套<router-view/>
+
+
+* keep-alive
+    * 缓存组件(包括状态、滚动条位置等)，不让组件销毁
+    * include: 设置需要缓存的组件
+    * exclude: 设置不需要缓存的组件
+
+* scrollBehavior
+    > 保持滚动条位置
+    

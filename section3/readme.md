@@ -1882,4 +1882,36 @@
 
 * scrollBehavior
     > 保持滚动条位置
-    
+
+## day5-1
+
+### 知识点
+* 页面转场动画
+    > 过渡动画
+    * 进场动画：隐藏->显示
+    * 出场动画：显示->隐藏
+* Vue的过渡动画
+    * `<transition/>`
+    * `<transition-group/>`
+    > transition与transition-group并没有实现具体的动画效果，需要用户自行实现
+    ```js
+        <transition>
+            <div></div>
+        </transition>
+        <transition-group>
+            <div></div>
+            <p></p>
+        </transition-group>
+    ```
+    * transition生效的条件（触发动画场景）
+        * 条件渲染 (使用 v-if)
+        * 条件展示 (使用 v-show)
+        * 动态组件
+            > 组件的内容不固定，根据不同的条件渲染不同的内容
+        * 组件根节点
+* Vue扩展
+    * 自定义组件
+        * 全局：Vue.component()
+        * 局部：components
+    * 自定义指令
+        > vue内置14个指令，如果还不够用，可以自定义

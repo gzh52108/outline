@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>24.自定义指令</title>
+    <style>
+        div{opacity:1;transition: opacity 0.5s;}
+        [v-cloak]{
+            opacity: 0;
+        }
+        /* 骨架屏 */
+    </style>
+</head>
+<body>
+    <h1>24.自定义指令</h1>
+    <div id="app">
+        <div v-cloak>{{msg}}</div>
+        <h4 v-pre>双花括号的用法：{{count}}</h4>
+        <p v-once>count:{{count}}</p>
+        <button @click="count++">count:{{count}}</button>
+    </div>
+    <script src="js/vue.js"></script>
+    <script>
+        const vm = new Vue({
+            data:{
+                msg:'hello',
+                count:1
+            },
+
+           
+        })
+
+        // 模拟延迟
+        setTimeout(()=>{
+            vm.$mount('#app')
+        },2500)
+
+        
+    </script>
+</body>
+</html>

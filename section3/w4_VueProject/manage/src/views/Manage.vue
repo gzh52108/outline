@@ -48,7 +48,9 @@
         </el-menu>
       </el-aside>
       <el-main>
+        <transition name="slide-left">
           <router-view></router-view>
+        </transition>
       </el-main>
     </el-container>
   </el-container>
@@ -191,5 +193,26 @@ export default {
       }
     }
   }
+}
+
+.slide-left-enter {
+    transform: translate(100%, 0);
+}
+.slide-left-enter-active{
+    position: absolute;left:0;top:0;right:0;bottom:0;
+    transition: transform 0.3s ease-in-out;
+}
+.slide-left-enter-to {
+    transform: translate(0, 0);
+}
+.slide-right-enter {
+    transform: translate(-100%, 0);
+}
+.slide-right-enter-active{
+    position: absolute;left:0;top:0;right:0;bottom:0;
+    transition: transform 0.3s ease-in-out;
+}
+.slide-right-enter-to {
+    transform: translate(0, 0);
 }
 </style>

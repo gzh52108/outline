@@ -1914,4 +1914,19 @@
         * 全局：Vue.component()
         * 局部：components
     * 自定义指令
-        > vue内置14个指令，如果还不够用，可以自定义
+        > vue内置14个指令，如果还不够用，可以自定义，
+        * 指令完整格式：v-name:arg.modiffer="value"
+            * name: 指令名称
+            * arg:指令参数
+            * modiffer:指令修饰符
+            * value: 指令值
+        * 全局指令：Vue.directive(name,options)
+        * 局部指令: directives:{name:options}
+
+* 设置用户权限
+    * 页面访问权限
+        * 路由守卫
+        * 动态添加路由
+    * 按钮权限（功能权限）
+    * 数据权限
+        

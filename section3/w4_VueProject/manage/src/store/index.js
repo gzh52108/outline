@@ -53,6 +53,28 @@ const store = new Vuex.Store({
     async login(ctx,payload){
       const {data} = await request.post("/login", payload);
       if(data.code === 200){
+        // if(data.data.username === 'laoxie'){
+        //   data.data.permissions = {
+        //     edit:true,
+        //     delete:true,
+        //     add:true,
+        //     list:true
+        //   }
+        // }else if(data.data.username === 'tiantian'){
+        //   data.data.permissions = {
+        //     edit:true,
+        //     delete:false,
+        //     add:false,
+        //     list:true
+        //   }
+        // }else if(data.data.username === 'jingjing'){
+        //   data.data.permissions = {
+        //     edit:false,
+        //     delete:false,
+        //     add:false,
+        //     list:true
+        //   }
+        // }
           // 更新userInfo
         ctx.commit("login", data.data);
 

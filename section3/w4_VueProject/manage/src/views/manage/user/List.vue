@@ -23,8 +23,8 @@
           {{formatDate(row.regtime)}}
       </el-table-column>
       <el-table-column label="操作" v-slot="{row}">
-          <el-button type="primary" size="small" @click="editItem(row._id)">编辑</el-button>
-          <el-button type="danger" size="small" @click="removeItem(row._id)">删除</el-button>
+          <el-button type="primary" size="small" @click="editItem(row._id)" v-pomission:edit>编辑</el-button>
+          <el-button type="danger" size="small" @click="removeItem(row._id)" v-pomission:delete>删除</el-button>
       </el-table-column>
     </el-table>
     <el-pagination

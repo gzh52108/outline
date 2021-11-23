@@ -20,6 +20,10 @@
         <h4 v-pre>双花括号的用法：{{count}}</h4>
         <p v-once>count:{{count}}</p>
         <button @click="count++">count:{{count}}</button>
+
+        <!-- <div v-focus>focus指令</div>
+        <p v-focus:a.abc.cba.nba="msg">focus指令</p> -->
+        <input v-focus />
     </div>
     <script src="js/vue.js"></script>
     <script>
@@ -28,14 +32,23 @@
                 msg:'hello',
                 count:1
             },
+        })
 
-           
+        // 全局指令
+        Vue.directive('focus',{
+            bind(el,binding){
+                console.log('bind',el,binding)
+            },
+            inserted(el,binding,vNode,oldNode){
+                console.log('inserted',vNode,oldNode)
+                el.focus();
+            }
         })
 
         // 模拟延迟
-        setTimeout(()=>{
+        // setTimeout(()=>{
             vm.$mount('#app')
-        },2500)
+        // },2500)
 
         
     </script>

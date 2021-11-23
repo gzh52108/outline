@@ -37,6 +37,23 @@ Vue.prototype.$request = request;
 Vue.config.productionTip = false
 
 
+// 定义按钮级别权限指令
+// 用于控制用户在后台管理系统中的权限
+Vue.directive('pomission',{
+  inserted(el,binding,vNode){
+    // 获取用户权限列表
+    const {permissions} = store.state.userInfo;
+    console.log('binding',binding,permissions,store.state)
+
+    // 获取具体功能权限
+    if(!permissions[binding.arg]){
+      el.disabled = true;
+      el.classList.add('is-disabled')
+    }
+  }
+})
+
+
 // 全局路由守卫
 router.beforeEach(function (to, from, next) {
   console.log('beforeEach');

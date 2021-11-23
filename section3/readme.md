@@ -1922,6 +1922,33 @@
             * value: 指令值
         * 全局指令：Vue.directive(name,options)
         * 局部指令: directives:{name:options}
+    * 过滤器filter
+        * 全局过滤器：Vue.filter(name,fn)
+        * 局部过滤器: filters:{name,fn}
+        ```js
+            <div>{{msg | upper}}</div>
+            <div>{{upper(msg)}}</div>
+
+            {
+                filters:{
+                    upper:function(val){
+                        return val.toUpperCase()
+                    }
+                },
+                methods:{
+                    upper(val){
+                        return val.toUpperCase()
+                    }
+                }
+            }
+        ```
+    * mixin混合（提取组件的公共代码）
+        * 全局：Vue.mixin(options)
+        * 局部：mixins:[]
+
+        > 属性合并规则：mixin中的属性覆盖，方法与生命周期函数同时生效
+    * 插件plugin
+        * 使用插件：Vue.use()
 
 * 设置用户权限
     * 页面访问权限
@@ -1929,4 +1956,15 @@
         * 动态添加路由
     * 按钮权限（功能权限）
     * 数据权限
-        
+
+* 项目上线要求
+    * 路由模式：mode
+        * history   更像一个网站（美）
+        * hash      路径带井号（丑）
+
+        ```js
+             // 运行 npm run serve: process.env.NODE_ENV的值为development
+             // 运行 npm run build: process.env.NODE_ENV的值为production
+             mode:process.env.NODE_ENV === 'production' ? 'history' : 'hash',
+
+        ```

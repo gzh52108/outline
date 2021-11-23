@@ -8,6 +8,7 @@ import Login from '../views/Login.vue'
 Vue.use(VueRouter)
 // 4. 实例化路由，并配置参数
 const router = new VueRouter({
+  // mode:process.env.NODE_ENV === 'production' ? 'history' : 'hash',
   routes:[
     {
       path:'/',

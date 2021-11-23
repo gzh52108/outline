@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>27.Vue插件</title>
+</head>
+
+<body>
+    <h1>27.Vue插件</h1>
+    <div id="app">
+        <div>{{msg}}</div>
+    </div>
+    <script src="js/vue.js"></script>
+    <script>
+        // 定义插件
+        const myPlugin = function(Vue){
+            console.log('myPlugin')
+
+            // 操作Vue原型
+            Vue.prototype.$request = request;
+
+            Vue.mixin()
+        }
+        const yourPlugin = {
+            install(Vue){
+                console.log('yourPlugin');
+
+                // 注册所有组件
+                ['Button','Table','Form'].forEach(item=>{
+                    Vue.component('EL'+item,{
+
+                    })
+
+                })
+            }
+        }
+
+
+        // 使用插件
+        Vue.use(myPlugin)
+        Vue.use(yourPlugin)
+
+        // elementUI
+        // Vue.use(elementUI)
+
+        const vm = new Vue({
+            data: {
+                msg: 'hello',
+                count: 1,
+                price: 998
+            }
+        })
+
+        
+
+        vm.$mount('#app')
+
+
+
+
+    </script>
+</body>
+
+</html>

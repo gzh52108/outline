@@ -17,6 +17,8 @@ import NotFound from '../views/NotFound.vue'
 Vue.use(VueRouter)
 // 4. 实例化路由，并配置参数
 const router = new VueRouter({
+  // process.env.NODE_ENV: production生产环境,devlopment开发环境
+  // mode:process.env.NODE_ENV === 'production' ? 'history' : 'hash', // history
   routes:[
     {
       path:'/',

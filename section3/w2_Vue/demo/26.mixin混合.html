@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>26.mixin混合</title>
+</head>
+
+<body>
+    <h1>26.mixin混合</h1>
+    <div id="app">
+        <div>{{msg}}</div>
+        <my-button>按钮</my-button>
+        <myheader></myheader>
+        <mybody></mybody>
+    </div>
+    <script src="js/vue.js"></script>
+    <script>
+        // 全局：Vue.mixin(options)
+        Vue.mixin({
+            data() {
+                return {
+                    flag: 'qf'
+                }
+            },
+            computed:{
+                checkAll(){
+                    return true;
+                }
+            }
+        })
+
+        // 局部mixin
+        const lxMixin = {
+            data(){
+                return {
+                    type:'lx mixin'
+                }
+            }
+        }
+
+        const ajaxMixin = {
+            data(){
+                return {
+                    ajaxData:[],
+                    name:'ajaxMixin'
+                }
+            },
+            created(){
+                console.log('mixin',this.name,'ajax request')
+                this.getData()
+            },
+            methods:{
+                getData(){
+                    console.log('ajaxMixin getData')
+                }
+            }
+        }
+
+        Vue.component('myButton', {
+            mixins:[ajaxMixin],
+            data() {
+                return {
+                    name: 'my button',
+                }
+            },
+            template: `<button><slot/></button>`,
+            created() {
+                console.log(this.name, this)
+            },
+            methods:{
+                getData(){
+                    console.log('组件getData')
+                }
+            }
+        })
+        const vm = new Vue({
+            data: {
+                msg: 'hello',
+                count: 1,
+                price: 998
+            },
+            components: {
+                myheader: {
+                    mixins:[lxMixin,ajaxMixin],
+                    data() {
+                        return {
+                            name: 'my header'
+                        }
+                    },
+                    template: `<div>name:{{name}}</div>`,
+                    created() {
+                        console.log('组件：',this.name, this)
+                    }
+                },
+                mybody: {
+                    data() {
+                        return {
+                            name: 'my body'
+                        }
+                    },
+                    template: `<div>name:{{name}}</div>`,
+                    created() {
+                        console.log(this.name, this)
+                    }
+                }
+            }
+        })
+
+        
+
+        vm.$mount('#app')
+
+
+
+
+    </script>
+</body>
+
+</html>

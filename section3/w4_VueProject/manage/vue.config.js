@@ -1,3 +1,4 @@
 module.exports = {
-    lintOnSave:'warning'
+    lintOnSave:'warning',
+    publicPath:'/manage'
 }

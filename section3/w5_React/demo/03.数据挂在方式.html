@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>03.数据挂在方式</title>
+    <script src="../node_modules/react/umd/react.development.js"></script>
+    <script src="../node_modules/react-dom/umd/react-dom.development.js"></script>
+    <script src="./js/browser.js"></script>
+</head>
+<body>
+    <h1>03.数据挂在方式</h1>
+    <div id="app"></div>
+    <script type="text/babel">
+        const username = 'tiantian';
+        const content = <div>laoxie</div>; // 虚拟节点
+        // const users = ['laoxie','tiantian','jingjing','ouyang']
+        const users = [{
+            username:'tiantian',
+            password:123,
+            role:'svip'
+        },{
+            username:'laoxie',
+            password:123456,
+            role:'admin'
+        }]
+        const user = {
+            username:'tiantian',
+            password:123,
+            role:'svip'
+        }
+
+        ReactDOM.render(
+            <div id="box">
+                <p>用户名：{username}</p>
+                <div>
+                    {content}
+                </div>
+                {
+                    //<div>用户列表：{users}</div>
+                
+                    //<div>{user}</div>
+                }
+
+                
+                {
+                    // 列表渲染
+                    // [{},{}] -> [<p></p>,<p></p>]
+                    users.map(item=>{
+                        return <p key={item.username}>{item.username}</p>
+                    })
+                }
+            </div>
+
+            ,
+            document.querySelector('#app')
+        )
+    </script>
+</body>
+</html>

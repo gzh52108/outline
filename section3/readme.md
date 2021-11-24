@@ -1968,3 +1968,46 @@
              mode:process.env.NODE_ENV === 'production' ? 'history' : 'hash',
 
         ```
+
+
+## day5-3
+
+### 知识点
+* 版本
+    * 按环境分
+        * development   开发环境（未压缩，有警告等提示）
+        * production    生产环境（压缩）
+    * 按模块分
+        * commonJS      cjs
+        * ESModule      es/esm
+        * AMD
+        * CMD
+        * UMD   通用模块化规范（支持commonJS,AMD,CMD,全局引用）
+    * 按构建方式分
+        * 完整版(编译器+运行时)
+        * 运行时版（runtime）
+* react的使用
+    * 引入模块
+        * react
+        * react-dom / react-native
+    * 渲染
+        * ReactDOM.render(vNode,target)
+    * 创建节点
+        * React.createElement(type,props,children)
+* JSX
+    > 浏览器不能识别JSX语法，必须使用babel去编译（把JSX编译成React.createElement()）
+    * JSX语法规范
+        * 属性中不能使用js关键字
+        * 属性必须采用驼峰写法
+        * 必须结束标签
+        * jsx中使用js：{}
+        * 注释
+            * 单行
+            * 多行
+        * 内联样式必须使用对象写法
+
+* react 组件的数据挂载方式
+    * {}
+    * 列表循环
+        * map
+        * filter

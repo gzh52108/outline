@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const baseUrl = 'http://120.76.247.5:2003'
+const baseUrl = process.env.NODE_ENV === 'production' ? 'http://120.76.247.5:2003':'http://120.76.247.5:2003'
 
 // 创建axios实例，实例拥有与axios几乎一致的方法
 // 我们可以在创建实例时配置自定义参数

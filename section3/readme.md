@@ -2006,8 +2006,83 @@
             * 多行
         * 内联样式必须使用对象写法
 
-* react 组件的数据挂载方式
+* react 组件的数据绑定方式
     * {}
     * 列表循环
         * map
         * filter
+    * 事件绑定
+        > 格式： onClick={handle}
+        * 改变this指向
+        * event事件对象：事件处理函数的最后一个参数
+    * 条件渲染
+
+* 组件化
+    * 组件分类
+        > 在实际开发中优先使用函数组件
+        * 函数组件（无状态组件，UI组件）
+        * 类组件（状态组件、容器组件）
+    * 组件要求
+        * 组件首字母必须为大写
+        * 只能有一个根元素
+        * 类组件必须有一个render渲染函数
+    * 函数组件与类组件的区别
+        * 是否有状态：类组件有状态，函数组件无状态
+        * 是否有this指向：类组件指向组件实例，函数组件指向undefined
+            > 默认在constructor,render、生命周期函数中可以直接使用this(自定义函数中没有this指向)
+
+* state：类组件中的状态
+    * 定义
+        ```js
+            constructor(){
+                super()
+                this.state = {
+                    count:1,
+                    qty:10
+                }
+            }
+        ```
+    * 使用
+        ```js
+            this.state.count;
+        ```
+    * 修改: `this.setState({count:this.state.count+1})`
+        > 通过setState()修改状态，组件会自动刷新
+
+
+* 组件刷新
+    * 类组件：组件刷新就是重新执行render渲染函数
+    * 函数组件：代码从头到尾执行一遍
+
+* 组件通讯: 
+    * 父->子：props
+        1. 给子组件定义属性
+        2. 在子组件中使用
+            * 函数组件：函数的第一个参数就是props
+            * 类组件：
+                * constructor的第一个参数
+                * this.props
+    * 子->父：
+        * 把父组件的方法通过props传到子组件中执行，并回传参数
+
+
+* ref
+    * 回调函数
+        > 函数的第一个参数为节点/组件实例的引用
+        ```js
+            <input ref={el=>this.input=el} />
+        ```
+    * React.createRef()
+        > 通过ref对象的current属性获取到节点/组件实例
+        ```js
+            const refObj = React.createRef()
+            <input ref={refObj}>
+
+            // 获取节点
+            refObj.current
+        ```
+
+* 受控组件与非受控组件
+    * 受控组件: 通过组件的状态控制表单的内容
+        * 给表单的value属性绑定State，必须同时提供修改state的方法,否则会报错
+    * 非受控组件：通过节点操作方式控制表单内容的方式

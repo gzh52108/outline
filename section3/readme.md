@@ -2014,8 +2014,13 @@
     * 事件绑定
         > 格式： onClick={handle}
         * 改变this指向
+            * render中使用箭头函数
+            * contructor中使用bind
+                > 通过bind改变this指向只在第一次生效
         * event事件对象：事件处理函数的最后一个参数
-    * 条件渲染
+        * 传参
+            * bind(target,arg...)
+    * 条件渲染: 三元运算
 
 * 组件化
     * 组件分类
@@ -2032,6 +2037,7 @@
             > 默认在constructor,render、生命周期函数中可以直接使用this(自定义函数中没有this指向)
 
 * state：类组件中的状态
+    > state的改变（必须通过setState()修改）会自动刷新组件（刷新组件：类组件就是执行render函数，函数组件就是从头到尾执行一遍代码）
     * 定义
         ```js
             constructor(){
@@ -2047,7 +2053,16 @@
             this.state.count;
         ```
     * 修改: `this.setState({count:this.state.count+1})`
-        > 通过setState()修改状态，组件会自动刷新
+        > 在React中setState()是异步的，所以不能直接修改state，而是创建一个新的数据去覆盖它
+        ```js
+            // state={count:1,qty:10}
+            console.log(this.state.count);// 1
+            // this.state.count++ // 不能让组件刷新
+            this.setState({
+                count:10
+            })
+            console.log(this.state.count);// 1
+        ```
 
 
 * 组件刷新
@@ -2086,3 +2101,52 @@
     * 受控组件: 通过组件的状态控制表单的内容
         * 给表单的value属性绑定State，必须同时提供修改state的方法,否则会报错
     * 非受控组件：通过节点操作方式控制表单内容的方式
+
+
+## day5-4
+
+### 知识点
+* 多层级组件通讯
+    * 逐层传递（不推荐）
+    * context
+        1. 创建context
+            ```js
+                const context = React.createContent(defaultValue)
+            ```
+        2. 父组件共享数据
+            > 使用context的Provider组件共享数据
+            ```js
+                // data为共享的数据
+                <context.Provider value={data}></context.Provider>
+            ```
+        3. 子组件接收
+            * 函数组件
+                * context的Consumer组件接收数据
+                ```js
+                    <context.Consumer>
+                        {
+                            (value)=>{
+                                // value为共享的数据
+                                return(
+
+                                )
+                            }
+                        }
+                    </context.Consumer>
+
+                ```
+                * Hook
+                    ```js
+                        const context = useContext(context)
+                    ```
+            * 类组件
+                * Consumer
+                * contextType
+                    > 给类添加contextType静态属性，只适用于类组件
+                    ```js
+                        TodoForm.contextType = context;
+
+                        // 获取
+                        constructor的第二个参数
+                        this.context
+                    ```

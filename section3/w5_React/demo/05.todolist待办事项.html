@@ -77,7 +77,7 @@
             }
 
         }
-        function TodoItem({item,index}) {
+        function TodoItem({item,index,completeItem}) {
             return (
                 <tr>
                     <th scope="row">{index+1}</th>
@@ -85,13 +85,13 @@
                     {/* <td>{item.done ? '是' : '否'}</td> */}
                     <td>{item.done ? <button className="btn btn-outline-secondary" disabled>是</button> : <button className="btn btn-outline-secondary" disabled >否</button>}</td>
                     <td>
-                        <button type="button" className="btn btn-primary">完成</button>
+                        <button type="button" className="btn btn-primary" onClick={completeItem.bind(null,item.id)}>完成</button>
                         <button type="button" className="btn btn-danger">删除</button>
                     </td>
                 </tr>
             )
         }
-        function TodoContent({datalist}) {
+        function TodoContent({datalist,completeItem}) {
             console.log('TodoContent.props',datalist);
             return (
                 <div>
@@ -108,7 +108,7 @@
                             {
                                 // [{},{},{}] -> [<TodoItem/>,<TodoItem/>,<TodoItem/>]
                                 datalist.map((item,idx)=>{
-                                    return <TodoItem key={item.id} item={item} index={idx} />
+                                    return <TodoItem key={item.id} item={item} index={idx} completeItem={completeItem} />
                                 })
                             }
                         </tbody>
@@ -159,6 +159,7 @@
                 }
 
                 this.addItem = this.addItem.bind(this);
+                this.completeItem = this.completeItem.bind(this);
             }
             
             // 在这里定义的发方法会成为原型方法
@@ -177,6 +178,28 @@
                     datalist
                 })
             }
+            // 定义时使用箭头函数
+            completeItem(id){
+                const {datalist} = this.state
+                // [{},{}] -> [{},{}]
+                const newDatalist = datalist.map(item=>{
+                    if(item.id === id){
+                        item.done = !item.done;
+                    }
+                    return {
+                        ...item
+                    }
+                })
+                this.setState({
+                    datalist:newDatalist
+                })
+            }
+            removeItem(){
+
+            }
+            selectItem(){
+                
+            }
             render () {
                 console.log('Todolist.render',this)
                 const {datalist} = this.state;
@@ -190,7 +213,7 @@
                             // }}>count:{this.state.count}</button>
                         }
                         <TodoForm addItem={this.addItem} />
-                        <TodoContent datalist={datalist} />
+                        <TodoContent datalist={datalist} completeItem={this.completeItem} />
                         <TodoFoot datalist={datalist} />
                     </div>
                 )

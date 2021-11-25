@@ -2137,7 +2137,7 @@
                 ```
                 * Hook
                     ```js
-                        const context = useContext(context)
+                        const value = useContext(context)
                     ```
             * 类组件
                 * Consumer
@@ -2150,3 +2150,73 @@
                         constructor的第二个参数
                         this.context
                     ```
+
+* 构建工具
+    * grunt -> gulp -> webpack -> vite
+
+    * 传统js写法
+        > 全局引入
+        ```html
+            <script src="jquery.js"></script>
+            <script src="bootstrap.js"></script>
+            <script src="common.js"></script>
+            <script src="home.js"></script>
+        ```
+        * 污染全局命名空间与变量冲突
+        ```js
+            ;(()=>{
+                var a = 10
+            })()
+        ```
+    * 模块化
+        ```js
+            var a = 10;
+        ```
+        * import 
+        * export
+* webpack与gulp这两个构建工具的区别
+    * gulp基于任务且需要用户手动实现某个流程的构建工具
+    ```js
+        // gulp
+        gulp.task('compileSass',(done)=>{
+            // 匹配文件
+            gulp.src('./src/sass/*.scss')
+            .pipe(sass())
+            .pipe(gulp.dest('./dist'))
+            .pipe(cssmin())
+            .pipe(rename({sufix:'.min'}))
+            .pipe(gulp.dest('./dist'))
+        })
+    ```
+    * webpack基于配置的自动化构建工具
+        > webpack.config.js配置文件
+
+* 从0配置基于webpack的react项目环境
+    * 创建目录与文件
+        * src
+        * public
+        * dist
+        * doc
+        * webpack.config.js
+            > 一个遵循commonJS规范的模块
+        * package.json
+    * 安装依赖
+        * react + react-dom
+        * webpack + webpack-cli + webpack-dev-server + html-webpack-plugin
+        * @babel/preset-react + @babel/core + babel-loader
+    * 配置webpack
+        > webpack.config.js
+        * mode  环境配置
+        * entry 入口配置
+        * output 出口配置
+        * loader    加载器
+            > module.rules，在webpack中每一种类型文件都需要一个加载器去处理
+        * plugins   插件配置
+    * 编译打包
+        * npm script
+
+
+
+### 练习
+* 从0配置基于webpack的Vue项目环境
+* 移植todolist到项目环境

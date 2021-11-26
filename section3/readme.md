@@ -2111,6 +2111,7 @@
     * context
         1. 创建context
             ```js
+                // defaultValue：在没有Provider时子组件可以拿到默认值
                 const context = React.createContent(defaultValue)
             ```
         2. 父组件共享数据
@@ -2220,3 +2221,11 @@
 ### 练习
 * 从0配置基于webpack的Vue项目环境
 * 移植todolist到项目环境
+
+
+## day5-5
+
+### 知识点
+* 缓存对页面访问的影响，导致用户获取不到最新的代码
+    * 解决方案
+        * 给文件路由添加时间戳

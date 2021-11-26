@@ -30,7 +30,7 @@
             * Button
          */
 
-        const context = React.createContext()
+        const context = React.createContext({a:10})
 
 
         class TodoForm extends React.Component {
@@ -229,7 +229,11 @@
                 console.log('Todolist.render', this)
                 const { datalist } = this.state;
                 return (
-                    <context.Provider value={{ add:this.addItem,remove: this.removeItem, complete: this.completeItem }}>
+                    <context.Provider value={{ 
+                        add:this.addItem,
+                        remove: this.removeItem, 
+                        complete: this.completeItem 
+                    }}>
                         <div className="todolist">
                             {
                                 // Todolist: <button onClick={()=>{

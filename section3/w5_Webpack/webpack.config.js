@@ -1,8 +1,10 @@
 const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+const { CleanWebpackPlugin } = require('clean-webpack-plugin')
+const CopyPlugin = require("copy-webpack-plugin");
 module.exports = {
     // 0.设置环境
-    mode:'development',
+    mode:process.env.NODE_ENV === 'production' ? 'production' : 'development',
 
     // 1.入口：用于告诉webpack从哪开始
 
@@ -20,6 +22,7 @@ module.exports = {
     // 2.出口：告诉webpack编译后的文件信息与输出到哪里
     output:{
         path:path.resolve('./dist'), // path.join(__dirname,'dist')
+        filename:'boundle.[name].[hash:5].js'
     },
 
     // 3. 加载器loader：告诉webpack如何处理文件（模块）
@@ -55,17 +58,51 @@ module.exports = {
             {
                 test:/\.scss$/,
                 use:['style-loader','css-loader','sass-loader']
+            },
+
+            // 文件加载器：图片
+            {
+                test:/\.(jpe?g|png|gif|svg)$/,
+                use:{
+                    loader:'url-loader',
+                    options:{
+                        // 设置文件大小如果超过limit的值则采用url地址方式
+                        // 如小于limit值，则采用base64的方式
+                        limit: 10000,
+                        // 以下路径基于outpu目录
+                        name:'assets/img/[name].[hash:5].[ext]'
+                    }
+                }
             }
         ]
     },
 
     // 4. plugins
     plugins:[
+        new CleanWebpackPlugin(),
         // 创建index.html文件
         new HtmlWebpackPlugin({
             // 指定文件作为模板生成html文件
             template:'./public/index.html',
-            // filename:'login.html', // 默认为index.html
+            // filename:'login.html', // 默认为index.html,
+            hash:true,
+            title:'首页'
+        }),
+        new HtmlWebpackPlugin({
+            // 指定文件作为模板生成html文件
+            template:'./public/index.html',
+            filename:'login.html', // 默认为index.html,
+            hash:true,
+            title:'用户登录'
+        }),
+
+        // 复制静态资源到编译目录，一般用于复制没有经过webpack处理的文件
+        new CopyPlugin({
+            patterns:[{
+                from:'./public/assets',
+                // 以下目录基于output目录
+                to:'./assets'
+            }]
         })
     ],
 

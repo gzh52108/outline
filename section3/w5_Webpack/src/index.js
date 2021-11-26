@@ -8,5 +8,5 @@ ReactDOM.render(
     // React.createElement('div',null,'App')
     <App/>
     ,
-    document.querySelector('#app') // document.getElementById('app')
+    document.getElementById('app') // document.getElementById('app')
 )

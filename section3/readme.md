@@ -2229,3 +2229,39 @@
 * 缓存对页面访问的影响，导致用户获取不到最新的代码
     * 解决方案
         * 给文件路由添加时间戳
+        * webpack
+            * output.filename
+            * urlLoad.name
+            * htmlWebpackPlugin.hash
+* React组件生命周期
+    * 初始化阶段
+        > 初始化state,props等
+        * constructor(props,context)
+    * 挂载阶段
+        > 把虚拟节点渲染到真实节点
+        * componentWillMount() -> UNSAFE_componentWillMount() （不推荐）
+        * componentDidMount()
+    * 更新阶段
+        * componentWillUpate(nextProps, nextState) -> UNSAFE_componentWillUpate() （不推荐）
+        * componentDidUpdate(prevProps, prevState)
+    * 特殊钩子函数
+        * shouldComponentUpdate(nextProps, nextState)
+        * componentWillReceiveProps(nextProps) -> UNSAFE_componentWillReceiveProps() （不推荐）
+    * 销毁阶段
+        * componentWillUnmount()
+
+* 组件刷新
+    > 类组件更新就是执行render渲染函数，函数组件更新就是冲头到尾执行所有代码
+    * 组件刷新条件
+        * state发生改变
+        * props发生改变
+        * 父组件刷新
+        * 强制刷新  this.forceUpdate()
+        ```js
+            <Parent/>
+                <Child index={idx}/>
+        ```
+* 组件性能优化
+    * shouldComponentUpdate
+    * PureComponent
+        > 一个做了shouldComponentUpdate优化后的组件

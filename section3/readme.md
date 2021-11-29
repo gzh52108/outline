@@ -2272,8 +2272,9 @@
 ### 知识点
 * 组件封装
     * Button
+    * List
 * classnames模块的使用
-    
+
 * props
     * children  写在组件标签内的内容
         > 类似于Vue中的插槽
@@ -2300,3 +2301,88 @@
          }   
         }</Button>
     ```
+* props类型校验
+    > 给组件添加静态属性`propTypes`，并使用`prop-types`进行类型设置
+    ```js
+        // Vue
+        {
+            props:{
+                datasource:{
+                    type:Array,
+                    required:true，
+                    default:10
+                }
+            }
+        }
+
+        // React: prop-types
+    ```
+
+* props默认值
+    > 给组件添加静态属性`defaultProps`
+
+
+* react-router
+    * vueRouter
+    ```js
+        // Vue-router
+        new VueRouter({
+            mode:'hash',//history
+            routes:[
+                {path:'/home',component:Home},
+                {path:'/reg',component:Reg},
+                {path:'/login',component:Login},
+            ]
+        })
+
+        <router-view/>
+    ```
+    * reactRouter：一切皆组件
+        ```js
+            <HashRouter>
+                <Route path="/home" component={Home} />
+                <Route path="/login" component={Login} />
+                <Route path="/reg">
+                    <Reg/>
+                </Route>
+            </HashRouter>
+        ```
+    * 常用组件
+        * 路由类型
+            * HashRouter        hash
+            * BrowserRouter     history
+        * 路由渲染
+            * Route
+                * path
+                * component
+                * render
+                * exact
+            * Redirect
+                * from 
+                * to
+                * exact
+            * Switch
+        * 路由导航
+            * 声明式导航
+                * Link
+                * NavLink
+            * 编程式导航
+                * history.push()        等效于 `<Link to>`
+                * history.replace()     等效于 `<Link to replace>`
+                * history.go()
+                * history.goBack()
+                * history.goForward()
+            * 如何获取history、location、match对象
+                * 使用Route的component属性渲染组件
+                    > history自动传入组件props
+                * withRouter高阶组件
+                    ```js
+                        App = withRouter(App)
+                    ```
+                * Hook: 只适用于函数组件
+                    * useHistory()
+                    * useLocation()
+                    * useRouteMath()
+                    ```js
+                        const history = useHistory()
+                    ```

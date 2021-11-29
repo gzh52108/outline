@@ -7,8 +7,8 @@
     "doc": "doc"
   },
   "scripts": {
-    "build": "webpack --progress --config config/pro.js",
-    "server": "webpack server --progress --config config/dev.js",
+    "build": "webpack --progress",
+    "server": "webpack server --progress",
     "start": "npm run server"
   },
   "keywords": [],
@@ -28,6 +28,8 @@
     "prop-types": "^15.7.2",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
+    "react-router": "^5.2.1",
+    "react-router-dom": "^5.3.0",
     "sass": "^1.43.5",
     "sass-loader": "^12.3.0",
     "style-loader": "^3.3.1",

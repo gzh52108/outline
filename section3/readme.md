@@ -2231,7 +2231,7 @@
         * 给文件路由添加时间戳
         * webpack
             * output.filename
-            * urlLoad.name
+            * urlLoader.name
             * htmlWebpackPlugin.hash
 * React组件生命周期
     * 初始化阶段
@@ -2265,3 +2265,38 @@
     * shouldComponentUpdate
     * PureComponent
         > 一个做了shouldComponentUpdate优化后的组件
+
+
+## day6-1
+
+### 知识点
+* 组件封装
+    * Button
+* classnames模块的使用
+    
+* props
+    * children  写在组件标签内的内容
+        > 类似于Vue中的插槽
+        * String    文本
+        * Object    虚拟节点
+        * Array     多个虚拟节点组成的数组
+        * Function
+            > 类似于Vue中的作用域插槽
+            ```js
+                <Button>
+                    {
+                        function(){}
+                    }
+                </Button>
+            ```
+* Render Props
+    > 使用一个值为函数的 prop 共享代码的简单技术，实现组件可定义化效果（在父组件生成结构后再传入子组件的操作，类似于Vue中的作用域插槽）
+    ```js
+        <Button renderHeader={(data)=>{
+            return <span></span>
+        }}>{
+         (data)=>{
+             return '添加'
+         }   
+        }</Button>
+    ```

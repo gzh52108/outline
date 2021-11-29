@@ -1,6 +1,5 @@
 import React from 'react'
 import context from './context'
-import Button from '../Button'
 class TodoForm extends React.Component {
     // constructor(props,context) {console.log('constructor.context',context)
     //     super(props)
@@ -47,15 +46,7 @@ class TodoForm extends React.Component {
                     value={this.state.todo}
                     onChange={this.changeTodo}
                 />
-                {/* <button className="btn btn-success" onClick={this.addItem}>添加</button> */}
-                {/* <Button className="btn-success"><strong>添加</strong><span>Add</span></Button> */}
-                {/* <Button className="btn-success">{
-                    (value)=>{
-                        // console.log('value',value)
-                        return '添加' + value;
-                    }
-                }</Button> */}
-                <Button className="btn-success" onClick={this.addItem}>添加</Button>
+                <button className="btn btn-success" onClick={this.addItem}>添加</button>
             </div>
         )
     }

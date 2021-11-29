@@ -15,9 +15,9 @@ class App extends React.Component{
             <div className="container">
                 App
     
-                {/* <Todolist/> */}
+                <Todolist/>
     
-                {
+                {/* {
                     show? 
                     <Lifecycle idx={idx}/>
                     :null
@@ -37,7 +37,7 @@ class App extends React.Component{
                     this.setState({
                         show:!show
                     })
-                }}>销毁组件</button>
+                }}>销毁组件</button> */}
 
             </div>
         )

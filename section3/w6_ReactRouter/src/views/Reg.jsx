@@ -1,5 +1,5 @@
 import React from 'react'
-import {withRouter,useHistory} from 'react-router-dom'
+import {withRouter,useHistory,useLocation,useRouteMatch} from 'react-router-dom'
 function Reg(props){
     console.log('Reg.props',props)
     const history = useHistory();

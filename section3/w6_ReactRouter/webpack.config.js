@@ -40,7 +40,10 @@ module.exports = {
                     loader:'babel-loader',
                     options:{
                         // 插件
-                        // plugins:['@babel/plugin-proposal-class-properties'],
+                        plugins:[
+                            // '@babel/plugin-proposal-class-properties',
+                            ['@babel/plugin-proposal-decorators',{legacy: true}]
+                        ],
 
                         // 预设：插件集合
                         presets:['@babel/preset-react'],

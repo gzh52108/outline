@@ -2417,7 +2417,10 @@
         * 属性代理
             > 使用高阶组件通过props获取需要的数据（注意：必须无条件给目标组件传入props）
             * 编写一个获取本地存储用户数据的高阶组件：withUser
-            * 编写一个能获取本地存储所有数据的高阶组件：withStorage
+            * 编写一个能获取本地存储所有数据的高阶组件：withStorage / withStorages
+        * 提取公共代码
+            * 页面访问权限控制
+        * 反向继承（了解）
 
 
 * 函数柯里化：利用多次函数执行收集不同类型参数然后统一处理的方式
@@ -2428,9 +2431,38 @@
             }
         }
     ```
+* 扩展运算符：`...`
+    * 展开
+        ```js
+            const arr = [10,20,30]
+            const arr2 = [...arr]
+            const obj = {a:10,b:20,c:30}
+            const obj2 = {...obj}
+            const arr3 = [1,21,13,5,16,37,3]
+            Math.max(...arr3)
+        ```
+    * 剩余
+        ```js
+            const arr = [10,20,30]
+            const [a,...b] = arr; // a=10,b=[20,30]
+            const obj = {username:'ouyang',password:123,role:'admin'}
+            const {username,...keys} = obj;
+            const sum = (a,...nums)=> {
+                return nums.reduce((prev,item)=>prev+item,a);
+            }
+            sum(10,20);//30
+            sum(10,20,30);//60
+            sum(10,20,3,4,5,6);//48
+            sum(10,20,3,4,5,6,4,3,4,6,774);//48
+        ```
+* UI组件库
+    * elementUI
+    * Vant
+    * ant-design
 
 ### 练习
 * 让withStorage支持多个数据获取
     ```js
         withStorage('userInfo','token')(Home)
     ```
+* 实现Manage页面效果

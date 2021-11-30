@@ -1,4 +1,5 @@
 import React from 'react'
+import {withUser,withStorage} from '@/utils/hoc'
 function Home(props){
     console.log('Home.props',props)
     return (
@@ -7,5 +8,9 @@ function Home(props){
         </div>
     )
 }
+
+// Home:OuterComponent
+// Home = withUser(Home)
+Home = withStorage('token')(Home)
 
 export default Home;

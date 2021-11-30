@@ -2386,3 +2386,51 @@
                     ```js
                         const history = useHistory()
                     ```
+## day6-2
+
+### 知识点
+* 高阶组件HOC（High Order Component）
+    > 高阶组件并不是一个react组件，而是一个纯函数（高阶函数、包装函数），接收react组件作为参数，并返回一个新的组件
+    * 纯函数
+        * 不修改传入的参数
+        * 固定输入有固定输出
+
+    ```js
+        function square(num){
+            return num*num;
+        }
+
+        square(2); // 4
+        square(2); // 4
+        square(2); // 4
+
+        function withRouter(InnerComponent){
+            return function(){
+                // 想办法获取history,location,match
+                return <InnerComponent history={history} location={location} match={match}/>
+            }
+        }
+
+        withRouter(App); // 包装后props中就有了history,location,match
+    ```
+    * 编写高阶组件方式
+        * 属性代理
+            > 使用高阶组件通过props获取需要的数据（注意：必须无条件给目标组件传入props）
+            * 编写一个获取本地存储用户数据的高阶组件：withUser
+            * 编写一个能获取本地存储所有数据的高阶组件：withStorage
+
+
+* 函数柯里化：利用多次函数执行收集不同类型参数然后统一处理的方式
+    ```js
+        function a(){
+            return function b(){
+
+            }
+        }
+    ```
+
+### 练习
+* 让withStorage支持多个数据获取
+    ```js
+        withStorage('userInfo','token')(Home)
+    ```

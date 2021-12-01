@@ -2478,11 +2478,32 @@
     ```js
         /manage/interview
         <App>
+            <Login>
             <Manage>    -> <Route path component={Interview}>
+                <Home>
                 <Interview>
+                <User>
         /mange/interview/list
         <App>
             <Manage>    -> <Route path component={Interview}>
                 <Interview>     -> <Route path component={List}>
                     <List>
     ```
+* 后台管理系统
+    * Table
+    * Form
+        * 如何把数据写入表单
+
+* 路由传参
+    * search: 问号后的参数你
+        > 接收：location.search，需要手动处理
+        ```js
+            const query = new URLSearchParams(location.search)
+            query.get('id')
+        ```
+    * params动态路由
+        > 接收：match.params，自动格式化成对象
+    * state
+        > 接收：location.state，页面刷新数据丢失
+    * 自定义数据
+        > 接收：location.xxx，页面刷新数据丢失

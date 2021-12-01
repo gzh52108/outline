@@ -60,7 +60,17 @@ module.exports = {
             // sass加载器：sass-loader
             {
                 test:/\.scss$/,
-                use:['style-loader','css-loader','sass-loader']
+                use:['style-loader',
+                'css-loader',
+                // {
+                //     loader:'css-loader',
+                //     options:{
+                //         module:true
+                //     }
+                // },
+                'sass-loader'],
+                // include:'./src',
+                exclude:'./node_modules',
             },
 
             // 文件加载器：图片

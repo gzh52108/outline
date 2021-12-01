@@ -2466,3 +2466,23 @@
         withStorage('userInfo','token')(Home)
     ```
 * 实现Manage页面效果
+
+
+## day6-3
+
+### 知识点
+* css模块化
+    * 通过文件名实现css模块化
+
+* 嵌套路由（子路由）
+    ```js
+        /manage/interview
+        <App>
+            <Manage>    -> <Route path component={Interview}>
+                <Interview>
+        /mange/interview/list
+        <App>
+            <Manage>    -> <Route path component={Interview}>
+                <Interview>     -> <Route path component={List}>
+                    <List>
+    ```

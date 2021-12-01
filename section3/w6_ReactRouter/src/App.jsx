@@ -4,12 +4,11 @@ import { Route, HashRouter, Redirect, Switch, Link, NavLink,withRouter } from 'r
 
 import 'antd/dist/antd.css'
 
-import Home from './views/Home'
+
 import Login from './views/Login'
-import Reg from './views/Reg'
 import Manage from './views/Manage'
 
-import './App.css'
+import './App.scss'
 
 class App extends React.Component {
     goto = (url)=>{

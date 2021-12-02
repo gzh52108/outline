@@ -2511,3 +2511,69 @@
 ## day6-4
 
 ### 知识点
+
+* 全局状态管理工具
+    * mobx
+    * redux
+        > 无框架状态管理工具
+* react与redux
+    > 两个独立产品，本身没有任何联系
+* redux使用步骤
+    1. 安装
+        ```bash
+            npm install redux
+        ```
+    2. 引入
+        ```js
+            import {createStore} from 'redux'
+        ```
+    3. 创建数据仓库（共享数据）
+        ```js
+            const state = {}
+            const reducer = function(state,action){}
+            const store = createStore(reducer,state)
+        ```
+    4. 使用
+        * 获取state: store.getState()
+        * 修改state: store.dispatch(action)
+        * 监听state修改：store.subscribe(fn)
+            > 当state有修改时，自动执行fn函数
+* redux核心
+    * store     数据仓库
+    * state     全局共享状态（数据）
+    * reducer   修改状态的方法
+        > Reducer 必须是一个纯函数，用于修改state，接收state与action作为参数，用户不需要直接执行reducer，而是通过`store.dispatch(action)`间接触发reducer
+    * action
+        > 格式为：`{type,payload?}`的对象，通过store.dispatch(action)调用
+
+* 复习Vuex
+    ```js
+        const store = new Vuex.Store({
+            state:{
+
+            },
+            mutations:{
+                login(){},
+                logout(){}
+            },
+        })
+
+        // store.commit('login'); store.commit({type:'login'})
+    ```
+* 在React中使用redux
+    * 需求
+        * 在多个组件中共享数据
+            * 在组件中获取redux数据
+            * 在组件中修改redux数据
+        * 如何刷新组件
+            * 当redux数据发生变化时需要刷新组件
+    * 直接在react中编写redux代码，会导致代码可维护性变差
+        > 如何解决：高阶组件
+* 组件刷新场景
+    * state改变
+    * props改变
+    * 父组件刷新
+    * 强制刷新
+
+### 练习
+* 编写升级版withRedux实现按需传递redux数据

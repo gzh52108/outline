@@ -70,7 +70,7 @@ module.exports = {
                 // },
                 'sass-loader'],
                 // include:'./src',
-                exclude:path.join(__dirname,'./node_modules'),
+                exclude:path.resolve('./node_modules'),
             },
 
             // 文件加载器：图片

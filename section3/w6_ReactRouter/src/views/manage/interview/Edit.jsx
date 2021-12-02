@@ -3,13 +3,15 @@ import request from '@/utils/request'
 import { Form, Input, Checkbox, Button,Rate,Switch,InputNumber  , message } from 'antd'
 import { DeleteOutlined, PlusOutlined } from '@ant-design/icons'
 
+import MyForm from './Form'
+
 class Edit extends React.Component {
     state = {
         data: {},
-        initialValues:{
-            difficulty:2,
-            hot:100
-        }
+        // initialValues:{
+        //     difficulty:2,
+        //     hot:100
+        // }
     }
     getData = async () => {
         const { id } = this.props.match.params;
@@ -20,27 +22,25 @@ class Edit extends React.Component {
         })
 
         // 把数据写入表单
-        this.form.setFieldsValue(data.data)
+        // this.form.setFieldsValue(data.data)
     }
-    onFinish = async ({_id,...values})=>{
-        console.log('value',values)
-        const {data} = await request.patch('/iq/'+_id,values)
+    // onFinish = async ({_id,...values})=>{
+    //     console.log('value',values)
+    //     const {data} = await request.patch('/iq/'+_id,values)
 
-        console.log('data',data);
-        if(data.status === 200){
-            message.success('修改成功')
-            this.props.history.push('/manage/interview/list')
-        }
-    }
+    //     console.log('data',data);
+    //     if(data.status === 200){
+    //         message.success('修改成功')
+    //         this.props.history.push('/manage/interview/list')
+    //     }
+    // }
     componentDidMount() {
         this.getData()
     }
     render() {
-
-        const {initialValues} = this.state;
         return (
             <div>
-                <Form
+                {/* <Form
                     name="basic"
                     labelCol={{ span: 4 }}
                     wrapperCol={{ span: 14 }}
@@ -85,7 +85,8 @@ class Edit extends React.Component {
                             确认
                         </Button>
                     </Form.Item>
-                </Form>
+                </Form> */}
+                <MyForm data={this.state.data}/>
             </div>
         )
 

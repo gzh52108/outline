@@ -1,17 +1,11 @@
 import React from 'react'
 import request from '@/utils/request'
-import {Table,Button,Row,Col} from 'antd'
+import {Table,Button,Row,Col,Popconfirm, message} from 'antd'
 import {DeleteOutlined,PlusOutlined} from '@ant-design/icons'
 
 
 
-const rowSelection = {
-    onChange(selectedRowKeys, selectedRows){
-        // selectedRowKeys: 选中行对应的rowKey组成的数组
-        // selectedRows：选中行对应的数据
-        console.log(selectedRowKeys, selectedRows)
-    }
-}
+
 
 class List extends React.Component{
     state = {
@@ -20,6 +14,7 @@ class List extends React.Component{
         total:0,
         page:1,
         size:10,
+        selectIds:[]
     }
     getData = async ()=>{
         const {page,size} = this.state
@@ -45,6 +40,43 @@ class List extends React.Component{
             params:{a:100,b:200},
         })
     }
+    removeItems = async ()=>{
+        const {selectIds} = this.state;
+        if(selectIds.length === 0){
+            message.warning('请求选择要删除的数据')
+            return;
+        }
+        const {data} = await request.delete(`/iq`,{
+            data:{
+                ids:selectIds
+            }
+        })
+        if(data.status === 200){
+            message.success('删除成功')
+
+            // 重新获取数据
+            this.getData();
+        }
+
+    }
+    removeItem = (id)=>{
+        const self = this;
+        return async function handle(e){
+            const {data} = await request.delete(`/iq/${id}`)
+            if(data.status === 200){
+                message.success('删除成功')
+
+                // 手动删除本地数据
+                // self.setState({
+                //     data:self.state.data.filter(item=>item._id !== id)
+                // })
+
+                // 重新获取数据
+                self.getData();
+            }
+
+        }
+    }
     componentDidMount(){
         this.getData();
 
@@ -66,6 +98,16 @@ class List extends React.Component{
                     size
                 },()=>{
                     this.getData();
+                })
+            }
+        }
+        const rowSelection = {
+            onChange:(selectedRowKeys, selectedRows)=>{
+                // selectedRowKeys: 选中行对应的rowKey组成的数组
+                // selectedRows：选中行对应的数据
+                console.log(selectedRowKeys, selectedRows)
+                this.setState({
+                    selectIds:selectedRowKeys
                 })
             }
         }
@@ -94,7 +136,9 @@ class List extends React.Component{
                 render:(row)=>{
                     return <>
                         <Button type="primary" size="small" ghost onClick={this.goto.bind(this,`/manage/interview/edit/${row._id}`)}>编辑</Button>
-                        <Button size="small" danger>删除</Button>
+                        <Popconfirm title="确认删除" cancelText="取消" okText="确认" onConfirm={this.removeItem(row._id)}>
+                            <Button size="small" danger>删除</Button>
+                        </Popconfirm>
                     </>
                 }
             }
@@ -103,10 +147,12 @@ class List extends React.Component{
             <div>
                 <Row gutter={[20,20]}>
                     <Col span={12}>
-                        <Button type="primary" icon={<PlusOutlined />}>添加</Button>
+                        <Button type="primary" icon={<PlusOutlined />} onClick={this.goto.bind(this,'/manage/interview/add')}>添加</Button>
                     </Col>
                     <Col span={12} className="text-right">
-                        <Button type="primary" icon={<DeleteOutlined />} danger>批量删除</Button>
+                        <Popconfirm title="确认删除" cancelText="取消" okText="确认" onConfirm={this.removeItems}>
+                            <Button type="primary" icon={<DeleteOutlined />} danger>批量删除</Button>
+                        </Popconfirm>
                     </Col>
                 </Row>
                 <Table

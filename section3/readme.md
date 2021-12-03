@@ -2610,4 +2610,42 @@
     > 解决方案：高阶组件
 
 ### 知识点
+* 编写withStore高阶组件
+    * 实现按需写入redux数据
 
+* react-redux 桥接工具
+    > 原理：利用context+高阶组件实现redux数据共享
+        * connect()     高阶组件
+        * Provider      context
+
+    * 使用步骤
+        1. 使用Provider组件共享store
+            ```js
+                <Provider store={store}>
+                    ...
+                </Provider>
+            ```
+        2. 使用
+            * connect高阶组件给目标组件传递redux数据
+                ```js
+                    connect(mapStateToProps,mapDispatchToProps)(Manage)
+                ```
+            * hook
+                * useStore()
+                * useDispatch()
+                * useSelector(state=>{})
+
+* redux模块化(reducer模块)
+    > 把复杂的reducer拆分成一个个小模块，然后使用combineReducers把多个reducer合并成一个reducer
+
+* action creator
+    > action构造器，一个用于创建action的函数
+
+    * bindActionCreators 一般用户简化代码
+
+* redux工作流与三项基本原则
+    1. 数据源唯一性
+    2. 不可变数据immutable
+        > 对state的修改永远时返回一个新的数据
+    * reducer必须是一个纯函数
+        > 在reducer中只能返回一个新的stae

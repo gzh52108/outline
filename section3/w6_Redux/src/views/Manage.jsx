@@ -4,7 +4,8 @@ import { withAuth, withLogin, withStorage, withStorages,withRedux,withStore } fr
 
 import { Layout, Menu, Breadcrumb, Row, Col, Button } from 'antd';
 import { UserOutlined, LaptopOutlined, NotificationOutlined, SlackOutlined, HomeOutlined, PicLeftOutlined } from '@ant-design/icons';
-
+import {connect} from 'react-redux';
+import userAction from '../store/actions/user'
 
 import style from './Manage.module.scss'
 
@@ -19,25 +20,28 @@ const { SubMenu } = Menu;
 const { Header, Content, Footer, Sider } = Layout;
 
 // 映射redux数据
-const mapStateToProps = function(state){
+const mapStateToProps = function(state,ownProps){
+    // state: redux的state
+    // ownProps: 组件本身的props
     return {
-        userInfo:state.userInfo,
-        a:10
+        userInfo:state.user.userInfo,
     }
 }
 // 映射修改数据的方法
 const mapDispatchToProps = function(dispatch){
     return {
        logout(){
-            dispatch({type:'logout'})
+            // dispatch({type:'logout'})
+            dispatch(userAction.logout())
        },
-       login(userInfo){
-           dispatch({type:'login',payload:userInfo})
-       }
+    //    login(userInfo){
+    //        dispatch({type:'login',payload:userInfo})
+    //    }
     }
 }
 
-@withStore(mapStateToProps,mapDispatchToProps)
+@connect(mapStateToProps,mapDispatchToProps)
+// @withStore(mapStateToProps,mapDispatchToProps)
 @withLogin
 class Manage extends React.Component {
     state = {

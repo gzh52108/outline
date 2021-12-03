@@ -176,7 +176,7 @@ export function withStore(mapStateToProps,mapDispatchToProps){
             }
             getData = ()=>{
                 const state = store.getState();
-                const reduxData = typeof mapStateToprops=== 'function' ? mapStateToProps(state) : {}
+                const reduxData = typeof mapStateToprops=== 'function' ? mapStateToProps(state,this.props) : {}
                 this.setState({
                     reduxData
                 })
@@ -191,7 +191,7 @@ export function withStore(mapStateToProps,mapDispatchToProps){
 
                 let reduxMethod;
                 if(typeof mapDispatchToProps === 'function'){
-                    reduxMethod = mapDispatchToProps(store.dispatch)
+                    reduxMethod = mapDispatchToProps(store.dispatch,this.props)
                 }else{
                     reduxMethod = {
                         dispatch:store.dispatch

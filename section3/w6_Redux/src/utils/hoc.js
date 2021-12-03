@@ -24,7 +24,7 @@ export function withUser(InnerComponent) {
 // 可以获取任意本地存储数据
 export function withStorage(key) {
     return function HOC(InnerComponent) {
-        return function OuterComonent(props) {
+        return function OuterComponent(props) {
             let value = localStorage.getItem(key)
             try {
                 value = JSON.parse(value)
@@ -166,11 +166,56 @@ export function withRedux(InnerComponent){
 
 // withRedux(Manage)
 
-export function withReduxPlus(){
-    
+// 按需传入redux数据到目标组件
+export function withStore(mapStateToProps,mapDispatchToProps){
+    return function HOC(InnerComponent){
+        class OuterComponent extends React.Component{
+            state = {
+                reduxData:{},
+                reduxMethod:{}
+            }
+            getData = ()=>{
+                const state = store.getState();
+                const reduxData = typeof mapStateToprops=== 'function' ? mapStateToProps(state) : {}
+                this.setState({
+                    reduxData
+                })
+
+            }
+            componentDidMount(){
+                this.getData();
+                // 监听redux数据修改，刷新组件
+                this.cancel = store.subscribe(()=>{
+                    this.getData();
+                })
+
+                let reduxMethod;
+                if(typeof mapDispatchToProps === 'function'){
+                    reduxMethod = mapDispatchToProps(store.dispatch)
+                }else{
+                    reduxMethod = {
+                        dispatch:store.dispatch
+                    }
+                }
+                this.setState({
+                    reduxMethod
+                })
+            }
+            componentWillUnmount(){
+                this.cancel();
+            }
+            render(){
+                return (
+                    <InnerComponent {...this.props} {...this.state.reduxData} {...this.state.reduxMethod}></InnerComponent>
+                )
+            }
+        }
+
+        return OuterComponent;
+    }
 }
 
-// withReduxPlus(function(state){
+// withStore(function(state){
 //     return {
 //         userInfo:state.userInfo,
 //         collapse:state.collapse,

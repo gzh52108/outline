@@ -1,6 +1,6 @@
 import React from 'react'
 import {Switch,Redirect,Route} from 'react-router-dom'
-import { withAuth, withLogin, withStorage, withStorages,withRedux } from '../utils/hoc'
+import { withAuth, withLogin, withStorage, withStorages,withRedux,withStore } from '../utils/hoc'
 
 import { Layout, Menu, Breadcrumb, Row, Col, Button } from 'antd';
 import { UserOutlined, LaptopOutlined, NotificationOutlined, SlackOutlined, HomeOutlined, PicLeftOutlined } from '@ant-design/icons';
@@ -18,8 +18,26 @@ import Interview from './manage/Interview'
 const { SubMenu } = Menu;
 const { Header, Content, Footer, Sider } = Layout;
 
+// 映射redux数据
+const mapStateToProps = function(state){
+    return {
+        userInfo:state.userInfo,
+        a:10
+    }
+}
+// 映射修改数据的方法
+const mapDispatchToProps = function(dispatch){
+    return {
+       logout(){
+            dispatch({type:'logout'})
+       },
+       login(userInfo){
+           dispatch({type:'login',payload:userInfo})
+       }
+    }
+}
 
-@withRedux
+@withStore(mapStateToProps,mapDispatchToProps)
 @withLogin
 class Manage extends React.Component {
     state = {
@@ -95,15 +113,15 @@ class Manage extends React.Component {
         console.log({ item, key, keyPath, domEvent })
         this.props.history.push(key)
     }
-    logout = ()=>{
-        this.props.dispatch({type:'logout'})
-    }
+    // logout = ()=>{
+    //     this.props.logout()
+    // }
     componentDidMount() {
         console.log('Manage.componentDidMount')
     }
     render() {
         console.log('Manage.render',this.props)
-        const {match,userInfo={}} = this.props;
+        const {match,userInfo,logout} = this.props;
         const { menu } = this.state;
         return (
             <Layout style={{ height: '100vh' }}>
@@ -116,7 +134,7 @@ class Manage extends React.Component {
                             </div>
                         </Col>
                         <Col span={12} className="text-right">
-                            {userInfo.username} <Button type="link" onClick={this.logout}>退出</Button>
+                            {userInfo.username} <Button type="link" onClick={logout}>退出</Button>
                         </Col>
                     </Row>
 

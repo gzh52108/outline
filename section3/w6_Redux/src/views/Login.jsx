@@ -1,7 +1,8 @@
 import React from 'react'
 import {Form,Input,Checkbox,Button,message} from 'antd'
 import request from '../utils/request'
-import store from '../redux'
+// import store from '../redux'
+import { withStore } from '../utils/hoc'
 function Login(props) {
     const onFinish = function(values){
         console.log('values',values)
@@ -11,9 +12,10 @@ function Login(props) {
         }).then(({data})=>{
             if(data.status === 200){
                 // 登录成功后，修改redux数据
-                store.dispatch({type:'login',payload:data.data})
+                // store.dispatch({type:'login',payload:data.data})
+                props.login(data.data)
 
-                
+
                 props.history.push('/manage')
                 message.success('登录成功')
             }else{
@@ -61,5 +63,13 @@ function Login(props) {
         </div>
     )
 }
+
+Login = withStore(null,(dispatch)=>{
+    return {
+        login(data){
+            dispatch({type:'login',payload:data})
+        }
+    }
+})(Login)
 
 export default Login;

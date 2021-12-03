@@ -2577,3 +2577,37 @@
 
 ### 练习
 * 编写升级版withRedux实现按需传递redux数据
+
+
+### day6-5
+
+### 复习
+* React与Redux的关系
+* redux使用步骤
+    1. 安装
+    2. 引用
+        ```js
+            import {createStore} from 'redux'
+        ```
+    3. 创建store
+        ```js
+            const store = createStore(reducer,state)
+        ```
+    4. 使用
+        * 获取：store.getState()
+        * 修改：store.dispatch(action)
+        * 监听：store.subscribe(fn)
+* redxu核心API
+    * store
+    * state
+    * reducer
+        > 是一个纯函数，接收state与action作为参数，并返回一个新的state
+    * action    命令/动作
+* 关联React组件与Redux
+    * 考虑代码可维护性问题
+    * 考虑组件刷新的问题
+        * 组件刷新场景
+    > 解决方案：高阶组件
+
+### 知识点
+

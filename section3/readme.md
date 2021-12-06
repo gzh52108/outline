@@ -2652,6 +2652,15 @@
 
 ## day7-1
 
+### 项目介绍纲要
+* 自我介绍：让面试官快速了解自己个方面的情况
+* 项目介绍
+    * 项目是干什么的
+    * 使用的技术
+    * 团队架构
+    * 我负责的部分
+    * 项目亮点
+
 ### 知识点
 * 简化版redux
     * 使用redux
@@ -2702,3 +2711,34 @@
             // unsub() // 取消监听
             // store.dispatch({type:'logout'})
         ```
+
+* redux 中间件
+    > 异步：react组件发起请求 -> 返回数据 -> dispatch -> state更新
+
+    * redux-thunk使用步骤
+        1. 安装
+            ```bash
+                npm i redux-thunk
+            ```
+        2. 引入
+            ```js
+                import thunk from 'redux-thunk'
+            ```
+        3. 关联store与中间件
+            ```js
+                import {applyMiddleware} from 'redux'
+                const enhancer = applyMiddleware(thunk)
+                const store = createStore(reducer,state,enhancer)
+            ```
+        4. 使用中间件
+            > 关联thunk中间件后，让dispatch支持函数作为参数
+            ```js
+                dispatch({type:'xxx'})
+
+                dispatch(function(dispatch){
+                    //ajax
+                })
+
+                // 一般把函数封装到action creatore中
+                dispatch(userAction.loginAsync())
+            ```

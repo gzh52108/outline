@@ -2649,3 +2649,56 @@
         > 对state的修改永远时返回一个新的数据
     * reducer必须是一个纯函数
         > 在reducer中只能返回一个新的stae
+
+## day7-1
+
+### 知识点
+* 简化版redux
+    * 使用redux
+        ```js
+            import {createStore} from 'redux'
+            const store = createStore(reducer,state)
+        ```
+    * 封装
+        ```js
+            export function createStore(reducer,state){
+                let listeners = []
+                const getState = function(){
+                    return state;
+                }
+                const dispatch = function(action){
+                    state = reducer(state,action)
+                    listeners.forEach(item=>{
+                        item()
+                    })
+                    return action
+                }
+                const subscribe = function(fn){
+                    listeners.push(fn)
+                    return function(){
+                        listener = listener.filter(item=>item!==fn)
+                    }
+                }
+
+                const replaceReducer = function(newReducer){
+                    reducer = newReducer
+                }
+
+                dispatch({type:'@@init'})
+
+                return {
+                    getState,
+                    dispatch,
+                    subscribe,
+                    replaceReducer
+                }
+            }
+
+            // store.getState()
+            // store.subscribe(function(){console.log(1)})
+            // const unsub = store.subscribe(function(){console.log(2)})
+            // store.subscribe(function(){console.log(3)})
+            // store.dispatch({type:'login',payload:userData})
+            // unsub() // 取消监听
+            // store.dispatch({type:'logout'})
+        ```

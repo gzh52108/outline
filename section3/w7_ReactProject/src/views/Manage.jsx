@@ -10,7 +10,12 @@ import userAction from '../store/actions/user'
 import style from './Manage.module.scss'
 console.log('style', style)
 
-
+import Home from './manage/Home'
+import User from './manage/User'
+import Interview from './manage/Interview'
+import List from './manage/interview/List'
+import Add from './manage/interview/Add'
+import Edit from './manage/interview/Edit'
 
 
 
@@ -156,7 +161,16 @@ function Manage({ userInfo, logout }) {
                             <Route path={match.path + "/interview"} component={Interview} />
                             <Route path={match.path + "/user"} component={User} /> */}
 
-                            <Outlet/>
+                            {/* <Outlet/> */}
+                            <Routes>
+                                <Route path="home" element={<Home />} />
+                                <Route path="interview" element={<Interview />}>
+                                    <Route path="list" element={<List/>} />
+                                    <Route path="add" element={<Add/>} />
+                                    <Route path="edit/:id" element={<Edit/>} />
+                                </Route>
+                                <Route path="user" element={<User />} />
+                            </Routes>
                     </Content>
                 </Layout>
             </Layout>

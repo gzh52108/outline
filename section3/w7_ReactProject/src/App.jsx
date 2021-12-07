@@ -11,6 +11,8 @@ import List from './views/manage/interview/List'
 import Add from './views/manage/interview/Add'
 import Edit from './views/manage/interview/Edit'
 
+import Hooks from './components/Hooks'
+
 import 'antd/dist/antd.css'
 import './App.scss'
 
@@ -18,10 +20,11 @@ import './App.scss'
 function App(){
     return (
         <div className="container">
+            <Hooks/>
             <Routes>
                 {/* <Route path="/manage" component={Manage} />
                 <Route path="/login" component={Login} /> */}
-                <Route path="/manage" element={<Manage/>}>
+                {/* <Route path="/manage" element={<Manage/>}>
                     <Route path="home" element={<Home />} />
                     <Route path="interview" element={<Interview />}>
                         <Route path="list" element={<List/>} />
@@ -29,7 +32,8 @@ function App(){
                         <Route path="edit/:id" element={<Edit/>} />
                     </Route>
                     <Route path="user" element={<User />} />
-                </Route>
+                </Route> */}
+                <Route path="/manage/*" element={<Manage/>}/>
                 <Route path="/login" element={<Login/>} />
             </Routes>
         </div>

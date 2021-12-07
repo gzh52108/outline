@@ -2742,3 +2742,99 @@
                 // 一般把函数封装到action creatore中
                 dispatch(userAction.loginAsync())
             ```
+* react-router6
+    * `<Route/>`
+        * path  
+        * component -> element
+        * render -> element
+    * `<Switch/>` -> `<Routes/>`
+    * `<Redirect>` -> `<Route element={<Navigate to/>} />`
+    * `<Outlet/>`
+    * 嵌套路由
+        ```js
+            // v5
+            // App.jsx
+            <Route path='/manage' component={Manage} />
+                // Manage.jsx
+                <Route path="/manage/user" component={User} />
+
+            // v6
+            // 用法1：把所有路由写在一起
+            // App.jsx
+            <Route path="/manage" element={<Manage/>}>
+                <Route path="user" element={<User/>}>
+            </Route>
+                // Manage.jsx
+                <Outlet/>
+
+            // 用法2：分开写
+            // App.jsx
+            <Route path="/manage/*" element={<Manage/>}/>
+
+                // Manage.jsx
+                <Route path="user" element={<User/>}>
+        ```
+    * 路由跳转
+        * 声明式导航
+            * <Link/>
+                * to
+                * replace
+            * <NavLink/>
+                ```js
+                    <NavLink to="/home" style={({isActive})=>({color:isActive ? '#f00':'#333'})}>首页</NavLink>
+                    <NavLink to="/home" className={({isActive})=>isActive?'current':''}>首页</NavLink>
+                ```
+        * 编程式导航
+            * useNavigate()
+                ```js
+                    const navigate = useNavigate()
+                    navigate('/home')
+                    navigate('/home',{replace:true})
+                ```
+            * 类组件跳转
+                > 封装一个高阶组件，并传递navigate到props
+    * 移除withRouter
+    * 获取路由参数
+        * search参数
+            ```js
+                //v5
+                props.location.search  -> new URLSearchParams()
+
+                // v6
+                const search = useSearchParams()
+
+            ```
+        * params动态路由
+            ```js
+                // v5
+                props.match.params
+
+                //v6
+                const params = useParams()
+            ```
+        * 其他
+            > const location = useLocation()
+
+
+## day7-2
+
+### 知识点
+* Hook
+    * 注意事项
+        * hook只能在函数组件中使用
+        * 不能嵌套在条件或循环语句中使用
+        * 函数组件的刷新就是代码从头到尾执行一遍
+    * 分类
+        * 内置Hook
+        * 第三方Hook
+        * 自定Hook
+* 内置Hook
+    * useState
+        > 返回一个状态与修改状态方法组成的数组，执行修改方法函数组件会自动刷新
+        ```js
+            const [state,setState] = useState(1)
+
+            setState(state+1)
+
+            setState(prev=>pre+1)
+        ```

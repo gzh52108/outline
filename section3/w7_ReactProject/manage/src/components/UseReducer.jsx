@@ -1,44 +1,46 @@
-import React, { useState, useEffect, useMemo, useCallback, useReducer } from 'react'
+import React, { useState, useEffect, useMemo, useCallback, useReducer,useContext } from 'react'
+import {context} from '@/myredux'
 
-const initState = [
-    { id: 1, name: "goods1", price: 98, qty: 2 },
-    { id: 2, name: "goods2", price: 198, qty: 2 },
-    { id: 3, name: "goods3", price: 998, qty: 1 },
-];
-const reducer = (state, action) => {
-    switch (action.type) {
-        // 添加商品
-        // dispatch({type:'add',payload:goods})
-        case 'add':
-            return [action.payload, ...state];
+// const initState = [
+//     { id: 1, name: "goods1", price: 98, qty: 2 },
+//     { id: 2, name: "goods2", price: 198, qty: 2 },
+//     { id: 3, name: "goods3", price: 998, qty: 1 },
+// ];
+// const reducer = (state, action) => {
+//     switch (action.type) {
+//         // 添加商品
+//         // dispatch({type:'add',payload:goods})
+//         case 'add':
+//             return [action.payload, ...state];
 
-        // 删除商品
-        // dispatch({type:'remove',payload:{id}})
-        case 'remove':
-            return state.filter(item => item.id != action.payload.id);
+//         // 删除商品
+//         // dispatch({type:'remove',payload:{id}})
+//         case 'remove':
+//             return state.filter(item => item.id != action.payload.id);
 
-        // dispatch({type:'change',payload:{id,qty}})
-        case 'change':
-            return state.map(item => {
-                if (item.id === action.payload.id) {
-                    item.qty = action.payload.qty;
-                }
-                return item;
-            })
-        // dispatch({type:'clear'})
-        case 'clear':
-            return []
-        default:
-            throw new Error('type error');
-    }
-}
+//         // dispatch({type:'change',payload:{id,qty}})
+//         case 'change':
+//             return state.map(item => {
+//                 if (item.id === action.payload.id) {
+//                     item.qty = action.payload.qty;
+//                 }
+//                 return item;
+//             })
+//         // dispatch({type:'clear'})
+//         case 'clear':
+//             return []
+//         default:
+//             throw new Error('type error');
+//     }
+// }
 
 
 function UseReducer(props) {
     console.log('start')
     const [count, setCount] = useState(10)
 
-    const [cartlist, dispatch] = useReducer(reducer, initState)
+    // const [cartlist, dispatch] = useReducer(reducer, initState)
+    const {state:cartlist,dispatch} = useContext(context)
 
     // 计算总价
     const totalPrice = useMemo(()=>{

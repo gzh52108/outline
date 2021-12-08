@@ -1,22 +1,25 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { HashRouter, BrowserRouter } from 'react-router-dom'
-import {Provider} from 'react-redux'
+// import {Provider} from 'react-redux'
 // const context = React.createContext()
 
 import store from './store'
+import {Provider} from './myredux'
 
 import App from './App'
 
 const Router = process.env.NODE_ENV === 'production' ? BrowserRouter : HashRouter
 ReactDOM.render(
     // <context.Provider value=""></context.Provider>
-    <Provider store={store}>
+    // <Provider store={store}>
+    <Provider>
         <Router>
             <App />
             {/* <Route path="/" component={App} /> */}
         </Router>
     </Provider>
+    // </Provider>
     ,
     document.querySelector('#app')
 )

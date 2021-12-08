@@ -2835,7 +2835,7 @@
 ### 知识点
 * Hook
     * 注意事项
-        * hook只能在函数组件中使用
+        * hook只能在函数组件中或其他hook中使用
         * 不能嵌套在条件或循环语句中使用
         * 函数组件的刷新就是代码从头到尾执行一遍
     * 分类
@@ -2923,6 +2923,105 @@
                 qty:11,
                 imgurl:'img/goods1.png'
             })
+
+            const [state,dispatch] = useReducer(reducer,initState)
+            dispatch(action)
         ```
     * useRef
-    * useLayoutEffect 同步版本
+        > 只有在初始化时创建一个ref对象，组件刷新都时从缓存中获取ref对象
+    * useLayoutEffect 
+        > useEffect的同步版本，在浏览器渲染前执行，会阻塞页面渲染，等效于componentWillMount+componentWillUpate
+* 自定义hook
+    * 自定义获取本地存储的hook
+        ```js
+            function useStorage
+        ```
+
+* 使用useReducer+context实现redux功能
+    * 做到唯一数据源：只能执行一次useReducer
+
+
+* 第三方hook
+    * react-router
+        * v5                v6
+        * useHistory        useNavigate
+        * useLocation       useLocation
+        * useParams         useParams
+        *                   useSearchParams
+
+
+
+    ```js
+        // v5
+        const history = useHistory()
+        history.push('/home')
+        history.replace('/home')
+        history.goBack()
+        history.push({
+            pathname:'/home',
+            search:'page=1&size=10',
+            state:{a:10,b:20}
+        })
+        ...
+
+        // 接收参数
+        // 动态路由参数
+        const params = useParams(); 
+        // search,state
+        const {search,state} = useLocation();// search='page=1&size=10'
+
+        // v6
+        const navigate = useNavigate()
+        navigate('/home')
+        navigate('/home',{replace:true})
+        navigate(-1)
+        navigate({
+            pathname:'/home',
+            search:'page=1&size=10'
+        },{state:{a:10,b:20}})
+
+        // 接收参数
+        // 动态路由参数
+        const params = useParams()
+        // search: 返回URLSearchParams对象
+        const [search,setSearch] = useSearchParams()
+        search.get('page');//1
+        //state
+        const {state} = useLocation()
+    ```
+    * react-redux
+        ```js
+            
+            function App(props){
+                const dispatch = useDispatch()
+                const store = useStore()
+                const userInfo = useSelector((state)=>{
+                    return state.user.userInfo;
+                })
+            }
+
+            connect((state)=>{
+                return {}
+            },(dispatch)=>{
+                return {}
+            })(App)
+
+        ```
+* 项目
+    * 项目要求
+    * CRA（create-react-app）
+        * 全局安装
+            ```bash
+                npm i create-react-app -g
+            ```
+        * 创建项目
+            ```bash
+                create-react-app myapp
+            ```
+            * 使用npx可以在不全局安装的情况下创建项目
+                ```bash
+                    npx create-react-app myapp
+                ```
+    * 扩展webpack配置
+        * 进入react-srcipts模块中修改（不推荐）
+        * yarn eject （不推荐）

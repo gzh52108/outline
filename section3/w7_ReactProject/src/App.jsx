@@ -21,7 +21,7 @@ function App(){
     return (
         <div className="container">
             <Hooks/>
-            <Routes>
+            {/* <Routes> */}
                 {/* <Route path="/manage" component={Manage} />
                 <Route path="/login" component={Login} /> */}
                 {/* <Route path="/manage" element={<Manage/>}>
@@ -33,9 +33,9 @@ function App(){
                     </Route>
                     <Route path="user" element={<User />} />
                 </Route> */}
-                <Route path="/manage/*" element={<Manage/>}/>
+                {/* <Route path="/manage/*" element={<Manage/>}/>
                 <Route path="/login" element={<Login/>} />
-            </Routes>
+            </Routes> */}
         </div>
     )
 }

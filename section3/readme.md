@@ -2818,6 +2818,20 @@
 
 ## day7-2
 
+### 面试题
+* 多久发一个版本
+    * 与环境有关
+        * 开发环境
+        * 测试环境
+            * 本地测试环境
+            * UAT测试环境
+        * 生产环境（上线）
+* 如何处理线上紧急bug
+    * 普通bug修复：迭代时更新
+    * 紧急bug修复：hotfix
+* 如何解决代码冲突
+    * review
+
 ### 知识点
 * Hook
     * 注意事项
@@ -2838,3 +2852,77 @@
 
             setState(prev=>pre+1)
         ```
+    * useEffect
+        > Effect Hook在每轮渲染结束后执行, 能实现类似于类组件中生命周期函数的效果
+        * 用法一：`useEffect(callback)`
+            > 等效于componentDidMount+componentDidUpdate
+        * 用法二：useEffect(callback,deps)
+            > 等效于componentDidMount+shouldComponentUpdate
+        * 用法三：useEffect(callback,[])
+            > 等效于componentDidMount
+        * 用法四：回调中返回一个函数
+            > 等效于componentWillUnmount
+
+    * useMemo
+        > 格式：const result = useMemo(callback)
+        * 用法一：默认用法（不推荐）
+            ```js
+                const result = useMemo(()=>{
+                    return xxx
+                })
+            ```
+        * 用法二：空依赖
+            ```js
+                const result = useMemo(()=>{
+                    return xxx
+                },[])
+            ```
+        * 用法三：指定依赖
+            ```js
+                const result = useMemo(()=>{
+                    return xxx
+                },[goodslist,qty])
+            ```
+    * useCallback
+        * 用法一：默认用法（不推荐）
+            ```js
+                const handle = useCallback(()=>{
+
+                })
+            ```
+        * 用法二：空依赖
+            ```js
+                const handle = useCallback(()=>{
+
+                },[])
+            ```
+        * 用法三：指定依赖
+            ```js
+                const handle = useCallback(()=>{
+
+                },[qty])
+            ```
+
+## day7-3
+
+### 知识点
+* Hooks
+    * useReducer(reducer,initState)
+        > useState的强化版，返回state与修改state的方法dispatch组成的数组
+        ```js
+            const [goods,setGoods] = useState({
+                name:'goods1',
+                price:1998,
+                qty:10,
+                imgurl:'img/goods1.png'
+            })
+
+            setGoods({
+                name:'goods1',
+                price:1998,
+                qty:11,
+                imgurl:'img/goods1.png'
+            })
+        ```
+    * useRef
+    * useLayoutEffect 同步版本

@@ -40,3 +40,20 @@ function total(a:number,...args:number[]):number{
 total(10,20)
 total(10,20,30)
 total(10,20,30,31,32,33,36,98)
+
+
+// 函数重载
+function createArray(item:string,len:number):string[];
+function createArray(item:number,len:number):number[];
+function createArray(item:any,len:number){
+    return Array(len).fill(item)
+}
+
+createArray(10,3)
+createArray('hello',3)
+
+// const navigate = useNavigate()
+// navigate('/home')
+// navigate(1)
+
+export {}

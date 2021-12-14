@@ -3131,3 +3131,25 @@
 
     * 浏览器不支持typescript，需要编译成js
         > typescript --编译--> javascript -> 浏览器运行
+
+    * 变量类型
+        * 基本类型
+            * string
+            * nunber
+            * boolean
+        * 特殊类型
+            * any
+            * unknown
+            * void
+            * null
+            * undefine
+            * 字面量
+        * 复杂类型
+            * 函数
+            * 数组
+                * 元素类型[]
+                * Array<元素类型>
+            * 对象
+                * 接口
+    * 联合类型
+    * 类型推论

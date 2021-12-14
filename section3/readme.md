@@ -3025,3 +3025,109 @@
     * 扩展webpack配置
         * 进入react-srcipts模块中修改（不推荐）
         * yarn eject （不推荐）
+        * react-app-rewired
+            1. 创建config-overrides.js
+            2. 配置config-overrides.js
+            3. 修改package.json中的npm script
+
+
+## day8-1
+
+### 知识点
+* 路由模式
+    > 搞懂路由是如何生效的？
+    * hash      HashRouter
+    * history   BrowserRouter
+
+    ```js
+        // http://localhost:8080/index.html#/manage/interview/list
+        // http://localhost:8080/manage/interview/list
+    ```
+* 路由原理
+    * hash
+        * window.onhashchange事件
+    * history       
+        > HTML5 API，
+        * history.pushState()
+        * history.replaceState()
+
+
+* 优化
+    * 性能优化
+    * 用户体验优化
+    * 搜索引擎优化（SEO）
+
+    * 路由懒加载
+        > 按需加载：访问页面时才引入对应路由组件的方式
+
+
+## day8-2
+* typescript
+    * 为什么需要ts
+    * ts能解决什么问题
+* javascript
+    * 只有在运行时才发现问题
+    ```js
+        let price = 100;
+
+        price = '200'
+
+        price.toFixed(2);// 100.00
+
+
+        const box = document.querySelector('.box');//null
+        box.onclick = function(){
+
+        }
+
+        
+    ```
+    * 没有足够的代码提示
+        ```js
+            const arr = [10,20,30]
+            arr.reduce((prev,item,idx)=>{})
+
+            
+        ```
+    * 没有类型限制
+        ```js
+            /**
+             * a: {Number}
+             * b: {Number}
+            */
+            function sum(a,b){
+                return a+b;
+            }
+
+            sum(10,20);// 30
+            sum(10,'20');// 1020
+        ```
+* TypeScript
+    > type + script
+    * typescript = javascript + 类型系统 + ES6+
+
+    ```ts
+        let price = 100
+        price = '200'
+        price.toFixed(2)
+    ```
+
+    * 类型系统：类型注解+类型检查
+        * 类型注解：声明变量时给变量添加类型限制
+        * 类型检查：编译时ts的解析器对赋值给变量的数据进行类型检查
+
+        ```ts
+            let price:number = 100;
+
+            price = '200'
+        ```
+        * 强类型与弱类型：js是一门弱类型语言
+            ```js
+                let result = 10-'4'; // 6 
+                localStorage.set('userInfo',{uesrname:'laoxie',role:'admin'})
+                // userInfo => [object Object]
+            ```
+        * 静态类型与动态类型：js是一门动态类型语言
+
+    * 浏览器不支持typescript，需要编译成js
+        > typescript --编译--> javascript -> 浏览器运行

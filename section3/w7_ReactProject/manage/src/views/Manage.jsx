@@ -1,4 +1,4 @@
-import React from 'react'
+import React,{lazy,Suspense} from 'react'
 import { Routes, Route, useNavigate,Outlet } from 'react-router-dom'
 import { withAuth, withLogin, withStorage, withStorages, withRedux, withStore } from '../utils/hoc'
 
@@ -10,14 +10,20 @@ import userAction from '../store/actions/user'
 import style from './Manage.module.scss'
 console.log('style', style)
 
-import Home from './manage/Home'
-import User from './manage/User'
-import Interview from './manage/Interview'
-import List from './manage/interview/List'
-import Add from './manage/interview/Add'
-import Edit from './manage/interview/Edit'
+// import Home from './manage/Home'
+// import User from './manage/User'
+// import Interview from './manage/Interview'
+// import List from './manage/interview/List'
+// import Add from './manage/interview/Add'
+// import Edit from './manage/interview/Edit'
 
-
+// 路由懒加载
+const Home = lazy(() => import("./manage/Home"));
+const User = lazy(() => import("./manage/User"));
+const Interview = lazy(() => import("./manage/Interview"));
+const List = lazy(() => import("./manage/interview/List"));
+const Add = lazy(() => import("./manage/interview/Add"));
+const Edit = lazy(() => import("./manage/interview/Edit"));
 
 const { SubMenu } = Menu;
 const { Header, Content, Footer, Sider } = Layout;
@@ -162,15 +168,17 @@ function Manage({ userInfo, logout }) {
                             <Route path={match.path + "/user"} component={User} /> */}
 
                             {/* <Outlet/> */}
-                            <Routes>
-                                <Route path="home" element={<Home />} />
-                                <Route path="interview" element={<Interview />}>
-                                    <Route path="list" element={<List/>} />
-                                    <Route path="add" element={<Add/>} />
-                                    <Route path="edit/:id" element={<Edit/>} />
-                                </Route>
-                                <Route path="user" element={<User />} />
-                            </Routes>
+                            <Suspense fallback={<div>loading...</div>}>
+                                <Routes>
+                                    <Route path="home" element={<Home />} />
+                                    <Route path="interview" element={<Interview />}>
+                                        <Route path="list" element={<List/>} />
+                                        <Route path="add" element={<Add/>} />
+                                        <Route path="edit/:id" element={<Edit/>} />
+                                    </Route>
+                                    <Route path="user" element={<User />} />
+                                </Routes>
+                            </Suspense>
                     </Content>
                 </Layout>
             </Layout>

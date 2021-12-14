@@ -22,7 +22,8 @@ module.exports = {
     // 2.出口：告诉webpack编译后的文件信息与输出到哪里
     output:{
         path:path.resolve('./dist'), // path.join(__dirname,'dist')
-        filename:'boundle.[name].[hash:5].js'
+        filename:'boundle.[name].[hash:5].js',
+        publicPath:'/'
     },
 
     // 3. 加载器loader：告诉webpack如何处理文件（模块）
@@ -117,7 +118,9 @@ module.exports = {
         static: {
             directory: path.join(__dirname, 'public'),
         },
-        port:8080
+        port:8080,
+        historyApiFallback: true,
+        compress:true,
     },
 
     // 6. 默认扩展名与路径别名

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>01-hash路由的原理</title>
+</head>
+<body>
+    <h1>01-hash路由的原理</h1>
+    <div id="app">
+
+    </div>
+
+    <script>
+        const app = document.querySelector('#app')
+        const routes = [
+            {
+                path:'/home',
+                component:'<div>首页</div>'
+            },
+            {
+                path:'/login',
+                component:'<div>登录</div>'
+            },
+            {
+                path:'/manage',
+                component:'<div>后台管理</div>'
+            },
+        ]
+
+        renderRouter();
+        window.onhashchange = function(){
+            console.log('hash change');
+
+            renderRouter()
+        }
+
+        function renderRouter(){
+            // 获取浏览器hash值
+            const hash = location.hash.slice(1)
+            const currentRoute = routes.find(item=>item.path === hash)
+            app.innerHTML = currentRoute.component
+        }
+    </script>
+</body>
+</html>

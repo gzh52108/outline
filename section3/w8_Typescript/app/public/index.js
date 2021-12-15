@@ -10,4 +10,5 @@ const box = document.querySelector('#box');
 box?.addEventListener('click', () => {
 });
 const username = 'laoxie';
-// lodash
+const result = capitalize('Foo Bar');
+console.log(result);

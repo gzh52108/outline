@@ -23,3 +23,11 @@ const username:string = 'laoxie';
 
 
 // lodash
+import {capitalize,camelCase} from 'lodash'
+
+// 声明函数类型
+// declare function capitalize(str?:string):string;
+
+const result:string = capitalize('Hello word')
+console.log(result)
+camelCase('hello word');

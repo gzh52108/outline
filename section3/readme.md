@@ -3348,3 +3348,11 @@
         // lodash.cloneDeep()
         // jQuery.clone(true)
     ```
+* 类型声明文件：.d.ts
+
+* 搭建ts+express的服务器环境
+    * 依赖
+        * @types/node
+        * @types/express
+        * typescript
+        * ts-node

@@ -58,4 +58,7 @@ createArray('hello',3)
 // navigate('/home')
 // navigate(1)
 
-export {}
+export {
+    add,
+    total
+}

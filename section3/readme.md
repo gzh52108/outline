@@ -3302,3 +3302,49 @@
         HomePage.title;
 
     ```
+
+* 配置文件：tsconfig.json
+    * 生成：`tsc --init`
+
+* 使用第三方库
+    * jquery        $
+    * underscore    _
+    * lodash        _
+
+* 深拷贝与浅拷贝
+    ```js
+        const str = 'hello';
+        const newStr = str;
+
+        const obj = {a:10,b:20,c:[31,32,33]}
+        // 复制一个地址
+        const newObj = obj;
+        
+        // 拷贝
+        // 浅拷贝：只复制对象的一层属性
+        const newObj = {}
+        for(let key in obj){
+            newObj[key] = obj[key]
+        }
+        newObj['a'] = 11
+        newObject['c'].push(34)
+
+        // const newObj = Object.assign({},obj)
+        // const newObj = {...obj}
+
+        // 深拷贝：复制对象所有属性（包括嵌套属性），让其独占内存空间
+        // 1. 递归遍历
+        function cloneDeep(){
+            const newObj = {}
+            for(let key in obj){
+                if(typeof obj[key] === 'object'){
+                    newObj[key] = cloneDeep(obj[key])
+                }else{
+                    newObj[key] = obj[key]
+                }
+            }
+            return newObj
+        }
+        // lodash.cloneDeep()
+        // jQuery.clone(true)
+    ```

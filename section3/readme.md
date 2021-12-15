@@ -3153,3 +3153,152 @@
                 * 接口
     * 联合类型
     * 类型推论
+    * 断言
+        * as
+        * 尖括号
+    * 泛型编程
+    * 枚举类型
+    * 类
+        * 修饰符
+            * public    共有属性（默认）
+            * private   私有属性
+            * protected 受保护的属性
+            * readonly  只读属性
+            * static    静态属性
+
+            ```js
+               // 实现一个对象的属性为只读
+               // ts
+               class User{
+                   readonly age:number=18
+                   constructor(){
+
+                   }
+               }
+
+               const user1 = new User()
+               u.age;
+
+               // js
+               // 1. 存储器属性：getter
+               const user2 = {
+                   // age:18,
+                   get age(){
+                       return 18
+                   }
+               }
+               user2.age++;
+
+               // 2. writable属性特性
+               const user3 = {}
+               Object.defineProperty(user3,'age',{
+                   // 属性特性：通过Object.defineProperty()**定义**的属性,所有属性特性默认为false
+                   // 可配置性：writable与enumerble的总开关
+                   configurable:false,
+
+                   // 可写性：是否能修改
+                   writable:false,
+
+                   // 可枚举性：是否能被遍历
+                   // 如enumerable的值为false，属性的颜色会变淡
+                   enumerable: false,
+                   value:18
+               })
+            ```
+* 属性特性
+    > 通过Object.defineProperty()**定义**的属性，所有属性特性为false，其他方式定义的属性，所有属性特性为true
+    * 存储器属性
+        * configurable
+        * enumerable
+        * get
+        * set
+        ```js
+            let _age = 18;
+            const user1 = {
+                id:10,
+                get age(){
+                    return _age
+                },
+                set age(newValue){
+                    _age = newValue;
+                }
+            }
+
+            Object.definePropery(user1,'age',{
+                get(){
+                    return _a
+                },
+                set(newValue){
+                    _age = newValue
+                }
+            })
+
+            Object.defineProperty(user1,'id',{
+                get(){},
+                set(){}
+            })
+        ```
+    * 值属性
+        * configurable
+        * enumerable
+        * writable
+        * value
+        ```js
+            const user = {
+                age:18
+            }
+
+            Object.defineProperty(user,'id',{
+                value:1
+            })
+
+            Object.defineProperty(user,'age',{
+                writable:false
+            })
+        ```
+    * 设置属性：
+        * Object.defineProperty(target,prop,descriptor)
+        * Object.defineProperties(target,descriptors)
+        ```js
+            Object.defineProperty(user,{
+                age:{
+                    writable:false
+                },
+                id:{}
+            })
+
+        ```
+    * 获取属性特性
+        * Object.getOwnPropertyDescriptor(target,prop)
+        * Object.getOwnPropertyDescriptors(target)
+
+* 命名空间namespce
+    ```js
+        // 全局写法：命名冲突
+        let title = '首页'
+        let title = '登录'
+
+        // 
+        const homePage = {
+            title:'首页'
+        }
+        const loginPage = {
+            title:'登录'
+        }
+
+        homePage.title;
+        loginPage.title;
+    ```
+
+    ```ts
+        namespace HomePage{
+            export const title = '首页'
+        }
+
+        namespace LoginPage{
+            export const title = '登录'
+        }
+
+        HomePage.title;
+
+    ```

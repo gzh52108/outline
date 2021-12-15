@@ -52,6 +52,8 @@ function createArray(item:any,len:number){
 createArray(10,3)
 createArray('hello',3)
 
+
+// ReactRouter6
 // const navigate = useNavigate()
 // navigate('/home')
 // navigate(1)

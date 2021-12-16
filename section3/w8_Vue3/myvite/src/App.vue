@@ -6,13 +6,16 @@
     <input type="text" v-model="msg" />
   </p>
 
-  <Test v-model="count" v-model:count="count" />
+  <!-- <Test v-model="count" v-model:count="count" />
 
-  <List ref="mylist" @click="count++" @hello="count+=10" style="color:#f00" class="box" msg="hello" :index="10" />
+  <List ref="mylist" @click="count++" @hello="count+=10" style="color:#f00" class="box" msg="hello" :index="10" /> -->
+
+  <Datalist/>
 </template>
 <script>
 import Test from './components/Test.vue'
 import List from './components/List.vue'
+import Datalist from './components/Datalist.vue'
 export default {
   // 选项式API
   data(){
@@ -28,10 +31,11 @@ export default {
   },
   components:{
     Test,
-    List
+    List,
+    Datalist
   },
   mounted(){
-    console.log('List',this.$refs.mylist)
+    // console.log('List',this.$refs.mylist)
   }
 }
 </script>

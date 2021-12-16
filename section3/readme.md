@@ -3498,3 +3498,39 @@
         * expose
         * emits
             > emits 选项中列出的事件不会从组件的根元素继承，也将从 $attrs property 中移除
+
+
+* 组合式（composition）API
+    * 入口：setup()
+    * 响应式API
+        > 利用ES6的Proxy实现代理从而实现响应式的效果
+        * reactive()
+        * ref()
+            > 解包：在**模板中**自动读取ref对象中的value属性
+            * toRef(target,prop)
+            * toRefs(target)
+        * computed
+        * watch
+            > 惰性监听
+            * 监听响应式对象：reactive或ref
+                ```js
+                    const qty = ref(10)
+                    const data = reactive({total:100,size:10,page:1})
+
+                    watch(qty,(n,o)=>{})
+                    watch(data,(n,o)=>{})
+                ```
+            * 监听reactive中的属性
+                ```js
+                    watch(()=>data.total,(n,o)=>{})
+                ```
+        * watchEffect
+            ```js
+                watchEffect(()=>{
+                    // 这里的代码在初始化与qty变化执行
+                    console.log(qty.value)
+                })
+            ```
+
+### 练习
+* 利用Vue3实现todolist

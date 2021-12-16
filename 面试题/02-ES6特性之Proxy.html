@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>02-ES6特性之Proxy</title>
+</head>
+<body>
+    <h1>02-ES6特性之Proxy</h1>
+    <div id="app">
+
+    </div>
+
+    <script>
+        // Vue2监听属性：Object.defineProperty(target,prop,descriptor)
+        // const obj = {
+        //     get age(){
+
+        //     },
+        //     set age(newValue){
+
+        //     }
+        // }
+        // obj.age = 20;
+        // obj.gender = '男'
+
+        // Vue3监听属性：Proxy代理对象
+        const user = {
+            username:'laoxie',
+            age:18,
+            score:{
+                en:100,
+                cn:120,
+                math:130
+            }
+        }
+
+        const p = new Proxy(user,{
+            // 拦截读取操作
+            get(target, property, receiver){
+                // target: 目标对象
+                // property: 读取的属性名
+                // receiver: 代理对象
+                console.log('get',target, property, receiver)
+                return target[property]
+            },
+
+            // 拦截写入操作
+            set(target, property, value, receiver){
+                console.log('set',target, property, value, receiver)
+                target[property] = value;
+
+                // 更新视图
+                // watcher实例 -> 刷新组件
+            },
+
+            // 拦截删除操作
+            deleteProperty: function(target, property) {
+                console.log('delete')
+                delete target[property]
+                return true;
+            },
+
+            // 拦截 in 操作符
+            has(target,property){
+                console.log('in')
+            }
+        })
+
+        // 只有对代理对象的操作才可以被监听到
+
+
+        // 判断是否存在某个属性
+        if(p.age !== undefined){
+
+        }
+
+        console.log('age in p=','age' in p)
+        
+    </script>
+</body>
+</html>

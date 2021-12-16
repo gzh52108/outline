@@ -3356,3 +3356,145 @@
         * @types/express
         * typescript
         * ts-node
+
+
+## day8-4
+
+### 知识点
+* 版本号:xxx.xx.x
+    > 大版本.小版本.补丁号
+* vue 2.6.14 -> 3.2.26
+
+* 数据监听
+    > Object.defineProperty()把属性改成getter&setter -> Proxy()
+    ```js
+        // vue2
+        {
+            data(){
+                return {
+                    user:{
+                        username:'laoxie',
+                        password:123
+                    },
+                    userlist:['laoxie','tiantian']
+                }
+            }
+        }
+
+        this.user.password = 123456;
+        this.user.gender = '男'
+        this.userlist[2] = 'jingjing'
+        this.userlist.push()
+
+        Vue.set()
+
+        <template>
+            <div>数据更新演示</div>
+            <div v-once>{{user}}</div>
+            <div>{{userlist}}</div>
+        </template>
+    ```
+
+* options API与composition API
+    * vue2: options API
+        ```js
+            Vue.component('list',{
+                data(){
+                    return {}
+                },
+                methods:{
+
+                },
+                computed:{
+
+                },
+                watch:{}
+            })
+        ```
+    * vu3: compositoin API
+        ```js
+            {
+                setup(){
+                    const data reactive({})
+                    computed(()=>{
+                        return data.xxx;
+                    })
+                    watch(data.xx,()=>{
+
+                    })
+
+                    const getData = ()=>{
+
+                    }
+
+                    return data
+                }
+            }
+        ```
+* 使用Vue3
+    * script
+    * 手动配置Webpack
+    * VueCLI
+    * Vite（推荐）
+
+* Vue3语法
+    > 兼容大部分Vue2写法
+    * v-model
+        * 用在表单上：与Vue2一致（v-bind:value+v-on:input）
+            ```html
+                <input v-model="searchText" />
+                <!-- 等价于 -->
+                <input :value="searchText" @input="searchText = $event.target.value" />
+            ```
+        * 用在组件上: 默认为`v-bind:model-value + v-on:update:model-value`的语法糖
+            > model-value可以修改
+            ```html
+                 <custom-input v-model="searchText"></custom-input>
+                <!-- 等效于 -->
+                <custom-input
+                :model-value="searchText"
+                @update:model-value="searchText = $event"
+                ></custom-input>
+
+                <!-- custom-input内部操作 -->
+                {
+                    props:['modelValue']
+                }
+                this.$emit('update:model-value',100)
+
+            
+            ```
+
+* 组件Component
+    * 定义
+        * 全局：app.component()
+        * 局部：components
+    * 组件选项
+        ```js
+            {
+                data(){
+                    return {}
+                },
+                // 单文件组件SFC(single file component)采用template标签而不是template选项
+                template:``,
+                computed:{},
+                methods:{},
+                watch:{}
+            }
+        ```
+        * 生命周期函数
+            > 指令生命周期与组件生命周期函数一致
+            ```js
+                // Vue2                 Vue3
+                beforeCreate            beforeCreate
+                created                 created
+                beforeMount             beforeMount
+                mounted                 mounted
+                beforeUpdate            beforeUpdate
+                updated                 updated
+                beforeDestroy           beforeUnmount
+                destroyed               unmounted
+            ```
+        * expose
+        * emits
+            > emits 选项中列出的事件不会从组件的根元素继承，也将从 $attrs property 中移除

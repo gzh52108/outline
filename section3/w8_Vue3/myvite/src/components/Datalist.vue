@@ -91,7 +91,9 @@ export default {
             datalist2,
 
             qty,
-            changeQty
+            changeQty,
+
+            menu:[{path:'/home',text:'首页'}]
         }
     },
     

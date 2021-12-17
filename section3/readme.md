@@ -3505,12 +3505,30 @@
     * 响应式API
         > 利用ES6的Proxy实现代理从而实现响应式的效果
         * reactive()
+            ```js
+                const data = reactive({list:[],b:20})
+                data.list = data.data;
+            ```
         * ref()
-            > 解包：在**模板中**自动读取ref对象中的value属性
+            > ref等效于`{value:reactive}`,**解包**：在**模板中**自动读取ref对象中的value属性
             * toRef(target,prop)
             * toRefs(target)
-        * computed
-        * watch
+            ```js
+                const qty = ref(1); 
+                qty.value++
+                const list = ref([])
+                list.value = data.data;
+            ```
+            * unref
+                ```js
+                    const count = ref(10)
+                    const qty = 20;
+
+                    unref(count);// 10
+                    unref(qty);// 20
+                ```
+        * computed  计算属性，等效于选项式API中的computed
+        * watch 监听属性，等效于选项式API中的watch
             > 惰性监听
             * 监听响应式对象：reactive或ref
                 ```js
@@ -3534,3 +3552,26 @@
 
 ### 练习
 * 利用Vue3实现todolist
+
+
+## day8-5
+
+### 知识点
+* 生命周期钩子函数
+    ```js
+        //选项式Api                 组合式Api
+        beforeCreate                setup
+        created                     setup
+        beforeMount                 onBeforeMount
+        mounted                     onMounted
+        beforeUpdate                onBeforeUpdate
+        updated                     onUpdated
+        beforeUnmount               onBeforeUnmount
+        unmounted                   onUnmounted
+    ```
+* ref对象
+    > 通过ref对象获取节点或组件实例
+
+* script setup
+    * 顶层的绑定会被暴露给模板
+    * script setup范围里的值也能被直接作为自定义组件的标签名使用

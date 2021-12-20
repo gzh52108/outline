@@ -3635,7 +3635,47 @@
         <div v-for="item in checkList"></div>
     ```
 
-
 ## day9-1
 
 ### 知识点
+* 文件类型
+    * json  配置文件
+    * wxss  样式文件
+    * wxml  结构文件
+    * js    逻辑文件
+    * wxs   模块化脚本文件
+* 作用范围
+    * 全局通用文件
+        * app.json
+        * app.wxss
+        * app.js
+    * 页面级别文件
+        * PAGE.json
+        * PAGE.wxss
+        * PAGE.wxml
+        * PAGE.js
+
+* json配置
+    * 全局
+        * app.json
+        * project.config.json   项目配置文件
+    * 页面
+        * PAGE.json
+
+* 页面分类
+    * tabbar页面
+    * 非tabbar页面
+
+* wxss样式文件
+    * rpx（responsive pixel）：750
+* wxml结构文件
+    * 内置组件
+    * 模板语法
+        * 数据绑定
+            * 单向绑定：{{}}
+                > 在wxml中直接使用data中的属性
+            * 双向绑定：
+                * 单向 + 事件
+                * model:value
+        * 事件绑定
+            * bind

@@ -1,0 +1,20 @@
+<view>View</view>
+<rich-text nodes="<h1>Hello</h1>"></rich-text>
+<text>txt</text>
+<text>123</text>
+<icon type="success"></icon>
+<icon type="success_no_circle"></icon>
+<icon type="download" color="#f00"></icon>
+
+<picker mode="region">
+    <view class="picker">
+      当前选择：
+    </view>
+  </picker>
+
+  <view>数据绑定</view>
+  <view data-msg="{{msg}}">msg: {{msg}}</view>
+  单向+事件：<input type="text" value="{{msg}}" bind:input="changeMsg" />
+  model:value : <input type="text" model:value="{{msg}}" />
+  <view>password: {{user.password}}</view>
+  model:value : <input type="text" model:value="{{user.password}}" />

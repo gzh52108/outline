@@ -6,6 +6,12 @@
     <input type="text" v-model="msg" />
   </p>
 
+  <p :class="$style.box">$style: {{$style}}</p>
+  <p :class="laoxie.mybox">laoxie: {{laoxie}}</p>
+
+  <p class="color" @click="changeColor">动态改变字体大小</p>
+
+
   <!-- <Test v-model="count" v-model:count="count" />
 
   <List ref="mylist" @click="count++" @hello="count+=10" style="color:#f00" class="box" msg="hello" :index="10" /> -->
@@ -14,10 +20,18 @@
 
   <!-- <Lifecycle/> -->
   <!-- <Table :data="datalist.list" :total="datalist.total" style="position:relative;z-index:10"/> -->
-  <ScriptSetup a="10" :b="20"/>
+  <ScriptSetup class="menu" a="10" :b="20"/>
+  <!-- <div data-v-hash class="menu">
+        msg:{{msg}}
+        <p @click="count++">count:{{count}}</p>
+        <button @click="changeCount">change count</button>
+        <List/>
+    </div> -->
+
+    <router-view></router-view>
 </template>
 <script>
-import {ref,reactive} from 'vue'
+import {ref,reactive,useCssModule} from 'vue'
 import Test from './components/Test.vue'
 import List from './components/List.vue'
 import Datalist from './components/Datalist.vue'
@@ -60,11 +74,24 @@ export default {
       list:[10,20,30],
       total:100
     })
+
+    const styles = useCssModule();
+    const laoxieStyles = useCssModule('laoxie');
+    console.log('styles',styles,laoxieStyles)
+    // return Vue.h('div',{attrs:{class:styles.box}})
+
+    // 动态改变字体大小
+    const color = ref('12px')
+    const changeColor = ()=>{
+      color.value = '20px';
+    }
     return {
       msg,
       count,
       changeCount,
-      datalist
+      datalist,
+      color,
+      changeColor
     }
   }
 }
@@ -78,4 +105,38 @@ export default {
   color: #2c3e50;
   margin-top: 60px;
 }
+</style>
+<style scoped>
+  /* 
+  1. 给当前组件所有标签添加 data-v-[hash] 属性
+    <div class="box"></div> -> <div class="box" data-v-hash></div>
+  2. 把当前样式添加属性选择器  
+    .box{} -> .box[data-v-hash]{}
+*/
+
+/* .menu button -> .menu[data-v-hash] button[data-v-hash] */
+.menu button{ 
+  color:#58bc58;
+}
+/* 
+  解决方案 
+    * >>> :  .menu >>> button{} -> .menu[data-v-hash] button{}
+    * /deep/ : .menu /deep/ button{} -> .menu[data-v-hash] button{}
+    * :deep() 深度伪类选择器
+      .menu :deep(button) -> .menu[data-v-hash] button{}
+*/
+.menu :deep(button){ 
+  color:#58bc58;
+}
+
+.color{
+  font-size:v-bind(color);
+}
+</style>
+
+<style module>
+  .box{color:#58bc58;}
+</style>
+<style module="laoxie">
+  .mybox{color:#f00;}
 </style>

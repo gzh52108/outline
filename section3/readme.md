@@ -3575,3 +3575,67 @@
 * script setup
     * 顶层的绑定会被暴露给模板
     * script setup范围里的值也能被直接作为自定义组件的标签名使用
+
+* `<style>`特性
+    * :deep()   深度伪类选择器
+    * :slotted() 插槽伪类选择器
+        ```html
+            <List>
+                <ul>
+                    <li></li>
+                </ul>
+            </List>
+
+            <!-- list结构 -->
+            <div class="list">
+                <div class="default"><slot/></div>
+            </div>
+
+            <!-- list内样式 -->
+            <style scoped>
+                .default :slotted(li){color:#ff0}
+
+                .list{padding:15px} -> .list[data-v-hash]{}
+                :global(.list) -> .list{}
+            </style>
+
+        ```
+    * :global() 全局伪类选择器
+
+* css module
+    > 类似于scoped局部样式，实现局部样式
+    ```js
+        // style scoped
+        .box{} -> .box[data-v-hash]
+
+        // css module
+        .box{} -> .sajdlfjasdl{}
+
+        // react
+        import style from './style.css'; //style={box:'sajdlfjasdl'}
+        <div className={style.box}> -> <div class="sajdlfjasdl"></div>
+
+        // vue
+        <style module>
+            .box{}  -> .abcdcba{}
+        </style>
+        <div :class="$style.box"></div>
+    ```
+
+
+* v-if于v-for的优先级
+    ```js
+        // vue2：computed过滤数据
+        computed:{
+            checkList(){
+                return this.datalist.filter(item=>item.chekced)
+            }
+        }
+        <div v-for="item in datalist" v-if="item.checked"></div>
+        <div v-for="item in checkList"></div>
+    ```
+
+
+## day9-1
+
+### 知识点

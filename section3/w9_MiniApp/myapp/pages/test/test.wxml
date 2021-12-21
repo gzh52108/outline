@@ -18,3 +18,17 @@
   model:value : <input type="text" model:value="{{msg}}" />
   <view>password: {{user.password}}</view>
   model:value : <input type="text" model:value="{{user.password}}" />
+<button bind:tap="submit" data-index="10" data-password="{{user.password}}">提交</button>
+
+<view>列表渲染：</view>
+<view wx:for="{{userlist}}" wx:key="*this" wx:for-index="idx">
+{{idx+1}} - {{item}}
+  <view wx:for="{{item}}" wx:key="*this">{{idx+1}}.{{index+1}}-{{item}}</view>
+</view>
+
+<view>条件渲染：</view>
+<block  wx:if="{{num>5}}">
+  <view>num>5</view>
+  <view>控制多个元素</view>
+</block>
+<button catch:tap="changeNum">num:{{num}}</button>

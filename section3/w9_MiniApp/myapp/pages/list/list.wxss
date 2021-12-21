@@ -1,1 +1,10 @@
 /* pages/list/list.wxss */
+.list-item{
+  padding:30rpx;
+  border-bottom:1px dotted #ddd;
+}
+.list-item text{display: inline-block;padding-right:10px;color:#999}
+
+.loadmore{
+  text-align: center;color:#999;padding:50rpx;
+}

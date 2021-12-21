@@ -1,6 +1,6 @@
 // app.js
 App({
-  onLaunch() {
+  onLaunch(options) {console.log('app.onLaunch',options)
     // 展示本地存储能力
     const logs = wx.getStorageSync('logs') || []
     logs.unshift(Date.now())
@@ -13,7 +13,14 @@ App({
       }
     })
   },
+  onShow(options){
+    console.log('app.onShow',options)
+  },
+  onHide(){
+    console.log('app.onHide')
+  },
   globalData: {
     userInfo: null
-  }
+  },
+  baseUrl:'http://laoxie.com'
 })

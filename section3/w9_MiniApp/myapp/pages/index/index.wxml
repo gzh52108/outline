@@ -21,6 +21,6 @@
     <text class="user-motto">{{motto}}</text>
   </view>
   <button>我的</button>
-  <navigator url="/pages/list/list" open-type="switchTab">别表</navigator>
+  <navigator url="/pages/list/list?page=1&size=10" open-type="switchTab">列表</navigator>
   <navigator url="/pages/logs/logs" open-type="navigate">logs</navigator>
 </view>

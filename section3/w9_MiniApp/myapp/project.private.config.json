@@ -29,6 +29,12 @@
           "pathName": "pages/test/test",
           "query": "",
           "scene": null
+        },
+        {
+          "name": "",
+          "pathName": "pages/list/list",
+          "query": "page=1&size=5",
+          "scene": null
         }
       ]
     }

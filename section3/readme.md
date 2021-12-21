@@ -3678,4 +3678,70 @@
                 * 单向 + 事件
                 * model:value
         * 事件绑定
-            * bind
+            * 在冒泡阶段执行
+                * bind: 执行并传播
+                * catch: 执行并阻止传播
+            * 在捕获节点执行
+                * capture-bind
+                * capture-catch
+            * event对象
+                * target
+                * currentTarget
+                * detail
+            * 传参
+                * 使用data-xx自定义属性的方式实现传参
+* 移动端事件
+    * click在移动端有300ms左右延迟 
+        > 经典bug: click事件穿透，解决方案：touch
+    * touch
+        * touchstart
+        * touchmove
+        * touchend
+    * 手势
+        * tap
+        * swiper/swiperleft/swiperright...
+
+* 列表渲染
+    * wx:for
+    * wx:key
+        > Vue和React使用唯一值作为key，微信小程序使用唯一值对应的属性名作为key
+        ```js
+            list = [{id:1,name:'goods1'},{id:2,name:'goods2'},{id:3,name:'goods3'}]
+            userlist = ['王力宏','李云迪','霍尊']
+            <div v-form="item in list" :key="item.id">
+            <div v-form="item in userlist" :key="item">
+            // 小程序
+            <view wx:for="{{list}}" key="id"></view>
+            <view wx:for="{{userlist}}" key="*this"></view>
+        ```
+    * wx:for-item   修改item名称
+    * wx:for-index  修改index名称
+* 条件渲染
+    * wx:if
+    * wx:else
+    * wx:elif
+    * hidden
+        > hidden与wx:if的区别，相当于Vue中v-show与v-if的区别
+
+* js逻辑文件
+    * App()注册一个应用，必须在 app.js 中调用，必须调用且只能调用一次。不然会出现无法预期的后果
+        * 生命周期钩子函数
+            * onLaunch
+            * onShow
+            * onHide
+        * 事件函数
+        * 其他
+            > 用户自定义内容
+    * Page()注册小程序中的一个页面
+        * getApp(): 获取到小程序全局唯一的 App 实例，可以在任意页面中调用
+        * 生命周期钩子函数
+            * onLoad    加载
+            * onUnLoad  卸载
+            * onShow    显示
+            * onHide    隐藏
+            * onReady   首次渲染完成
+* ajax请求
+    > 接口地址：真实接口地址：http://120.76.247.5:2002
+    ```js
+        链接：https://easydoc.net/s/99249679   密码：h52008
+    ```

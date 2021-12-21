@@ -1,2 +1,18 @@
 <!--pages/list/list.wxml-->
-<text>pages/list/list.wxml</text>
+<!-- <text>pages/list/list.wxml</text>
+<navigator url="/pages/index/index" open-type="switchTab">首页（tabbar）</navigator>
+<navigator url="/pages/logs/logs" open-type="navigate">logs</navigator>
+<navigator url="/pages/index/index" open-type="reLaunch">首页（reLaunch）</navigator> -->
+<view class="list">
+  <view wx:for="{{classlist}}" wx:key="_id" class="list-item">
+    <text>{{index+1}}</text>{{item.city}}-{{item.category}}-{{item.name}}
+  </view>
+</view>
+<view class="loadmore">
+  <view wx:if="{{hasMore}}">
+    loading...
+  </view>
+  <view wx:else>
+    ----------------我是有底綫的----------------
+  </view>
+</view>

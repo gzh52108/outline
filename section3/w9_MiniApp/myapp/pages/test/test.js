@@ -1,4 +1,5 @@
-// pages/test/test.js
+var appInstance = getApp()
+// console.log('appInstance',appInstance)
 Page({
 
   /**
@@ -8,9 +9,15 @@ Page({
     msg:'hello everybody',
     user:{
       password:1234
-    }
+    },
+    userlist:['王力宏','李云迪','霍尊'],
+    num:1
   },
-
+  changeNum(){
+    this.setData({
+      num:this.data.num+1
+    })
+  },
   changeMsg(e){
     // 在js中获取data属性：this.data.msg;
     console.log('e',e)
@@ -19,6 +26,12 @@ Page({
     this.setData({
       msg:e.detail.value
     })
+  },
+
+  submit(e){
+    console.log('e',e)
+    const {index,password} = e.target.dataset;
+    console.log('index',index,password)
   },
 
   /**

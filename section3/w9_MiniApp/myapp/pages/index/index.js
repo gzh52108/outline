@@ -44,5 +44,13 @@ Page({
       userInfo: e.detail.userInfo,
       hasUserInfo: true
     })
+  },
+  onShareAppMessage(options){
+    console.log('分享',options)
+    return {
+      title:'班级管理系统',
+      path:'/pages/list/list?id=1234',
+      imageUrl:"/img/g3.jpg"
+    }
   }
 })

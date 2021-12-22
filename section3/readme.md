@@ -3740,8 +3740,30 @@
             * onShow    显示
             * onHide    隐藏
             * onReady   首次渲染完成
+        * 事件处理函数
+            * onPullDownRefresh
+            * onReachBottom
 * ajax请求
     > 接口地址：真实接口地址：http://120.76.247.5:2002
     ```js
         链接：https://easydoc.net/s/99249679   密码：h52008
     ```
+
+* 组件
+    * 内置组件
+    * 自定义组件
+        * 定义：Component()
+            * js
+                * data
+                * methods
+                * properties    类似于Vue中的props
+                * observers    类似于Vue中的watch
+                * behaviors     类似于Vue中的mixins
+            * json
+            * wxml
+            * wxss
+        * 使用
+            * 注册：`usingComponents`
+                * 全局组件
+                * 局部组件
+            * 使用

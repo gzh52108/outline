@@ -1,0 +1,7 @@
+<view>
+  datalist
+  {{data}}
+  <view>
+    a:{{a}}
+  </view>
+</view>

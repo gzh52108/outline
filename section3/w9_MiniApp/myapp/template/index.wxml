@@ -1,0 +1,25 @@
+<!-- 定义模板，给模板添加name属性 -->
+<template name="list">
+  <view class="list" style="margin-top:20rpx;">
+    <view class="title" style="font-weight:bold;">@{{title || '列表标题'}}</view>
+    <view class="content">
+      <view wx:for="{{data}}" wx:key="*this">{{index+1}} - {{item}}</view>
+    </view>
+  </view>
+</template>
+<view>额外的代码1</view>
+<template name="lazylist">
+  <template is="list" data="{{title,data}}"></template>
+  <view bind:tap="{{handle.loadMore}}">加载更多>></view>
+</template>
+
+<wxs module="handle">
+  function loadMore() {
+    console.log('load more')
+  }
+  module.exports = {
+    loadMore: loadMore
+  }
+</wxs>
+
+<view>额外的代码2</view>

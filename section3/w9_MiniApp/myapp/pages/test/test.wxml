@@ -1,3 +1,15 @@
+<!-- 引入模板文件 -->
+<import src="/template/index.wxml"></import>
+
+<!-- 使用模板 -->
+<template is="list" data="{{title:'技能列表',data:['html','css','javascript']}}"></template>
+<template is="lazylist" data="{{title:'用户列表',data:['laoxie','jingjing','tiantian']}}"></template>
+
+<view class="container">
+  <include src="/template/index" />
+
+</view>
+
 <view>View</view>
 <rich-text nodes="<h1>Hello</h1>"></rich-text>
 <text>txt</text>
@@ -37,3 +49,31 @@
 <mylist/>
 
 <datalist data="{{[10,20,30]}}"></datalist>
+
+<view>add: {{tools.add(10,20)}}</view>
+<view>utils: {{utils.add(10,20)}}</view>
+<button bind:tap="{{tools.handleClick}}" data-id="10">wxs方法作为事件处理函数</button>
+<view>{{utils.formatDate('2008-8-8')}}</view>
+<wxs src="/wxs/tools.wxs" module="utils"></wxs>
+<wxs module="tools">
+  // 在wxs中引入别的wxs模块
+  var utils = require('../../wxs/tools.wxs')
+  console.log('wxs.require',utils)
+  
+  // 模块化脚本文件，每个模块具有独立的作用域
+  function add(a,b){
+    return a + b;
+  }
+
+  // wxs函数作为事件处理函数
+  var handleClick = function(e){
+    console.log(e.target.dataset.id)
+    // return function handle(e){
+    //   console.log('e',e)
+    // }
+  }
+  module.exports = {
+    add:add,
+    handleClick:handleClick,
+  }
+</wxs>

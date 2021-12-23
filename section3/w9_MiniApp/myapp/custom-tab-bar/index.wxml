@@ -1,6 +1,9 @@
-<view class="tabbar">
+<!-- <view class="tabbar">
   <view wx:for="{{menu}}" wx:key="pagePath" class="item {{index===current?'active':''}}" bind:tap="changeMenu" data-path="{{item.pagePath}}">
     <image src="{{index===current? item.selectedIconPath : item.iconPath}}" />
     <text>{{item.text}}</text>
   </view>
-</view>
+</view> -->
+<van-tabbar active="{{ current }}" bind:change="onChange">
+  <van-tabbar-item icon="{{item.icon}}" wx:for="{{menu}}" wx:key="pagePath">{{item.text}}</van-tabbar-item>
+</van-tabbar>

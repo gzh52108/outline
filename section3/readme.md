@@ -3767,3 +3767,53 @@
                 * 全局组件
                 * 局部组件
             * 使用
+    * 第三方组件库
+        * Vant weapp
+            1. 安装
+                ```bash
+                    npm i @vant/weapp
+                ```
+            2. 去除app.json中的`style:"v2"`
+            3. 构建npm包
+                > 工具->构建（必须存在package.json依赖记录才可以构建）
+            4. 注册组件
+            5. 使用组件
+        * weui-miniprogram
+            * 使用扩展库方式引用（不占用小程序包大小）
+            ```js
+                "useExtendedLib": {
+                    "weui": true
+                }
+            ```
+
+* 在小程序中使用npm模块
+    1. 安装
+    2. 构建npm包
+
+* 模块化规范
+    * commonJS
+    * ESModule
+    * AMD   require.js
+    * CMD   sea.js
+* 小程序模块化
+    * js模块化
+        * 微信小程序中支持commonJS与ESModule模块化规范
+    * wxs 模块化
+        > 解决在wxml中无法直接调用js方法的问题
+
+* wxml模板
+    > 实现wxml结构复用
+    * 定义模板: name
+        ```html
+            <template name="list"></template>
+        ```
+    * 引入
+        * <import />
+            ```html
+                <import src="template.wxml" />
+            ```
+        * <include/>
+    * 使用模板: is
+        ```html
+            <template is="list"/>
+        ```

@@ -13,7 +13,6 @@
     "navigationBarTextStyle": "white",
     "backgroundColor": "#666"
   },
-  "style": "v2",
   "sitemapLocation": "sitemap.json",
   "tabBar": {
     "custom": true,
@@ -39,6 +38,11 @@
     ]
   },
   "usingComponents": {
-    "datalist":"/components/datalist/datalist"
-  }
+    "datalist":"/components/datalist/datalist",
+    "van-button": "@vant/weapp/button/index",
+    "mp-icon": "weui-miniprogram/icon/icon"
+  },
+  "useExtendedLib": {
+    "weui": true
+}
 }

@@ -1,5 +1,10 @@
+import request,{baseUrl} from '../../utils/request'
+import m_utils from '../../utils/util'
 var appInstance = getApp()
 // console.log('appInstance',appInstance)
+const m_request = require('../../utils/request')
+const utils = require('../../utils/util')
+console.log('request',m_utils,m_request)
 Page({
 
   /**
@@ -32,6 +37,10 @@ Page({
     console.log('e',e)
     const {index,password} = e.target.dataset;
     console.log('index',index,password)
+  },
+
+  add(a,b){
+    return a+b;
   },
 
   /**

@@ -1,0 +1,6 @@
+<view class="tabbar">
+  <view wx:for="{{menu}}" wx:key="pagePath" class="item {{index===current?'active':''}}" bind:tap="changeMenu" data-path="{{item.pagePath}}">
+    <image src="{{index===current? item.selectedIconPath : item.iconPath}}" />
+    <text>{{item.text}}</text>
+  </view>
+</view>

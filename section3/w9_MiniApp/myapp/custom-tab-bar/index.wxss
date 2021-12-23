@@ -1,0 +1,7 @@
+.tabbar{
+  display: flex;
+  background: #fff;
+}
+.tabbar .item{flex:1;text-align: center;padding:20rpx;}
+.tabbar .item image{display:block;margin:0 auto;width:80rpx;height:80rpx;}
+.tabbar .item.active{color:#f0c;}

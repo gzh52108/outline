@@ -43,5 +43,20 @@ Component({
         count:this.data.count+1
       })
     }
+  },
+
+  // 组件生命周期钩子函数:新版小程序建议写在lifetimes
+  lifetimes:{
+    created(){
+
+    },
+    attached(){
+
+    }
+  },
+
+  // 组件所在页面生命周期钩子函数
+  pageLifetimes:{
+
   }
 })

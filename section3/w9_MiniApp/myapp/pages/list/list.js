@@ -63,6 +63,11 @@ Page({
    */
   onShow: function () {
     console.log('list.onShow')
+     // 获取tabbar实例
+     const tabbar = this.getTabBar();
+     tabbar.setData({
+       current:1
+     })
   },
 
   /**
